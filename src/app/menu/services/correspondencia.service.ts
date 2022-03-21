@@ -1,0 +1,99 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { Correspondencia, CorrespondenciaB, CorrespondenciaModificar, TipoDocumento, TipoEnvio, } from '../interface/correspondencia.interface';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CorrespondenciaService {
+
+  private baseUrl: string = environment.baseUrl;
+  // private _correo!: CorrespondenciaAgregar;
+
+  // get correo() {
+  //   return { ...this._correo };
+  // }
+
+  constructor( private http: HttpClient) { }  
+
+  getCorrespondencia(): Observable<Correspondencia[]> {
+    return this.http.get<Correspondencia[]>('http://localhost:4000/api/correspondencia/mostrar')
+  }
+ 
+  getTipoEnvio(): Observable<TipoEnvio[]> {
+    return this.http.get<TipoEnvio[]>(`http://localhost:4000/api/correspondencia/mostrar/tipoenvio`)
+  }
+
+  getTipoDocumento(): Observable<TipoDocumento[]> {
+     return this.http.get<TipoDocumento[]>(`http://localhost:4000/api/correspondencia/mostrar/tipodocumento`)
+   }
+
+  ingresaCorrespondencia( idTipoDocumento: number, idTipoEnvio: number,
+                          usuario: string, destinatario: string,
+                          referencia: string ){
+
+    const url = `http://localhost:4000/api/correspondencia/ingresar`;
+
+    const body = { idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia };
+    
+    return this.http.post(url , body )
+          .pipe(
+            tap( resp => {
+              console.log(resp)
+            } ),
+            map( resp => resp),
+            catchError( err => of(false) ) 
+          )
+  }
+
+  buscaCorrelativoModificar(filtro: string ): Observable<CorrespondenciaModificar[]> {
+    return this.http.get<CorrespondenciaModificar[]>(`http://localhost:4000/api/correspondencia/mod/${ filtro }`);
+         
+  }
+
+  buscaCorrelativo(filtro: string ): Observable<CorrespondenciaB> {
+    return this.http.get<CorrespondenciaB>(`http://localhost:4000/api/correspondencia/${ filtro }`);
+         
+  }
+
+
+  // modificarCorrespondencia(IdTipoEnvio: number, Destinatario: string, Referencia: string, Correlativo: string, EstadoCorreo: string) {
+    
+  //   const url = `${ this.baseUrl }/modificar`;
+
+  //   const body = {  IdTipoEnvio,  Destinatario, Referencia, Correlativo, EstadoCorreo };
+
+  //   return this.http.put<correspondenciaModificar>(url , body )
+  //   .pipe(
+  //     tap( resp => {
+  //       console.log(resp)
+  //     } ),
+  //     map( resp => resp),
+
+  //     catchError( err => of(false) ) 
+  //   )
+  // }
+
+  // filtraCorrelativo(Correlativo: string){
+
+  //   const url = `${ this.baseUrl }/filtrar`;
+
+  //   const body = { Correlativo };
+
+  //   return this.http.get<FiltroCorrelativo[]>( url  )
+  //   .pipe(
+  //     tap( resp => {
+  //       console.log(resp)
+  //     } ),
+  //     map( resp =>{
+  //       console.log(resp)
+  //     } ),
+
+  //     catchError( err => of(false) ) 
+  //   )
+  // }
+
+}
