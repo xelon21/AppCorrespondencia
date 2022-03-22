@@ -10,6 +10,22 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   .ancho{
     width: 100%;
   } 
+
+
+
+
+.mat-row .mat-cell {
+  border-bottom: 2px solid transparent;
+  border-top: 2px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+
+
   `
   ]
 })

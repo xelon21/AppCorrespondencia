@@ -34,6 +34,7 @@ export interface TipoDocumento {
 }
 
 export interface CorrespondenciaModificar {
+    correlativo:       string;
     idTipoEnvio:       number;
     usuario:           string;
     destinatario:      string;

@@ -49,14 +49,14 @@ export class CorrespondenciaService {
           )
   }
 
-  buscaCorrelativoModificar(filtro: string ): Observable<CorrespondenciaModificar[]> {
-    return this.http.get<CorrespondenciaModificar[]>(`http://localhost:4000/api/correspondencia/mod/${ filtro }`);
-         
+  modificarPorCorrelativo(correo: CorrespondenciaModificar ): Observable<CorrespondenciaModificar> {
+    return this.http.put<CorrespondenciaModificar>(`http://localhost:4000/api/correspondencia/modificar/${ correo.correlativo }`, correo);   
+
   }
 
   buscaCorrelativo(filtro: string ): Observable<CorrespondenciaB> {
     return this.http.get<CorrespondenciaB>(`http://localhost:4000/api/correspondencia/${ filtro }`);
-         
+
   }
 
 
