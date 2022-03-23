@@ -29,8 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MenuRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule,    
-    
+    FormsModule,  
 
   ]  
 })

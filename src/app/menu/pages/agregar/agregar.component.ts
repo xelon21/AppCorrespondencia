@@ -25,6 +25,7 @@ export class AgregarComponent implements OnInit  {
   tipoDocumento: TipoDocumento[] = [];
   correos: Correspondencia[] = [];
   
+  
 
   miFormulario: FormGroup = this.fb.group({
     idTipoDocumento: 5,

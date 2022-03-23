@@ -59,41 +59,5 @@ export class CorrespondenciaService {
 
   }
 
-
-  // modificarCorrespondencia(IdTipoEnvio: number, Destinatario: string, Referencia: string, Correlativo: string, EstadoCorreo: string) {
-    
-  //   const url = `${ this.baseUrl }/modificar`;
-
-  //   const body = {  IdTipoEnvio,  Destinatario, Referencia, Correlativo, EstadoCorreo };
-
-  //   return this.http.put<correspondenciaModificar>(url , body )
-  //   .pipe(
-  //     tap( resp => {
-  //       console.log(resp)
-  //     } ),
-  //     map( resp => resp),
-
-  //     catchError( err => of(false) ) 
-  //   )
-  // }
-
-  // filtraCorrelativo(Correlativo: string){
-
-  //   const url = `${ this.baseUrl }/filtrar`;
-
-  //   const body = { Correlativo };
-
-  //   return this.http.get<FiltroCorrelativo[]>( url  )
-  //   .pipe(
-  //     tap( resp => {
-  //       console.log(resp)
-  //     } ),
-  //     map( resp =>{
-  //       console.log(resp)
-  //     } ),
-
-  //     catchError( err => of(false) ) 
-  //   )
-  // }
-
+  
 }

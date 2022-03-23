@@ -13,43 +13,43 @@
 <table mat-table [dataSource]="correos" >
   
     <ng-container matColumnDef="usuario">
-        <th mat-header-cell *matHeaderCellDef class=""> Usuario </th>
-        <td mat-cell *matCellDef="let correo" class=""> {{correo.usuario}} </td>
+        <th mat-header-cell *matHeaderCellDef> Usuario </th>
+        <td mat-cell *matCellDef="let correo"> {{correo.usuario}} </td>
       </ng-container> 
     
     <ng-container matColumnDef="tipoEnvio">
-        <th mat-header-cell *matHeaderCellDef class=""> Tipo de Envio </th>
-        <td mat-cell *matCellDef="let correo" class=""> {{correo.nombreEnvio}} </td>
+        <th mat-header-cell *matHeaderCellDef> Tipo de Envio </th>
+        <td mat-cell *matCellDef="let correo"> {{correo.nombreEnvio}} </td>
       </ng-container> 
 
       <ng-container matColumnDef="nombreDocumento">
-        <th mat-header-cell *matHeaderCellDef class=""> Nombre de Documento</th>
-        <td mat-cell *matCellDef="let correo" class=""> {{correo.nombreDocumento}} </td>
+        <th mat-header-cell *matHeaderCellDef> Nombre de Documento</th>
+        <td mat-cell *matCellDef="let correo"> {{correo.nombreDocumento}} </td>
       </ng-container> 
 
       <ng-container matColumnDef="destinatario">
-        <th mat-header-cell *matHeaderCellDef class=""> Destinatario </th>
-        <td mat-cell *matCellDef="let correo" class=""> {{correo.destinatario}} </td>
+        <th mat-header-cell *matHeaderCellDef> Destinatario </th>
+        <td mat-cell *matCellDef="let correo"> {{correo.destinatario}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="referencia" >
-        <th mat-header-cell *matHeaderCellDef class=""> Referencia </th>
-        <td mat-cell *matCellDef="let correo" class=""> {{correo.referencia}} </td>
+      <ng-container matColumnDef="referencia">
+        <th mat-header-cell *matHeaderCellDef> Referencia </th>
+        <td mat-cell *matCellDef="let correo"> {{correo.referencia}} </td>
       </ng-container>
 
       <ng-container matColumnDef="fecha">
-        <th mat-header-cell *matHeaderCellDef class=""> Fecha </th>
-        <td mat-cell *matCellDef="let correo" class=""> {{correo.fecha | date: 'dd/MM/yyyy' }} </td>
+        <th mat-header-cell *matHeaderCellDef> Fecha </th>
+        <td mat-cell *matCellDef="let correo"> {{correo.fecha | date: 'dd/MM/yyyy' }} </td>
       </ng-container>
 
-      <ng-container matColumnDef="correlativo" >
-        <th mat-header-cell *matHeaderCellDef class=""> Correlativo </th>
-        <td mat-cell *matCellDef="let correo" class=""> {{correo.correlativo}} </td>
+      <ng-container matColumnDef="correlativo">
+        <th mat-header-cell *matHeaderCellDef> Correlativo </th>
+        <td mat-cell *matCellDef="let correo"> {{correo.correlativo}} </td>
       </ng-container>
 
       <ng-container matColumnDef="estadoCorreo">
-        <th mat-header-cell *matHeaderCellDef class=""> EstadoCorreo </th>
-        <td mat-cell *matCellDef="let correo" class=""> {{correo.estadoCorreo}} </td>       
+        <th mat-header-cell *matHeaderCellDef> EstadoCorreo </th>
+        <td mat-cell *matCellDef="let correo"> {{correo.estadoCorreo}} </td>       
       </ng-container>
 
       <ng-container matColumnDef="acciones">
@@ -63,11 +63,7 @@
       </td>
       </ng-container>
 
-
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 </div>
-
-
