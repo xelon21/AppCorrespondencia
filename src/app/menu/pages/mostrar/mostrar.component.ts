@@ -60,3 +60,6 @@ export class MostrarComponent implements OnInit {
 }
 
 
+//comit xD
+
+
