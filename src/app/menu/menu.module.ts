@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MenuRoutingModule } from './menu-routing.module';
-import { SliderComponent } from './slider/slider.component';
 import { AgregarComponent } from './pages/agregar/agregar.component';
 import { ModificarComponent } from './pages/modificar/modificar.component';
 import { MostrarComponent } from './pages/mostrar/mostrar.component';
@@ -10,17 +9,21 @@ import { inicioComponent } from './inicio/inicio.component';
 import { MaterialModule } from '../material/material.module';
 import { FiltrarComponent } from './pages/filtrar/filtrar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { FiltroFechasComponent } from './filtro-fechas/filtro-fechas.component';
+import { TablaCorrespondenciaComponent } from './tablaCorrespondencia/tablaCorrespondencia.component';
 
 
 
 @NgModule({
   declarations: [
-    SliderComponent,
+    TablaCorrespondenciaComponent,
     AgregarComponent,
     ModificarComponent,
     MostrarComponent,    
     inicioComponent,
     FiltrarComponent,
+    FiltroFechasComponent,
         
     
   ],
@@ -31,6 +34,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule,  
 
+  ],
+  providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
   ]  
 })
 export class MenuModule { }

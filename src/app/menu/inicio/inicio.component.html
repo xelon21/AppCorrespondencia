@@ -3,14 +3,12 @@
     <mat-sidenav #sidenav mode="push">
         <mat-toolbar color="primary">            
             <span>Correspondencia</span>
-
             <span class="spacer"></span>
             <button mat-icon-button
                     (click)="sidenav.toggle()">   
                 <mat-icon mat-list-icon>exit_to_app</mat-icon>            
             </button>
         </mat-toolbar>
-
         <mat-nav-list>
             <a routerLink="./mostrar"
                mat-list-item
@@ -32,34 +30,18 @@
             </a>
         </mat-nav-list>
     </mat-sidenav>
-
     <mat-toolbar color="primary">
         <button mat-icon-button
                 (click)="sidenav.toggle()">
             <mat-icon>menu</mat-icon>
             Menu
         </button>
-
         <span class="spacer"></span>
-
         <button mat-button>
             Logout
         </button>
     </mat-toolbar>
-
     <div class="container">
         <router-outlet></router-outlet>
     </div>
-
 </mat-sidenav-container>
-
-
-
-
-
-
-
-
-<!-- <p>inicio works!</p>
-
-<router-outlet></router-outlet> -->

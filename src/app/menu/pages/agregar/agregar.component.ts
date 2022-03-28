@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Correspondencia, TipoDocumento, TipoEnvio } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
@@ -19,55 +19,48 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   `
   ]
 })
-export class AgregarComponent implements OnInit  {
-  
+export class AgregarComponent implements OnInit  {  
+
+  // Se declaran los arreglos
   tipoEnvio: TipoEnvio[] = [];
   tipoDocumento: TipoDocumento[] = [];
   correos: Correspondencia[] = [];
-  
-  
 
+  // se establece el formulario
   miFormulario: FormGroup = this.fb.group({
-    idTipoDocumento: 5,
-    idTipoEnvio: 3,
-    usuario: ['Marcelo Valenzuela', Validators.required],
-    destinatario: ['FrontEnd', Validators.required],
-    referencia: ['BackEnd', Validators.required]
-  })
-
-  
- 
+    idTipoDocumento: 1,
+    idTipoEnvio: 1,   
+    destinatario: ['', Validators.required],
+    referencia: ['', Validators.required]
+  }) 
 
   constructor( private fb: FormBuilder,
                private correosService: CorrespondenciaService,
-               private activatedRoute: ActivatedRoute ) { }
-
-
+               private activatedRoute: ActivatedRoute,
+               private router: Router ) { }
   
   ngOnInit(): void {
 
     this.traeTipos();
 
     this.activatedRoute.params.subscribe( ({correlativo}) => console.log(correlativo) )
-
   }  
-  
+  /* Metodo que trae los campos tipo envio y tipo documento y rellena los selects*/
   traeTipos() {
     this.correosService.getTipoEnvio() 
        .subscribe( tipo => this.tipoEnvio = tipo );
     
-       this.correosService.getTipoDocumento()
+    this.correosService.getTipoDocumento()
        .subscribe( tipo => this.tipoDocumento = tipo );
   }
 
-  ingresar() { 
-
-    //console.log(this.miFormulario.value) 
+  /* Metodo que permite ingresar una correspondencia */
+  async ingresar() {    
     
-    const { idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia } = this.miFormulario.value;
-        
+    // Se extraen los datos del formulario
+    const { idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia } = this.miFormulario.value;        
 
-    this.correosService.ingresaCorrespondencia( idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia )
+    await this.correosService.ingresaCorrespondencia( idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia )
     .subscribe( resp => {
       console.log(resp)
       Swal.fire({
@@ -78,15 +71,10 @@ export class AgregarComponent implements OnInit  {
         timer: 1500
       })    
     });
-  };      
-   
-  
-  
-
-
- // displayedColumns: string[] = ['Usuario', 'NombreDocumento', 'TipoEnvio', 'Destinatario', 'Referencia', 'Fecha', 'Correlativo', 'EstadoCorreo', 'Modificar'];
-
- 
+    
+    //se redirecciona a la pagina que muestra correspondencia 
+    this.router.navigate(['/correspondencia/mostrar'])
+  };   
 }
 
 

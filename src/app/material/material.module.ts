@@ -19,6 +19,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -43,7 +48,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSelectModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    
+    MatDialogModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatAutocompleteModule 
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES'}
   ]
 
 })

@@ -1,69 +1,10 @@
 <div class="mat-elevation-z3">
-<mat-toolbar >
+<mat-toolbar  >
     <h3>Correspondencia</h3>
-
     <div class="spacer"></div>
     <button mat-raised-button color="primary"
             routerLink="/correspondencia/agregar"                     
             ><mat-icon>add</mat-icon > Correspondencia</button>
-    
 </mat-toolbar>
-
-
-<table mat-table [dataSource]="correos" >
-  
-    <ng-container matColumnDef="usuario">
-        <th mat-header-cell *matHeaderCellDef> Usuario </th>
-        <td mat-cell *matCellDef="let correo"> {{correo.usuario}} </td>
-      </ng-container> 
-    
-    <ng-container matColumnDef="tipoEnvio">
-        <th mat-header-cell *matHeaderCellDef> Tipo de Envio </th>
-        <td mat-cell *matCellDef="let correo"> {{correo.nombreEnvio}} </td>
-      </ng-container>  
-
-      <ng-container matColumnDef="nombreDocumento">
-        <th mat-header-cell *matHeaderCellDef> Nombre de Documento</th>
-        <td mat-cell *matCellDef="let correo"> {{correo.nombreDocumento}} </td>
-      </ng-container> 
-
-      <ng-container matColumnDef="destinatario">
-        <th mat-header-cell *matHeaderCellDef> Destinatario </th>
-        <td mat-cell *matCellDef="let correo"> {{correo.destinatario}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="referencia">
-        <th mat-header-cell *matHeaderCellDef> Referencia </th>
-        <td mat-cell *matCellDef="let correo"> {{correo.referencia}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="fecha">
-        <th mat-header-cell *matHeaderCellDef> Fecha </th>
-        <td mat-cell *matCellDef="let correo"> {{correo.fecha | date: 'dd/MM/yyyy' }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="correlativo">
-        <th mat-header-cell *matHeaderCellDef> Correlativo </th>
-        <td mat-cell *matCellDef="let correo"> {{correo.correlativo}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="estadoCorreo">
-        <th mat-header-cell *matHeaderCellDef> EstadoCorreo </th>
-        <td mat-cell *matCellDef="let correo"> {{correo.estadoCorreo}} </td>       
-      </ng-container>
-
-      <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let correo" style="text-align: right;">
-       
-        <a class="pointer" style="color: #e15639" matTooltip="Editar Correspondencia"
-            [routerLink]="['/correspondencia/modificar/', correo.correlativo]" >           
-            <mat-icon>edit</mat-icon>
-        </a>
-      </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<app-tabla [correos]="correos" ></app-tabla>
 </div>

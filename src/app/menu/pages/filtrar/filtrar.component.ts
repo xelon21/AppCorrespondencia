@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { FiltroFechasComponent } from '../../filtro-fechas/filtro-fechas.component';
 import { Correspondencia } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 
@@ -8,60 +12,61 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   templateUrl: './filtrar.component.html',
   styles: [`
   td {
-    text-align: center;
+    background: whitesmoke;
+    text-align: center;    
   }
+  
   th {
+    background: #efefef;
     text-align: center;
   }
   `]
 })
 export class FiltrarComponent implements OnInit {
 
-  correos: Correspondencia[] = [];
-  filtrar: string = '';
+  correos: Correspondencia[] = [];  
+  filtro: string = '';
   hayError: boolean = false;
-  datasource: Correspondencia[] = []
 
-  constructor( private correosService: CorrespondenciaService ) { 
+  constructor( private correosService: CorrespondenciaService,
+               private dialog: MatDialog) { 
     
   }
 
-
-  ngOnInit(): void {
-    
+  ngOnInit(): void {     
     this.traeCorrespondencia();
+  }  
+
+  /** Metodo que despliega el cuadro de dialogo el cual filtra por rango de fechas */
+  openDialog() {    
+    const dialogRef = this.dialog.open(FiltroFechasComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      result;
+    });
   }
   
-  traeCorrespondencia(){
+  /** Metodo que trae todas las correspondencias */
+  async traeCorrespondencia(){
     
-    this.correosService.getCorrespondencia()
+    await this.correosService.getCorrespondencia()
       .subscribe( correos =>{
         this.correos = correos
         console.log(this.correos)
       });  
-
   }
 
-  // buscar() {
-  //   this.hayError = false;
-  //   console.log(this.filtrar);
-
-  //   this.correosService.buscaCorrelativo( this.filtrar )
-  //     .subscribe( (correspondencia) => {       
-  //       this.correos = correspondencia;        
-  //       this.datasource = this.correos;
-  //     }, (err) => {              
-  //       this.hayError = true;
-  //       this.correos = [];
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'ERROR',
-  //         text: 'El correlativo ingresado no existe',          
-  //       });  
-  //     });      
-
-  // }
-
-  displayedColumns: string[] = ['Usuario', 'NombreDocumento', 'TipoEnvio', 'Destinatario', 'Referencia', 'Fecha', 'Correlativo', 'EstadoCorreo', 'acciones'];
-
+  /** Metodo que filtra por correlativo  */
+  async filtrarPorCorrelativo() {  
+    await this.correosService.filtroCorrelativo(this.filtro)
+        .subscribe( correos => {
+          if(correos){
+            this.hayError = true
+            this.correos = correos
+            console.log(this.correos)
+          }else {
+            this.hayError = false;
+          }  
+        })
+  }
 }

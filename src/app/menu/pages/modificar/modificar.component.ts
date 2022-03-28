@@ -17,6 +17,8 @@ import Swal from 'sweetalert2';
 })
 export class ModificarComponent implements OnInit {
 
+  // Se establecen los campos a modificar vacios para luego rellenarlos con los datos traidos mediante
+  // los parametros
   correos: CorrespondenciaModificar = {
     idTipoEnvio: 0,
     usuario: '',
@@ -25,46 +27,41 @@ export class ModificarComponent implements OnInit {
     referencia: '',
     correlativo: ''
   }
-
   
   correlativo: string = '';
   tipoEnvio: TipoEnvio[] = [];
-  estado: boolean = false;  
-  
+  estado: boolean = false; 
 
   constructor( private correoService: CorrespondenciaService,
                private activatedRouter: ActivatedRoute,
                private router: Router ) { }
 
+  ngOnInit(): void {    
 
-  
-  ngOnInit(): void {
-
+    // Se trae el correlativo de una correspondencia seleccionada, y mediante el mismo
+    // se rellenan los campos con los datos que le pertenecen a ese correlativo
     this.activatedRouter.params
        .pipe(
          switchMap( ({ correlativo }) => this.correoService.buscaCorrelativo(correlativo) )
        )
-       .subscribe( correo => {
+       .subscribe( correo => {                  
         this.correos = correo  
+        console.log(this.correos)
        })
-    
        this.correoService.getTipoEnvio() 
-       .subscribe( tipo => this.tipoEnvio = tipo );   
-
+       .subscribe( tipo => this.tipoEnvio = tipo );
   }
 
-  modificar( ){
-    
+  /** metodo que permite modifiar una correspondencia mediante correlativo */
+  async modificar( ){
     if(!this.estadoCorrespondencia(this.correos.estadoCorreo)){      
          if(this.estado){          
             this.correos.estadoCorreo = 'ANULADO'            
-            this.correoService.modificarPorCorrelativo( this.correos )
-            .subscribe( correo => this.correos = correo)            
-
-          }else {
-             this.correoService.modificarPorCorrelativo( this.correos )
+            await this.correoService.modificarPorCorrelativo( this.correos )
             .subscribe( correo => this.correos = correo)
-            
+          }else {
+            await this.correoService.modificarPorCorrelativo( this.correos )
+            .subscribe( correo => this.correos = correo)
           }
           Swal.fire({
             position: 'top-end',
@@ -83,9 +80,11 @@ export class ModificarComponent implements OnInit {
           this.router.navigate(['/correspondencia/mostrar'])
       return ;      
     }
-      
   }
 
+  /** Metodo que verifica el estado de una correspondencia.
+   * si esta esta anulada, no puede modificarse 
+   */
   estadoCorrespondencia(estado: string):boolean {
     if(estado === 'ANULADO'){   
       Swal.fire({
@@ -98,12 +97,5 @@ export class ModificarComponent implements OnInit {
       return false;
     }    
   }
-
-  regresar() {
-    
-  }
-  
-
-
  }
 

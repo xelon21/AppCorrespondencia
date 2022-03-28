@@ -42,4 +42,11 @@ export interface CorrespondenciaModificar {
     estadoCorreo:      string;
 }
 
+export interface FormatoFecha {
+    year: string,
+    month: number,
+    date: string
+  }
+
+
 

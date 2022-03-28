@@ -11,9 +11,6 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
     width: 100%;
   } 
 
-
-
-
 .mat-row .mat-cell {
   border-bottom: 2px solid transparent;
   border-top: 2px solid transparent;
@@ -23,16 +20,10 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
 .mat-row:hover .mat-cell {
   border-color: currentColor;
 }
-
-
-
-  `
-  ]
+`]
 })
 
 export class MostrarComponent implements OnInit {
-
-  //@Input() muestraRegistro: [] =[];
 
   correos: Correspondencia[] = [];
 
@@ -41,25 +32,19 @@ export class MostrarComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // Se trae todas las correspondencias
     this.correosService.getCorrespondencia()
       .subscribe( correos =>{
         this.correos = correos
         console.log(this.correos)
       }); 
-
-
   }
 
+  /** Metodo que envia el correlativo de la correspondencia seleccionada 
+   * al formulario para poder modificar dicha correspondencia
+   */
   modificar(correlativo: string){
     this.router.navigate(['/correspondencia/modificar', correlativo]);
     console.log(correlativo)
   }
-  
-  displayedColumns: string[] = ['usuario', 'nombreDocumento', 'tipoEnvio', 'destinatario', 'referencia', 'fecha', 'correlativo', 'estadoCorreo', 'acciones'];
-  
 }
-
-
-//comit xD
-
-

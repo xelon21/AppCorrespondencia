@@ -8,35 +8,36 @@ import { Correspondencia, CorrespondenciaB, CorrespondenciaModificar, TipoDocume
 @Injectable({
   providedIn: 'root'
 })
+
 export class CorrespondenciaService {
 
+  // Se declara la url desde las variables de entorno
   private baseUrl: string = environment.baseUrl;
-  // private _correo!: CorrespondenciaAgregar;
-
-  // get correo() {
-  //   return { ...this._correo };
-  // }
-
+  
+  // Se inicialica la variable http como tipo HttpClient
   constructor( private http: HttpClient) { }  
 
+  /* Metodo que trae todas las correspondencias*/
   getCorrespondencia(): Observable<Correspondencia[]> {
-    return this.http.get<Correspondencia[]>('http://localhost:4000/api/correspondencia/mostrar')
+    return this.http.get<Correspondencia[]>(`${this.baseUrl}/mostrar`)
   }
  
+  /** Metodo que trae los tipos de envio */
   getTipoEnvio(): Observable<TipoEnvio[]> {
-    return this.http.get<TipoEnvio[]>(`http://localhost:4000/api/correspondencia/mostrar/tipoenvio`)
+    return this.http.get<TipoEnvio[]>(`${this.baseUrl}/mostrar/tipoenvio`)
   }
 
+  /** Metodo que trae los tipos de documentos */
   getTipoDocumento(): Observable<TipoDocumento[]> {
-     return this.http.get<TipoDocumento[]>(`http://localhost:4000/api/correspondencia/mostrar/tipodocumento`)
+     return this.http.get<TipoDocumento[]>(`${this.baseUrl}/mostrar/tipodocumento`)
    }
 
+   /** Metodo que ingresa una correspondencia  */
   ingresaCorrespondencia( idTipoDocumento: number, idTipoEnvio: number,
                           usuario: string, destinatario: string,
                           referencia: string ){
 
-    const url = `http://localhost:4000/api/correspondencia/ingresar`;
-
+    const url = `${this.baseUrl}/ingresar`;
     const body = { idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia };
     
     return this.http.post(url , body )
@@ -49,15 +50,30 @@ export class CorrespondenciaService {
           )
   }
 
+  /** Metodo que permite modificar una correspondencia por el correlativo */
   modificarPorCorrelativo(correo: CorrespondenciaModificar ): Observable<CorrespondenciaModificar> {
-    return this.http.put<CorrespondenciaModificar>(`http://localhost:4000/api/correspondencia/modificar/${ correo.correlativo }`, correo);   
+    return this.http.put<CorrespondenciaModificar>(`${this.baseUrl}/modificar/${ correo.correlativo }`, correo);   
 
   }
 
+  /** metodo que trae una correspondencia por el correlativo */
   buscaCorrelativo(filtro: string ): Observable<CorrespondenciaB> {
-    return this.http.get<CorrespondenciaB>(`http://localhost:4000/api/correspondencia/${ filtro }`);
+    return this.http.get<CorrespondenciaB>(`${this.baseUrl}/filtro/${ filtro }`);
 
   }
+
+  /** Metodo que trae un arreglo de correspondencias mediante el correlativo */
+  filtroCorrelativo(filtro: string ): Observable<Correspondencia[]> {
+    return this.http.get<Correspondencia[]>(`${this.baseUrl}/${ filtro }`);
+
+  }
+
+  /** Metodo que permite Filtar las correspondencias por un rango de fechas */
+  filtroFechas(inicio: string, final: string): Observable<Correspondencia[]>{
+    return this.http.get<Correspondencia[]>(`${this.baseUrl}/filtrar/${ inicio }/${ final }`);
+  }
+
+
 
   
 }
