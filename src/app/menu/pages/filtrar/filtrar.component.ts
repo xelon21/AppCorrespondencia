@@ -51,8 +51,7 @@ export class FiltrarComponent implements OnInit {
     
     await this.correosService.getCorrespondencia()
       .subscribe( correos =>{
-        this.correos = correos
-        console.log(this.correos)
+        this.correos = correos     
       });  
   }
 
@@ -62,8 +61,7 @@ export class FiltrarComponent implements OnInit {
         .subscribe( correos => {
           if(correos){
             this.hayError = true
-            this.correos = correos
-            console.log(this.correos)
+            this.correos = correos           
           }else {
             this.hayError = false;
           }  

@@ -6,6 +6,8 @@ import { Correspondencia } from '../interface/correspondencia.interface';
   selector: 'app-tabla',
   templateUrl: './tablaCorrespondencia.component.html',  
   styles: [`
+  
+ 
   table {
   width: 100%;
 }

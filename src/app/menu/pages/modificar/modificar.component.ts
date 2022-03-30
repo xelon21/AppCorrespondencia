@@ -45,8 +45,7 @@ export class ModificarComponent implements OnInit {
          switchMap( ({ correlativo }) => this.correoService.buscaCorrelativo(correlativo) )
        )
        .subscribe( correo => {                  
-        this.correos = correo  
-        console.log(this.correos)
+        this.correos = correo         
        })
        this.correoService.getTipoEnvio() 
        .subscribe( tipo => this.tipoEnvio = tipo );

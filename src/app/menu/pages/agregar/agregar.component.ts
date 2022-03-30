@@ -61,8 +61,7 @@ export class AgregarComponent implements OnInit  {
     const { idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia } = this.miFormulario.value;        
 
     await this.correosService.ingresaCorrespondencia( idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia )
-    .subscribe( resp => {
-      console.log(resp)
+    .subscribe( resp => {      
       Swal.fire({
         position: 'top-end',
         icon: 'success',

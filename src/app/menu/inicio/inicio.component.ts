@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { SesionesService } from 'src/app/login/services/sesiones.service';
 
 @Component({
   selector: 'app-inicio',
@@ -8,14 +10,30 @@ import { Component, OnInit } from '@angular/core';
     .container {
       margin: 10px;
     }
+
+    span {
+      text-align: center;
+      display: inline-block;
+      width: 100%;
+    }
+
   `
   ]
 })
-export class inicioComponent implements OnInit {
+export class inicioComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  get usuario() {    
+    return  this.usuarioService.usuario;
   }
 
+  constructor(private router: Router,
+              private usuarioService: SesionesService) { }
+
+ 
+
+  logout() {
+
+    this.router.navigateByUrl('/login')
+    this.usuarioService.logout();
+  }
 }

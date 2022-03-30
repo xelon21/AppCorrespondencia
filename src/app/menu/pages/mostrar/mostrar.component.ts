@@ -7,6 +7,8 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   selector: 'app-mostrar',
   templateUrl: './mostrar.component.html',
   styles: [`
+
+  
   .ancho{
     width: 100%;
   } 
@@ -35,8 +37,7 @@ export class MostrarComponent implements OnInit {
     // Se trae todas las correspondencias
     this.correosService.getCorrespondencia()
       .subscribe( correos =>{
-        this.correos = correos
-        console.log(this.correos)
+        this.correos = correos        
       }); 
   }
 
@@ -44,7 +45,6 @@ export class MostrarComponent implements OnInit {
    * al formulario para poder modificar dicha correspondencia
    */
   modificar(correlativo: string){
-    this.router.navigate(['/correspondencia/modificar', correlativo]);
-    console.log(correlativo)
+    this.router.navigate(['/correspondencia/modificar', correlativo]);   
   }
 }

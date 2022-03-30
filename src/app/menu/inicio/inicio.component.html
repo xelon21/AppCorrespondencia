@@ -35,13 +35,15 @@
                 (click)="sidenav.toggle()">
             <mat-icon>menu</mat-icon>
             Menu
-        </button>
-        <span class="spacer"></span>
-        <button mat-button>
+        </button>       
+        <span>Usuario: {{ usuario.nombre }}</span>
+        <div class="spacer"></div>
+        <button mat-button
+         (click)="logout()">
             Logout
         </button>
     </mat-toolbar>
     <div class="container">
-        <router-outlet></router-outlet>
+        <router-outlet ></router-outlet>
     </div>
 </mat-sidenav-container>

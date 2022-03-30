@@ -46,7 +46,7 @@ export interface FormatoFecha {
     year: string,
     month: number,
     date: string
-  }
+}
 
 
 
