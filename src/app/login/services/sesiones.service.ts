@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LoginResponse, Usuario } from '../interface/login.interface';
+import { LoginResponse, Roles, Usuario } from '../interface/login.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,8 @@ export class SesionesService {
 
   private baseUrl: string = environment.baseUrl;
   private _usuario!: Usuario;
+  
+  
 
   get usuario() {
     return { ...this._usuario };
@@ -35,7 +37,7 @@ export class SesionesService {
     )
   }
 
-  loginUsuario(email: string, password: string) {
+ loginUsuario(email: string, password: string) {
 
     const url = `${this.baseUrl}/login`;
     const body = { email, password, };
@@ -44,12 +46,13 @@ export class SesionesService {
         .pipe(
             tap( resp => {           
             if( resp.estadoMsg ) {
-              localStorage.setItem('apiKey', resp.apiKey!)
+              localStorage.setItem('apiKey', resp.apiKey!)              
               this._usuario = {
                 uid: resp.uid!,
+                idRol: resp.idRol,
                 nombre: resp.nombre!,
                 apiKey: resp.apiKey!
-              }              
+              }      
             }
           } ),
             map( resp => resp.estadoMsg),
@@ -70,6 +73,7 @@ export class SesionesService {
           localStorage.setItem('apiKey', resp.apiKey!)
               this._usuario = {
                 uid: resp.uid!,
+                idRol: resp.idRol,
                 nombre: resp.nombre!,
                 apiKey: resp.apiKey!
               }  
@@ -82,6 +86,49 @@ export class SesionesService {
   logout(){
     localStorage.removeItem('apiKey');
   }
+
+  traeRoles(): Observable<Roles[]> {
+
+    const url = `${this.baseUrl}/login/traeRoles`
+
+    return this.http.get<Roles[]>( url )
+  }
+
+  validaAdmin(email: string, password: string) {
+
+    const url = `${this.baseUrl}/login`;
+    const body = { email, password, };
+
+    return this.http.post<LoginResponse>(url , body )
+        .pipe(
+            tap( resp => { 
+               console.log(resp)          
+            if( resp.estadoMsg ) {              
+              if(resp.idRol == 1){
+                this._usuario = {
+                  uid: resp.uid!,
+                  idRol: resp.idRol!,
+                  nombre: resp.nombre!,
+                  apiKey: resp.apiKey!
+                } 
+                console.log('usuario si es admin', resp.estadoMsg) 
+              }else {
+                resp.estadoMsg = false;
+                this._usuario = {
+                  uid: resp.uid!,
+                  idRol: resp.idRol!,
+                  nombre: resp.nombre!,
+                  apiKey: resp.apiKey!
+                }
+                console.log('usuario si no es admin', resp.estadoMsg)
+              }           
+            }
+          } ),
+            map( resp => resp.estadoMsg),
+            catchError( err => of(false) )
+        )
+  }
+  }
+
   
-  
-}
+

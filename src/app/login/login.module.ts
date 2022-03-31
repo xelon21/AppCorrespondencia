@@ -7,9 +7,9 @@ import { MaterialModule } from '../material/material.module';
 
 
 
+
 @NgModule({
-  declarations: [
-    
+  declarations: [  
   ],
   imports: [
     CommonModule,  
