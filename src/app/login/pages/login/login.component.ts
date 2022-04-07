@@ -67,7 +67,8 @@ export class LoginComponent implements OnInit {
                       showConfirmButton: false,
                       timer: 1500
                     })
-                    this.router.navigate(['/registrar'])
+                    this.esAdmin = resp;
+                    this.router.navigateByUrl('/correspondencia/registrar')
                   }
                 })
             } else {
@@ -82,7 +83,8 @@ export class LoginComponent implements OnInit {
                       showConfirmButton: false,
                       timer: 1500
                     })
-                    this.router.navigate(['/correspondencia/mostrar'])
+                    this.esAdmin = resp;
+                    this.router.navigateByUrl('/correspondencia/mostrar')
                   } else {
                     console.log('nothin')
                   }

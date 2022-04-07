@@ -7,6 +7,11 @@ import { Correspondencia } from '../interface/correspondencia.interface';
   templateUrl: './tablaCorrespondencia.component.html',  
   styles: [`
   
+  .example-container {
+  height: 400px;
+  overflow: auto;
+}
+
  
   table {
   width: 100%;

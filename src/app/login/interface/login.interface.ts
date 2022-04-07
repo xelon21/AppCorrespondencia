@@ -28,10 +28,11 @@ export interface Usuario {
 
 export interface RegistrarUsuario {
     idUsuario: number;
-    correoUsuario?: string;
-    password?: string; 
-    nombreUsuario?: string;
-    estado?: boolean;
+    idRol: number;
+    correoUsuario: string;
+    password: string; 
+    nombreUsuario: string;
+    estado: boolean;
     activacionUsuario?: Date;
     desactivacionUsuario?: Date;
 }

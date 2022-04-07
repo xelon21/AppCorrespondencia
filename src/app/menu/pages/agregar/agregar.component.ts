@@ -56,7 +56,11 @@ export class AgregarComponent implements OnInit  {
 
   /* Metodo que permite ingresar una correspondencia */
   async ingresar() {    
-    
+    try {
+      
+    } catch (error) {
+      
+    }
     // Se extraen los datos del formulario
     const { idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia } = this.miFormulario.value;        
 

@@ -1,23 +1,25 @@
+<div class="example-container
+">
 <table mat-table
-       [dataSource]="correos" multiTemplateDataRows
-       class="mat-elevation-z8 bobi">
+[dataSource]="correos" multiTemplateDataRows
+class="mat-elevation-z8">
 
-  <ng-container matColumnDef="usuario">
-    <th mat-header-cell *matHeaderCellDef> Usuario </th>
-    <td mat-cell *matCellDef="let correo"> {{correo.usuario}} </td>
-  </ng-container> 
+<ng-container matColumnDef="usuario">
+  <th mat-header-cell *matHeaderCellDef> Usuario </th>
+  <td mat-cell *matCellDef="let correo"> {{correo.usuario}} </td>
+</ng-container> 
 
 <ng-container matColumnDef="tipoEnvio">
-    <th mat-header-cell *matHeaderCellDef> Tipo de Envio </th>
-    <td mat-cell *matCellDef="let correo"> {{correo.nombreEnvio}} </td>
-  </ng-container>  
+  <th mat-header-cell *matHeaderCellDef> Tipo de Envio </th>
+  <td mat-cell *matCellDef="let correo"> {{correo.nombreEnvio}} </td>
+</ng-container>  
 
-  <ng-container matColumnDef="nombreDocumento">
-    <th mat-header-cell *matHeaderCellDef> Nombre de Documento</th>
-    <td mat-cell *matCellDef="let correo"> {{correo.nombreDocumento}} </td>
-  </ng-container> 
+<ng-container matColumnDef="nombreDocumento">
+  <th mat-header-cell *matHeaderCellDef> Nombre de Documento</th>
+  <td mat-cell *matCellDef="let correo"> {{correo.nombreDocumento}} </td>
+</ng-container> 
 
-  <ng-container matColumnDef="destinatario">
+<ng-container matColumnDef="destinatario">
     <th mat-header-cell *matHeaderCellDef> Destinatario </th>
     <td mat-cell *matCellDef="let correo"> {{correo.destinatario}} </td>
   </ng-container>
@@ -60,7 +62,7 @@
     </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
   <tr mat-row *matRowDef="let correo; columns: columnsToDisplay;"
       class="example-element-row"
       [class.example-expanded-row]="expandedElement === correo"
@@ -68,3 +70,4 @@
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
+</div>

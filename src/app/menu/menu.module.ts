@@ -12,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { FiltroFechasComponent } from './filtro-fechas/filtro-fechas.component';
 import { TablaCorrespondenciaComponent } from './tablaCorrespondencia/tablaCorrespondencia.component';
+import { RegistrarComponent } from './pages/registrarUsuario/registrar.component';
+
 
 
 
@@ -24,6 +26,7 @@ import { TablaCorrespondenciaComponent } from './tablaCorrespondencia/tablaCorre
     inicioComponent,
     FiltrarComponent,
     FiltroFechasComponent,
+    RegistrarComponent
         
     
   ],

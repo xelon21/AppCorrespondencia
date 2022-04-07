@@ -5,6 +5,7 @@ import { inicioComponent } from './inicio/inicio.component';
 import { ModificarComponent } from './pages/modificar/modificar.component';
 import { MostrarComponent } from './pages/mostrar/mostrar.component';
 import { FiltrarComponent } from './pages/filtrar/filtrar.component';
+import { RegistrarComponent } from './pages/registrarUsuario/registrar.component';
 
 // Se definen las rutas hijas a ocupar
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
     children: [
       { path: 'mostrar', component: MostrarComponent },
       { path: 'agregar', component: AgregarComponent },
+      { path: 'registrar', component: RegistrarComponent },
       { path: 'modificar/:correlativo', component: ModificarComponent },      
       { path: 'filtrar/:correlativo', component: FiltrarComponent },      
       { path: '**', redirectTo: 'mostrar'}

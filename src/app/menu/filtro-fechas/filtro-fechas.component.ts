@@ -43,16 +43,15 @@ export class FiltroFechasComponent implements OnInit {
 
           this.hayError = true;
           this.inicial = this.range.value.start._i;
-          this.final = this.range.value.end._i;      
-          
+          this.final = this.range.value.end._i; 
+         
           let fechaInicio: string = this.inicial.year + '-' + (this.inicial.month + 1 ).toString() + '-' + this.inicial.date;
           let fechaFinal: string = this.final.year + '-' + (this.final.month + 1 ).toString() + '-' + this.final.date;
  
+                  
           await this.correoService.filtroFechas( fechaInicio, fechaFinal )
-            .subscribe( datos => {
-              console.log(datos[0]);
-              this.correos = datos;
-              console.log(this.correos[0])
+            .subscribe( datos => {              
+              this.correos = datos;              
             })  
         }   
   }

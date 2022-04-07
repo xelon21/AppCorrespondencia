@@ -8,6 +8,13 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   templateUrl: './mostrar.component.html',
   styles: [`
 
+.bobi{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    background-color: #f5f5f5;
+  }
   
   .ancho{
     width: 100%;

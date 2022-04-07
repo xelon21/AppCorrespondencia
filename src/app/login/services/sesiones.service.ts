@@ -21,11 +21,11 @@ export class SesionesService {
     return { ...this._usuario };
   }
 
-  registrarUsuario( idRol: number, email: string, 
+  registrarUsuario(idUsuario: number, idRol: number, email: string, 
     password: string, nombreUsuario: string , estado: number ){
 
-      const url = `${this.baseUrl}/login/registrar`;
-      const body = { idRol, email, password, nombreUsuario , estado };
+      const url = `${this.baseUrl}/login/register`;
+      const body = { idUsuario, idRol, email, password, nombreUsuario , estado };
 
         return this.http.post(url , body )
         .pipe(
@@ -94,6 +94,30 @@ export class SesionesService {
     return this.http.get<Roles[]>( url )
   }
 
+  validaUsuariosAdmin(): Observable<boolean> {
+
+    const url = `${this.baseUrl}/login/traeUsuarios`
+    const headers = new HttpHeaders()
+      .set('x-api-key', localStorage.getItem('apiKey') || '')
+
+    return this.http.get<LoginResponse>( url, { headers })
+      .pipe(
+        map( resp => {
+
+          localStorage.setItem('apiKey', resp.apiKey!)
+            this._usuario = {
+              uid: resp.uid!,
+                idRol: resp.idRol,
+                nombre: resp.nombre!,
+                apiKey: resp.apiKey!
+            }
+            return resp.estadoMsg;
+        }),
+        catchError( err => of(false))
+      );
+
+  }
+
   validaAdmin(email: string, password: string) {
 
     const url = `${this.baseUrl}/login`;
@@ -111,7 +135,7 @@ export class SesionesService {
                   nombre: resp.nombre!,
                   apiKey: resp.apiKey!
                 } 
-                console.log('usuario si es admin', resp.estadoMsg) 
+                //console.log('usuario si es admin', resp.estadoMsg) 
               }else {
                 resp.estadoMsg = false;
                 this._usuario = {
@@ -120,7 +144,7 @@ export class SesionesService {
                   nombre: resp.nombre!,
                   apiKey: resp.apiKey!
                 }
-                console.log('usuario si no es admin', resp.estadoMsg)
+               // console.log('usuario si no es admin', resp.estadoMsg)
               }           
             }
           } ),

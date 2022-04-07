@@ -7,8 +7,6 @@ import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './shared/error-page/error-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './login/pages/home/home.component';
-import { LoginComponent } from './login/pages/login/login.component';
 import { MaterialModule } from './material/material.module';
 
 
@@ -17,10 +15,6 @@ import { MaterialModule } from './material/material.module';
   declarations: [
     AppComponent,
     ErrorPageComponent,
-    HomeComponent,
-    LoginComponent,
-    
-        
     
   ],
   imports: [

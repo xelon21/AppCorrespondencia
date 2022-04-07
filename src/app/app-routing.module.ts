@@ -14,14 +14,14 @@ const routes: Routes = [
   {
     path: '404',
     component: ErrorPageComponent
-  },
+  }, 
   {
-    path:'login',
+    path:'home',
     loadChildren: () => import('./login/login.module').then( m => m.LoginModule)
   },
   {
     path: '**',
-    redirectTo: 'login'
+    redirectTo: 'home'
   }
 
 ];
@@ -31,3 +31,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
