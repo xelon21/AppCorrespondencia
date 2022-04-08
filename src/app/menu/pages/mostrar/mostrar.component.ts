@@ -17,7 +17,7 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   }
   
   .ancho{
-    width: 100%;
+    width: 145%;
   } 
 
 .mat-row .mat-cell {

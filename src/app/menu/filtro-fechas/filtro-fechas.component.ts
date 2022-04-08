@@ -11,6 +11,10 @@ import { CorrespondenciaService } from '../services/correspondencia.service';
   .example-form-field {
     margin-right: 20px;
   }
+
+  .ancho {
+    width: 125%;    
+  }
   `]
 })
 

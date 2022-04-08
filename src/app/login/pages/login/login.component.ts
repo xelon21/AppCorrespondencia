@@ -16,6 +16,9 @@ import { SesionesService } from '../../services/sesiones.service';
     align-items: center;
     background-color: #f5f5f5;
   }
+  .margin {
+    padding: 40px;
+  }
 
   .bobi2{
     display: flex;
@@ -23,6 +26,7 @@ import { SesionesService } from '../../services/sesiones.service';
     height: 100%;
     align-items: center;    
   }`
+
   ]
 })
 export class LoginComponent implements OnInit {
@@ -56,26 +60,25 @@ export class LoginComponent implements OnInit {
           } else {
             this.estadoEmail = false;
             this.estadoPassword = false;
-            if (resp) {
+            // if (resp) {
+            //   this.loginService.loginUsuario(email, password)
+            //     .subscribe(resp => {
+            //       if (resp) {
+            //         Swal.fire({
+            //           position: 'top-end',
+            //           icon: 'success',
+            //           title: 'Se a ingresado correctamente',
+            //           showConfirmButton: false,
+            //           timer: 1500
+            //         })
+            //         this.esAdmin = resp;
+            //         this.router.navigateByUrl('/correspondencia/registrar')
+            //       }
+            //     })
+            // } else {
               this.loginService.loginUsuario(email, password)
                 .subscribe(resp => {
-                  if (resp) {
-                    Swal.fire({
-                      position: 'top-end',
-                      icon: 'success',
-                      title: 'Se a ingresado correctamente',
-                      showConfirmButton: false,
-                      timer: 1500
-                    })
-                    this.esAdmin = resp;
-                    this.router.navigateByUrl('/correspondencia/registrar')
-                  }
-                })
-            } else {
-              this.loginService.loginUsuario(email, password)
-                .subscribe(resp => {
-                  if (resp) {
-                    console.log('Solo pasa si no es admin', resp);
+                  if (resp) {                    
                     Swal.fire({
                       position: 'top-end',
                       icon: 'success',
@@ -89,7 +92,7 @@ export class LoginComponent implements OnInit {
                     console.log('nothin')
                   }
                 });
-            }
+            //}
           }
         })
     } catch (error) {

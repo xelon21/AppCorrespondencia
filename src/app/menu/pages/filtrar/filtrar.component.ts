@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import Swal from 'sweetalert2';
 import { FiltroFechasComponent } from '../../filtro-fechas/filtro-fechas.component';
 import { Correspondencia } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
@@ -11,6 +8,12 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   selector: 'app-filtrar',
   templateUrl: './filtrar.component.html',
   styles: [`
+
+  
+.ancho{
+    width: 140%;
+  } 
+ 
   td {
     background: whitesmoke;
     text-align: center;    
@@ -39,11 +42,13 @@ export class FiltrarComponent implements OnInit {
 
   /** Metodo que despliega el cuadro de dialogo el cual filtra por rango de fechas */
   openDialog() {    
-    const dialogRef = this.dialog.open(FiltroFechasComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      result;
+    const dialogRef = this.dialog.open(FiltroFechasComponent,{
+      width:'1250px'      
     });
+
+     dialogRef.afterClosed().subscribe(result => {
+       console.log(result);
+      });
   }
   
   /** Metodo que trae todas las correspondencias */

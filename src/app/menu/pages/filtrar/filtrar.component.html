@@ -1,4 +1,11 @@
-<div class="container">
+<div fxLayout="columns wrap" fxLayoutAlign="center" >
+  <div fxFlex="150"
+  style="font-style: italic"
+  [ngStyle.xs]="{'font-size.px': 10, color: 'blue'}"
+  [ngStyle.sm]="{'font-size.px': 20, color: 'lightblue'}"
+  [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
+  
+<div class="ancho">
   <mat-toolbar>
     <span>Filtrar Correspondencia</span>
     <div class="spacer"></div>
@@ -6,13 +13,19 @@
                  (click)="openDialog()"                     
             ><mat-icon>event</mat-icon >Por rango de fechas </button>    
   </mat-toolbar>
-<form autocomplete="off">
-    <input type="text"
-           name="filtro"
-           class="form-control salto"
-           [(ngModel)]="filtro"
-           (input)="filtrarPorCorrelativo()"
-           placeholder="correlativo">
-          </form>  
-<app-tabla [correos]="correos" *ngIf="hayError"></app-tabla>
+</div>
+<div class="ancho">
+  <form autocomplete="off">
+      <input type="text"
+             name="filtro"
+             class="form-control salto"
+             [(ngModel)]="filtro"
+             (input)="filtrarPorCorrelativo()"
+             placeholder="correlativo">
+            </form>  
+            <div >
+              <app-tabla [correos]="correos" *ngIf="hayError"></app-tabla>
+            </div>
+</div>
+  </div>
 </div>

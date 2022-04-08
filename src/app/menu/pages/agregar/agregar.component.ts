@@ -12,6 +12,12 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
     .ancho {
       width: 80%;
     }
+    .ancho2 {
+      width: 260%;
+    }
+    .ancho3 {
+      width: 50%;
+    }
 
     .salto {
       margin-top: 10px;

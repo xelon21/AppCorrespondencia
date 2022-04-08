@@ -1,24 +1,32 @@
-    <mat-card>
-        <mat-card-header>
-            <img src="/assets/logo.png">
-        </mat-card-header>
-        <mat-form-field appearance="fill" rowHeight="70px">
-            <mat-label>Email</mat-label>
-        <input type="text" matInput autocomplete="off"
-                [(ngModel)]="usuario.email"  >                        
-    </mat-form-field>
-    <mat-error *ngIf="estadoEmail">
-        Debe ingresar un <strong> Email</strong>
-</mat-error> 
-    <mat-form-field appearance="fill" rowHeight="70px">
-        <mat-label>Contraseña</mat-label>
-        <input type="password" matInput autocomplete="off"
-                [(ngModel)]="usuario.password" > 
-   </mat-form-field>
-   <mat-error *ngIf="estadoPassword">
-          debe ingresar una <strong> Contraseña</strong>
-</mat-error> 
-   <div class="bobi2">
-       <button mat-raised-button color="primary" (click)="login()">Login</button>              
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div
+    style="font-style: italic"
+    [ngStyle.xs]="{'font-size.px': 10, color: 'blue'}"
+    [ngStyle.sm]="{'font-size.px': 20, color: 'lightblue'}"
+    [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
+    <mat-card class="mat-elevation-z3">
+           <mat-card-header>
+               <img src="/assets/logo.png">
+           </mat-card-header>
+           <mat-form-field appearance="fill" rowHeight="70px">
+               <mat-label>Email</mat-label>
+           <input type="text" matInput autocomplete="off"
+                   [(ngModel)]="usuario.email"  >                        
+       </mat-form-field>
+       <mat-error *ngIf="estadoEmail">
+           Debe ingresar un <strong> Email</strong>
+   </mat-error> 
+       <mat-form-field appearance="fill" rowHeight="70px">
+           <mat-label>Contraseña</mat-label>
+           <input type="password" matInput autocomplete="off"
+                   [(ngModel)]="usuario.password" > 
+      </mat-form-field>
+      <mat-error *ngIf="estadoPassword">
+             debe ingresar una <strong> Contraseña</strong>
+   </mat-error> 
+      <div class="bobi2">
+          <button mat-raised-button color="primary" (click)="login()">Login</button>              
+       </div>
+   </mat-card>
     </div>
-</mat-card>
+</div>

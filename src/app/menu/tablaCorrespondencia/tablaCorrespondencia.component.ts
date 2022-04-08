@@ -12,6 +12,9 @@ import { Correspondencia } from '../interface/correspondencia.interface';
   overflow: auto;
 }
 
+.ancho{
+    width: 143%;
+  } 
  
   table {
   width: 100%;

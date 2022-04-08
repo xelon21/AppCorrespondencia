@@ -1,4 +1,10 @@
-<div class="container"> 
+<div fxLayout="columns wrap" fxLayoutAlign="center" >
+    <div
+    style="font-style: italic"
+    [ngStyle.xs]="{'font-size.px': 10, color: 'blue'}"
+    [ngStyle.sm]="{'font-size.px': 20, color: 'lightblue'}"
+    [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
+<div class="ancho"> 
     <mat-toolbar>
         <span>Modificar Correspondencia</span>
         <div class="spacer"></div>
@@ -6,10 +12,12 @@
             routerLink="/correspondencia/mostrar"                     
             ><mat-icon>reply</mat-icon > Volver</button>
     </mat-toolbar>
-    <mat-card style="margin-top: 10px;">
+</div>
+<div class="ancho">
+    <mat-card style="margin-top: 10px;" fxLayoutGap>
             <mat-grid-list cols="2" rowHeight="70px">
                 <mat-grid-tile [colspan]="1" [rowspan]="1">
-                    <mat-form-field class="ancho" >  
+                    <mat-form-field class="ancho2" >  
                         <mat-label>Destinatario</mat-label>                      
                         <input matInput                 
                                type="text"
@@ -18,7 +26,7 @@
                       </mat-form-field>
                 </mat-grid-tile>
                 <mat-grid-tile [colspan]="1" [rowspan]="1">
-                    <mat-form-field class="ancho">
+                    <mat-form-field class="ancho2">
                         <mat-label>Tipo de Envio</mat-label>
                         <mat-select type="number" required [(ngModel)]="correos.idTipoEnvio">
                             <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.idTipoEnvio">
@@ -28,7 +36,7 @@
                         </mat-form-field>
                 </mat-grid-tile>
                 <mat-grid-tile [colspan]="1" [rowspan]="1">
-                    <mat-form-field class="ancho" >
+                    <mat-form-field class="ancho2" >
                         <mat-label>Referencia</mat-label>
                         <input matInput                                
                                type="text"
@@ -37,23 +45,18 @@
                       </mat-form-field>     
                 </mat-grid-tile>
                 <mat-grid-tile [colspan]="1" [rowspan]="1"> 
-                </mat-grid-tile> 
-                <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="correos.estadoCorreo == 'GRABADO'" > 
-                    <mat-checkbox class="ancho" [(ngModel)]="estado">ANULAR</mat-checkbox> 
+                    <mat-checkbox class="ancho2" [(ngModel)]="estado">ANULAR</mat-checkbox> 
                     <ng-template #anulado class="ancho">
                         <mat-label>Correo Anulado</mat-label>                        
                     </ng-template>   
-                </mat-grid-tile>
-                <mat-grid-tile [colspan]="1" [rowspan]="1">  
-                </mat-grid-tile>
-                <mat-grid-tile [colspan]="1" [rowspan]="1" >                         
-                    <button mat-raised-button color="primary" class="ancho"                            
-                     (click)="modificar( )" >
-                <mat-icon mat-list-icon >send</mat-icon> Modificar 
-            </button>                     
-                </mat-grid-tile>
-                <mat-grid-tile [colspan]="1" [rowspan]="1">
-                </mat-grid-tile> 
-            </mat-grid-list> 
+                </mat-grid-tile>  
+        </mat-grid-list> 
+        <div fxLayoutAlign="center" >
+            <button mat-raised-button color="primary" class="ancho3"                            
+            (click)="modificar( )" >
+            <mat-icon mat-list-icon >send</mat-icon> Modificar 
+        </button>
+     </div>
     </mat-card>    
-    
+</div>
+    </div>

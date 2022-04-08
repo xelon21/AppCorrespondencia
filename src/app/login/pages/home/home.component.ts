@@ -11,6 +11,9 @@ import { Component, OnInit } from '@angular/core';
     align-items: center;
     background-color: #f5f5f5;
   }
+  .margin {
+    padding: 270px;    
+  }
 
   .bobi2{
     display: flex;

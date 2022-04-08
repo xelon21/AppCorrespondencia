@@ -10,6 +10,7 @@ import { SesionesService } from 'src/app/login/services/sesiones.service';
   styles: [`
 
     .container {
+      padding: 16px;
       margin: 10px;
     }
 

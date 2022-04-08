@@ -13,6 +13,16 @@ import Swal from 'sweetalert2';
   .marg {
     margin-right:
   }
+  .ancho2 {
+    width: 80%;
+  }
+  .ancho3 {
+    width: 50%;
+  }
+  
+  .ancho {
+    width: 260%;    
+  }
   `]
 })
 export class ModificarComponent implements OnInit {
@@ -58,9 +68,11 @@ export class ModificarComponent implements OnInit {
             this.correos.estadoCorreo = 'ANULADO'            
             await this.correoService.modificarPorCorrelativo( this.correos )
             .subscribe( correo => this.correos = correo)
+            console.log(this.correos)
           }else {
             await this.correoService.modificarPorCorrelativo( this.correos )
             .subscribe( correo => this.correos = correo)
+            console.log(this.correos)
           }
           Swal.fire({
             position: 'top-end',
