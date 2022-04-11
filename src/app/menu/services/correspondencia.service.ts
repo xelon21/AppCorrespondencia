@@ -52,6 +52,7 @@ export class CorrespondenciaService {
 
   /** Metodo que permite modificar una correspondencia por el correlativo */
   modificarPorCorrelativo(correo: CorrespondenciaModificar ): Observable<CorrespondenciaModificar> {
+
     return this.http.put<CorrespondenciaModificar>(`${this.baseUrl}/modificar/${ correo.correlativo }`, correo);   
 
   }

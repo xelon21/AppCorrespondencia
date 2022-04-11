@@ -18,6 +18,7 @@ export interface CorrespondenciaB {
     fecha:             string;
     correlativo:       string;
     estadoCorreo:      string;
+    us: string;
 }
 
 export interface TipoEnvio {
@@ -40,6 +41,7 @@ export interface CorrespondenciaModificar {
     destinatario:      string;
     referencia:        string;   
     estadoCorreo:      string;
+    us: string;
 }
 
 export interface FormatoFecha {

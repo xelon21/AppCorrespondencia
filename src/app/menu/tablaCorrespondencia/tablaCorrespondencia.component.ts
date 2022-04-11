@@ -13,7 +13,7 @@ import { Correspondencia } from '../interface/correspondencia.interface';
 }
 
 .ancho{
-    width: 143%;
+    width: 145%;
   } 
  
   table {

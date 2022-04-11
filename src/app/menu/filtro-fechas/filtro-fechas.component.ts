@@ -13,7 +13,7 @@ import { CorrespondenciaService } from '../services/correspondencia.service';
   }
 
   .ancho {
-    width: 125%;    
+    width: 100%;    
   }
   `]
 })

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { CorrespondenciaModificar, TipoEnvio } from '../../interface/correspondencia.interface';
+import { CorrespondenciaB, CorrespondenciaModificar, TipoEnvio } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, tap, catchError, map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-modificar',
@@ -35,8 +36,10 @@ export class ModificarComponent implements OnInit {
     estadoCorreo: '',
     destinatario: '',
     referencia: '',
-    correlativo: ''
+    correlativo: '',
+    us: ''
   }
+  us: string = '';
   
   correlativo: string = '';
   tipoEnvio: TipoEnvio[] = [];
@@ -63,35 +66,79 @@ export class ModificarComponent implements OnInit {
 
   /** metodo que permite modifiar una correspondencia mediante correlativo */
   async modificar( ){
+
     if(!this.estadoCorrespondencia(this.correos.estadoCorreo)){      
-         if(this.estado){          
-            this.correos.estadoCorreo = 'ANULADO'            
-            await this.correoService.modificarPorCorrelativo( this.correos )
-            .subscribe( correo => this.correos = correo)
-            console.log(this.correos)
-          }else {
-            await this.correoService.modificarPorCorrelativo( this.correos )
-            .subscribe( correo => this.correos = correo)
-            console.log(this.correos)
-          }
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Correspondencia modificada Con Exito',
-            showConfirmButton: false,
-            timer: 1500
-          })  
-          this.router.navigate(['/correspondencia/mostrar'])
+         if(this.estado){
+           console.log('1 Pasa por aca')       
+            this.correos.estadoCorreo = 'ANULADO'
+            console.log('2 Pasa por aca') 
+            await this.correoService.filtroCorrelativo(this.correos.correlativo)
+            .subscribe( result => {              
+              if(this.correos.usuario === result[0].usuario){
+                this.correoService.modificarPorCorrelativo( this.correos )
+                .subscribe( correo => this.correos = correo)  
+                console.log('se subscribe y se modifica')
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Your work has been saved',
+                  showConfirmButton: false,
+                  timer: 1500
+                }) 
+                this.router.navigate(['/correspondencia/mostrar']) 
+
+              }else {
+                console.log('4 por aca si no son iguales los usuarios')
+                Swal.fire({
+                  icon: 'error',
+                  title: 'ERROR',
+                  text: 'No se puede modificar la correspondencia',        
+                })
+                this.router.navigate(['/correspondencia/mostrar'])
+              }  
+            });  
+            
+          }else{           
+            await this.correoService.filtroCorrelativo(this.correos.correlativo)
+            .subscribe( result => {              
+              if(this.correos.usuario === result[0].usuario){
+                this.correoService.modificarPorCorrelativo( this.correos )
+                .subscribe( correo => this.correos = correo)  
+                console.log('se subscribe y se modifica')
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Your work has been saved',
+                  showConfirmButton: false,
+                  timer: 1500
+                }) 
+                this.router.navigate(['/correspondencia/mostrar']) 
+
+              }else {
+                console.log('4 por aca si no son iguales los usuarios')
+                Swal.fire({
+                  icon: 'error',
+                  title: 'ERROR',
+                  text: 'No se puede modificar la correspondencia',        
+                })
+                this.router.navigate(['/correspondencia/mostrar'])
+              }  
+            }); 
+          } 
     }else {
+      console.log('6 por aca si la correspondencia esta como anulada')
       Swal.fire({
             icon: 'error',
             title: 'ERROR',
             text: 'No se puede modificar una correspondencia anulada',        
           })
           this.router.navigate(['/correspondencia/mostrar'])
-      return ;      
+      return ;  
     }
   }
+
+
+
 
   /** Metodo que verifica el estado de una correspondencia.
    * si esta esta anulada, no puede modificarse 
@@ -102,9 +149,9 @@ export class ModificarComponent implements OnInit {
             icon: 'error',
             title: 'ERROR',
             text: 'No se puede modificar una correspondencia anulada',        
-      })
+      })      
           return true;
-    }else {
+    }else {      
       return false;
     }    
   }

@@ -59,23 +59,7 @@ export class LoginComponent implements OnInit {
             }
           } else {
             this.estadoEmail = false;
-            this.estadoPassword = false;
-            // if (resp) {
-            //   this.loginService.loginUsuario(email, password)
-            //     .subscribe(resp => {
-            //       if (resp) {
-            //         Swal.fire({
-            //           position: 'top-end',
-            //           icon: 'success',
-            //           title: 'Se a ingresado correctamente',
-            //           showConfirmButton: false,
-            //           timer: 1500
-            //         })
-            //         this.esAdmin = resp;
-            //         this.router.navigateByUrl('/correspondencia/registrar')
-            //       }
-            //     })
-            // } else {
+            this.estadoPassword = false;         
               this.loginService.loginUsuario(email, password)
                 .subscribe(resp => {
                   if (resp) {                    
@@ -91,8 +75,7 @@ export class LoginComponent implements OnInit {
                   } else {
                     console.log('nothin')
                   }
-                });
-            //}
+                });            
           }
         })
     } catch (error) {
