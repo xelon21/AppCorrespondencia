@@ -5,7 +5,7 @@ import { LoginRoutingModule } from './login-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -20,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,  
     LoginRoutingModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class LoginModule { }
