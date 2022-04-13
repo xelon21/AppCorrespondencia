@@ -13,20 +13,14 @@
                    <mat-label>Email</mat-label>
                <input type="text" matInput autocomplete="off"
                        formControlName="email"  >                        
-           </mat-form-field>
-           <mat-error *ngIf="estadoEmail">
-               Debe ingresar un <strong> Email</strong>
-       </mat-error> 
+           </mat-form-field>        
            <mat-form-field appearance="fill" rowHeight="70px">
                <mat-label>Contraseña</mat-label>
                <input type="password" matInput
                        autocomplete="off"
                        placeholder="Contraseña"
                        formControlName="password" > 
-          </mat-form-field>
-          <mat-error *ngIf="estadoPassword">
-                 debe ingresar una <strong> Contraseña</strong>
-       </mat-error>    
+          </mat-form-field>     
           <div class="bobi2">
               <button mat-raised-button color="primary" type="submit" 
                        >Login</button>              

@@ -67,41 +67,57 @@ export class LoginComponent implements OnInit {
          
         })
       }else{
-        this.loginService.validaAdmin(email, password)
-          .subscribe(resp => {
-            if (!email) {
-              this.estadoEmail = true;
-              if (!password) {
-                this.estadoPassword = true;
-              }
-            } else {
-              this.estadoEmail = false;
-              this.estadoPassword = false;         
-                this.loginService.loginUsuario(email, password)
-                  .subscribe(resp => {
-                    if (resp) {                    
-                      Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Se a ingresado correctamente',
-                        showConfirmButton: false,
-                        timer: 1500
-                      })
-                      this.esAdmin = resp;
-                      this.router.navigateByUrl('/correspondencia/mostrar')
-                    } else {
-                      console.log('nothin')
-                    }
-                  });            
+        this.loginService.loginUsuario(email, password)
+          .subscribe( resp => {
+            if(resp) {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Se a ingresado correctamente',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              this.router.navigateByUrl('/correspondencia/mostrar')
+            }else {
+              console.log('nothin')
             }
-          })        
+          })       
       }
     } catch (error) {
       console.log(error)
     }
   }
 
-
-
 }
+
+
+
+// this.loginService.validaAdmin(email, password)
+// .subscribe(resp => {
+//   if (!email) {
+//     this.estadoEmail = true;
+//     if (!password) {
+//       this.estadoPassword = true;
+//     }
+//   } else {
+//     this.estadoEmail = false;
+//     this.estadoPassword = false;         
+//       this.loginService.loginUsuario(email, password)
+//         .subscribe(resp => {
+//           if (resp) {                    
+//             Swal.fire({
+//               position: 'top-end',
+//               icon: 'success',
+//               title: 'Se a ingresado correctamente',
+//               showConfirmButton: false,
+//               timer: 1500
+//             })
+//             this.esAdmin = resp;
+//             this.router.navigateByUrl('/correspondencia/mostrar')
+//           } else {
+//             console.log('nothin')
+//           }
+//         });            
+//   }
+// }) 
 

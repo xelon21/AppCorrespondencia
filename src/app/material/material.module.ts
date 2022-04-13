@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 
 
-
-
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -24,6 +22,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 
@@ -51,7 +50,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatDialogModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    MatAutocompleteModule 
+    MatAutocompleteModule,
+    MatSlideToggleModule 
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES'}

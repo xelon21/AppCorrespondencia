@@ -10,16 +10,24 @@ import { LoginResponse, Roles, Usuario } from '../interface/login.interface';
 })
 export class SesionesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {    
+   }
 
   private baseUrl: string = environment.baseUrl;
   private _usuario!: Usuario;
-  
   
 
   get usuario() {
     return { ...this._usuario };
   }
+
+  obtenerUsuarios(): Observable<Usuario[]> {
+    
+    const url = `${this.baseUrl}/login/traeUsuarios`
+
+    return this.http.get<Usuario[]>( url );
+  }
+
 
   registrarUsuario(idUsuario: number, idRol: number, email: string, 
     password: string, nombreUsuario: string , estado: number ){
@@ -34,7 +42,7 @@ export class SesionesService {
           } ),
             map( resp => resp),
             catchError( err => of(false) ) 
-    )
+    );
   }
 
  loginUsuario(email: string, password: string) {
@@ -49,8 +57,12 @@ export class SesionesService {
               localStorage.setItem('apiKey', resp.apiKey!)              
               this._usuario = {
                 uid: resp.uid!,
-                idRol: resp.idRol,
+                idRol: resp.idRol!,
+                email: resp.email!,
                 nombre: resp.nombre!,
+                estado: resp.estado!,
+                usuarioActivo: resp.usuarioActivo!,
+                usuarioNoActivo: resp.usuarioNoActivo!,    
                 apiKey: resp.apiKey!
               }      
             }
@@ -73,8 +85,12 @@ export class SesionesService {
           localStorage.setItem('apiKey', resp.apiKey!)
               this._usuario = {
                 uid: resp.uid!,
-                idRol: resp.idRol,
+                idRol: resp.idRol!,
                 nombre: resp.nombre!,
+                email: resp.email!,
+                estado: resp.estado!,
+                usuarioActivo: resp.usuarioActivo!,
+                usuarioNoActivo: resp.usuarioNoActivo!,      
                 apiKey: resp.apiKey!
               }  
           return resp.estadoMsg;
@@ -94,31 +110,7 @@ export class SesionesService {
     return this.http.get<Roles[]>( url )
   }
 
-  validaUsuariosAdmin(): Observable<boolean> {
-
-    const url = `${this.baseUrl}/login/traeUsuarios`
-    const headers = new HttpHeaders()
-      .set('x-api-key', localStorage.getItem('apiKey') || '')
-
-    return this.http.get<LoginResponse>( url, { headers })
-      .pipe(
-        map( resp => {
-
-          localStorage.setItem('apiKey', resp.apiKey!)
-            this._usuario = {
-              uid: resp.uid!,
-                idRol: resp.idRol,
-                nombre: resp.nombre!,
-                apiKey: resp.apiKey!
-            }
-            return resp.estadoMsg;
-        }),
-        catchError( err => of(false))
-      );
-
-  }
-
-  validaAdmin(email: string, password: string) {
+   validaAdmin(email: string, password: string) {
 
     const url = `${this.baseUrl}/login`;
     const body = { email, password, };
@@ -126,13 +118,17 @@ export class SesionesService {
     return this.http.post<LoginResponse>(url , body )
         .pipe(
             tap( resp => { 
-               console.log(resp)          
+              console.log(resp)          
             if( resp.estadoMsg ) {              
               if(resp.idRol == 1){
                 this._usuario = {
                   uid: resp.uid!,
                   idRol: resp.idRol!,
                   nombre: resp.nombre!,
+                  email: resp.email!,
+                  estado: resp.estado!,
+                  usuarioActivo: resp.usuarioActivo!,
+                  usuarioNoActivo: resp.usuarioNoActivo!,    
                   apiKey: resp.apiKey!
                 } 
                 //console.log('usuario si es admin', resp.estadoMsg) 
@@ -142,9 +138,13 @@ export class SesionesService {
                   uid: resp.uid!,
                   idRol: resp.idRol!,
                   nombre: resp.nombre!,
+                  email: resp.email!,
+                  estado: resp.estado!,
+                  usuarioActivo: resp.usuarioActivo!,
+                  usuarioNoActivo: resp.usuarioNoActivo!,    
                   apiKey: resp.apiKey!
                 }
-               // console.log('usuario si no es admin', resp.estadoMsg)
+              // console.log('usuario si no es admin', resp.estadoMsg)
               }           
             }
           } ),
@@ -152,7 +152,39 @@ export class SesionesService {
             catchError( err => of(false) )
         )
   }
-  }
+  
+
 
   
+ 
+}
+
+
+// validaUsuariosAdmin(): Observable<boolean> {
+
+//   const url = `${this.baseUrl}/login/traeUsuarios`
+//   const headers = new HttpHeaders()
+//     .set('x-api-key', localStorage.getItem('apiKey') || '')
+
+//   return this.http.get<LoginResponse>( url )
+//     .pipe(
+//       map( resp => {
+
+//         localStorage.setItem('apiKey', resp.apiKey!)
+//           this._usuario = {
+//               uid: resp.uid!,
+//               idRol: resp.idRol!,
+//               nombre: resp.nombre!,
+//               estado: resp.estado!,
+//               usuarioActivo: resp.usuarioActivo!,
+//               usuarioNoActivo: resp.usuarioNoActivo!,    
+//               apiKey: resp.apiKey!
+//           }
+//           return resp.estadoMsg;
+//       }),
+//       catchError( err => of(false))
+//     );
+
+// }
+
 

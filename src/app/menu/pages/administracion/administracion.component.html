@@ -1,0 +1,200 @@
+<div fxLayout="columns wrap" fxLayoutAlign="center center">
+    <div
+    style="font-style: italic"
+    [ngStyle.xs]="{'font-size.px': 10, color: 'blue'}"
+    [ngStyle.sm]="{'font-size.px': 20, color: 'lightblue'}"
+    [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
+    <div class="ancho2">
+        <mat-toolbar>
+            <span>Ingresar Usuario</span>
+            <div class="spacer"></div>
+            <button mat-raised-button color="primary"
+                routerLink="/correspondencia/mostrar"                     
+                ><mat-icon>reply</mat-icon > Volver</button>
+        </mat-toolbar>
+    </div>
+    <div class="ancho2">
+        <mat-card style="margin-top: 10px;" fxLayoutGap>
+            <form [formGroup]="loginForm" (ngSubmit)="ingresar()">
+                <mat-grid-list cols="2" rowHeight="70px">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-form-field class="ancho" >                        
+                            <input matInput 
+                                   type="text"                                  
+                                   autocomplete="off"
+                                   formControlName="idUsuario"
+                                   placeholder="ID">
+                          </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-form-field class="ancho">
+                            <mat-label>Rol</mat-label>
+                            <mat-select formControlName="idRol"
+                                        type="number">
+                                <mat-option *ngFor="let tipo of roles" [value]="tipo.idRol">
+                                {{ tipo.rol }}                            
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>   
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-form-field class="ancho" >                        
+                            <input matInput                                   
+                                   autocomplete="off"
+                                   type="text"
+                                   formControlName="email"
+                                   placeholder="Email">
+                          </mat-form-field>     
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">                   
+                        <mat-form-field class="ancho">
+                            <input matInput 
+                                   type="text"                                  
+                                   autocomplete="off"
+                                   formControlName="password"
+                                   placeholder="Contraseña">                            
+                            </mat-form-field>
+                    </mat-grid-tile>   
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">                   
+                        <mat-form-field class="ancho">
+                            <input matInput 
+                                   type="text"                                  
+                                   autocomplete="off"
+                                   formControlName="nombreUsuario"
+                                   placeholder="Nombre">                            
+                            </mat-form-field>
+                    </mat-grid-tile>                    
+                                 
+                </mat-grid-list>   
+                <div fxLayout="columns wrap" fxLayoutAlign="center" >
+                    <button mat-raised-button color="primary" class="ancho3"                                                 
+                        type="submit" [disabled]="loginForm.invalid">
+                    <mat-icon mat-list-icon >send</mat-icon> Ingresar 
+                </button>  
+                </div>               
+            </form>
+        </mat-card>
+    </div>
+    <br>
+    <div >
+      <div class="ancho2">
+        <mat-toolbar>
+            <span>Listado Usuarios</span>
+            <div class="spacer"></div>
+            
+        </mat-toolbar>
+    </div>
+      <div class="example-container ancho2" >
+        <table mat-table
+        [dataSource]="users" multiTemplateDataRows
+        class="mat-elevation-z8">
+        
+        <ng-container matColumnDef="IdUsuario">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let user"> {{user.idUsuario}} </td>
+        </ng-container> 
+        
+        <ng-container matColumnDef="NombreUsuario">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let user"> {{user.nombreUsuario}} </td>
+        </ng-container>  
+        
+        <ng-container matColumnDef="Email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let user"> {{user.correoUsuario}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Rol">
+          <th mat-header-cell *matHeaderCellDef> Rol</th>
+          <td mat-cell *matCellDef="let user"> {{user.rol}} </td>
+        </ng-container> 
+        
+        <ng-container matColumnDef="Estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let user"> {{user.estado | estado}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="FechaActivacion">
+            <th mat-header-cell *matHeaderCellDef> Fecha Activacion </th>
+            <td mat-cell *matCellDef="let user"> {{user.activacionUsuario | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="FechaDesactivacion">
+            <th mat-header-cell *matHeaderCellDef> Fecha Desactivacion </th>
+            <td mat-cell *matCellDef="let user"> {{user.desactivacionUsuario | date: 'dd/MM/yyyy' }} </td>
+          </ng-container>
+            
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let user" style="text-align: right;">
+           
+            <a class="pointer" style="color: #e15639" matTooltip="Editar Usuario"
+                [routerLink]="['/correspondencia/administrador/modificar', user.idUsuario]"
+                mat-dialog-close  >           
+                <mat-icon>edit</mat-icon>
+            </a>
+          </td>
+          </ng-container>
+         
+         
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let user" [attr.colspan]="columnsToDisplay.length">     
+            </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+          <tr mat-row *matRowDef="let user; columns: columnsToDisplay;"
+              class="example-element-row"
+              [class.example-expanded-row]="expandedElement === user"
+              (click)="expandedElement = expandedElement === user ? null : user">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        </div>
+</div>
+</div>
+
+
+   
+
+
+
+
+
+<!-- 
+    
+     <mat-grid-tile [colspan]="1" [rowspan]="1">                   
+              
+                            <mat-slide-toggle ngModel name="estado" required>Estado Correo</mat-slide-toggle>                           
+                      
+                    </mat-grid-tile>    
+      <mat-grid-tile [colspan]="1" [rowspan]="1">                   
+                        <mat-form-field appearance="fill" class="example-form-field">
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput [matDatepicker]="datepicker">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker>
+                              <mat-datepicker-actions>
+                                <button mat-button matDatepickerCancel>Cancel</button>
+                                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                              </mat-datepicker-actions>
+                            </mat-datepicker>
+                          </mat-form-field>
+                    </mat-grid-tile>     
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">                   
+                        <mat-form-field appearance="fill" class="example-form-field">
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput [matDatepicker]="datepicker">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker>
+                              <mat-datepicker-actions>
+                                <button mat-button matDatepickerCancel>Cancel</button>
+                                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                              </mat-datepicker-actions>
+                            </mat-datepicker>
+                          </mat-form-field>
+                    </mat-grid-tile>   
+
+ -->

@@ -12,6 +12,10 @@ export interface LoginResponse {
     uid: number;
     idRol: number;    
     nombre: string;
+    email: string;
+    password?: string;
+    usuarioActivo?: Date;
+    usuarioNoActivo?: Date;    
     apiKey: string;
     estado?: boolean;    
 }
@@ -19,9 +23,11 @@ export interface LoginResponse {
 export interface Usuario {
     uid: number;
     idRol: number;
-    email?: string;
+    email: string;
     password?: string;
     nombre: string;
+    usuarioActivo: Date;
+    usuarioNoActivo: Date; 
     estado?: boolean;
     apiKey: string;
 }

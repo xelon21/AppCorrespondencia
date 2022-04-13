@@ -13,6 +13,8 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { FiltroFechasComponent } from './filtro-fechas/filtro-fechas.component';
 import { TablaCorrespondenciaComponent } from './tablaCorrespondencia/tablaCorrespondencia.component';
 import { RegistrarComponent } from './pages/registrarUsuario/registrar.component';
+import { AdministracionComponent } from './pages/administracion/administracion.component';
+import { estadoUsuarioPipe } from './pipe/estadoUsuario.pipe';
 
 
 
@@ -26,7 +28,9 @@ import { RegistrarComponent } from './pages/registrarUsuario/registrar.component
     inicioComponent,
     FiltrarComponent,
     FiltroFechasComponent,
-    RegistrarComponent
+    RegistrarComponent,
+    AdministracionComponent,
+    estadoUsuarioPipe
         
     
   ],
