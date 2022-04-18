@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanLoad, Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { CanActivate, CanLoad, Router, } from '@angular/router';
+import { Observable } from 'rxjs';
 import { SesionesService } from '../login/services/sesiones.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ValidarApiKeyGuard implements CanActivate, CanLoad {
+export class ValidaAdminGuard implements CanActivate, CanLoad {
 
-  constructor( private usuarioService: SesionesService,
-               private router: Router) {}
+  constructor(private usuarioService: SesionesService,
+              private router: Router) {
 
+  }
   canActivate(): Observable<boolean> | boolean {  
-    return this.usuarioService.validaApiKey()
+    return this.usuarioService.validaAdmin()
             .pipe( 
               tap( valid => {
                 if(!valid) {
-                  this.router.navigateByUrl('/login')
-                } 
+                  this.router.navigateByUrl('/correspondencia/administrador')
+                }
               })
             );
   }
@@ -26,7 +28,7 @@ export class ValidarApiKeyGuard implements CanActivate, CanLoad {
               .pipe( 
                 tap( valid => {
                   if(!valid) {
-                    this.router.navigateByUrl('/login')
+                    this.router.navigateByUrl('/correspondencia/administrador')
                   }
                 })
               );

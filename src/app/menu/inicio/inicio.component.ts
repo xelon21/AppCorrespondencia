@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Roles } from 'src/app/login/interface/login.interface';
 import { SesionesService } from 'src/app/login/services/sesiones.service';
 
@@ -28,7 +28,7 @@ export class inicioComponent implements OnInit {
   get usuario() {     
     return  this.usuarioService.usuario;
   }
-
+  esAdmin: boolean = true;
   roles: Roles[] = []
   nombreRol: string = '';
   numeroRol: number = 0; 
@@ -46,34 +46,19 @@ export class inicioComponent implements OnInit {
   }
  
 
-  logout() {
-
+  logout() {    
+    
     this.router.navigateByUrl('/login')
     this.usuarioService.logout();
+
   }
 
   traeRolUsuario() {
 
-    // this.usuarioService.traeRoles()
-    //     .subscribe(
-    //         roles => {          
-    //         this.roles = roles;
-    //         console.log('1',this.roles)
-    //         console.log('bonus', this.usuario)
-    //         this.numeroRol = this.usuario.idRol;  
-    //         console.log('2',this.numeroRol)        
-    //         if(this.numeroRol === this.roles[0].idRol){
-    //           console.log('3',this.roles[0].idRol)            
-    //           this.nombreRol = this.roles[0].rol;
-    //           console.log('4', this.nombreRol)
-    //         }         
-    //       } 
-    //     )
-        // .pipe(
-        //   tap( roles => {           
-        //    console.log(roles)
-
-        //   }))
+    
+    // this.usuarioService.validaAdmin()
+    //     .subscribe( resp => this.esAdmin = resp )
+            
 
   }
 

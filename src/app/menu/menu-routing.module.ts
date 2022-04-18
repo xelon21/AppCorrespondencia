@@ -7,6 +7,7 @@ import { MostrarComponent } from './pages/mostrar/mostrar.component';
 import { FiltrarComponent } from './pages/filtrar/filtrar.component';
 import { RegistrarComponent } from './pages/registrarUsuario/registrar.component';
 import { AdministracionComponent } from './pages/administracion/administracion.component';
+import { ValidaAdminGuard } from '../guards/valida-admin.guard';
 
 // Se definen las rutas hijas a ocupar
 const routes: Routes = [
@@ -19,7 +20,10 @@ const routes: Routes = [
       { path: 'registrar', component: RegistrarComponent },
       { path: 'modificar/:correlativo', component: ModificarComponent },      
       { path: 'filtrar/:correlativo', component: FiltrarComponent },      
-      { path: 'administrador', component: AdministracionComponent },  
+      { path: 'administrador', component: AdministracionComponent, 
+        canActivate: [ ValidaAdminGuard ],
+        canLoad: [ ValidaAdminGuard ] 
+      },  
       { path: '**', redirectTo: 'mostrar'}
     ]
   }

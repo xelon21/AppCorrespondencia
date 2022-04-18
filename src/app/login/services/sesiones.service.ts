@@ -64,7 +64,8 @@ export class SesionesService {
                 usuarioActivo: resp.usuarioActivo!,
                 usuarioNoActivo: resp.usuarioNoActivo!,    
                 apiKey: resp.apiKey!
-              }      
+              }  
+              console.log('login ususario: ', this._usuario)                  
             }
           } ),
             map( resp => resp.estadoMsg),
@@ -81,11 +82,11 @@ export class SesionesService {
     return this.http.get<LoginResponse>( url, { headers } )
       .pipe(
         map( resp => {
-
+          console.log('validaapiKey (map-localstorage): ', resp.apiKey)
           localStorage.setItem('apiKey', resp.apiKey!)
               this._usuario = {
                 uid: resp.uid!,
-                idRol: resp.idRol!,
+                idRol: resp.idRol,
                 nombre: resp.nombre!,
                 email: resp.email!,
                 estado: resp.estado!,
@@ -93,6 +94,7 @@ export class SesionesService {
                 usuarioNoActivo: resp.usuarioNoActivo!,      
                 apiKey: resp.apiKey!
               }  
+              console.log('Validaapikey (fin):  ', resp.nombre, resp.idRol)
           return resp.estadoMsg;
         }),
         catchError( err => of(false))
@@ -110,17 +112,18 @@ export class SesionesService {
     return this.http.get<Roles[]>( url )
   }
 
-   validaAdmin(email: string, password: string) {
+  validaAdmin() {
 
-    const url = `${this.baseUrl}/login`;
-    const body = { email, password, };
+    const url = `${this.baseUrl}/login/validaAdmin`;
+    const headers = new HttpHeaders()
+      .set('x-api-key', localStorage.getItem('apiKey') || '')
 
-    return this.http.post<LoginResponse>(url , body )
-        .pipe(
-            tap( resp => { 
-              console.log(resp)          
-            if( resp.estadoMsg ) {              
-              if(resp.idRol == 1){
+    return this.http.get<LoginResponse>( url, { headers } )
+      .pipe(
+        map( resp => { 
+          if(resp.idRol === 1) {
+            localStorage.setItem('apiKey', resp.apiKey!)
+            console.log('validaAdmin (map-localstorage): ', resp.apiKey)
                 this._usuario = {
                   uid: resp.uid!,
                   idRol: resp.idRol!,
@@ -128,63 +131,17 @@ export class SesionesService {
                   email: resp.email!,
                   estado: resp.estado!,
                   usuarioActivo: resp.usuarioActivo!,
-                  usuarioNoActivo: resp.usuarioNoActivo!,    
+                  usuarioNoActivo: resp.usuarioNoActivo!,      
                   apiKey: resp.apiKey!
-                } 
-                //console.log('usuario si es admin', resp.estadoMsg) 
-              }else {
-                resp.estadoMsg = false;
-                this._usuario = {
-                  uid: resp.uid!,
-                  idRol: resp.idRol!,
-                  nombre: resp.nombre!,
-                  email: resp.email!,
-                  estado: resp.estado!,
-                  usuarioActivo: resp.usuarioActivo!,
-                  usuarioNoActivo: resp.usuarioNoActivo!,    
-                  apiKey: resp.apiKey!
-                }
-              // console.log('usuario si no es admin', resp.estadoMsg)
-              }           
-            }
-          } ),
-            map( resp => resp.estadoMsg),
-            catchError( err => of(false) )
-        )
-  }
+                }  
+                console.log('ValidaAdmin (fin):  ', resp.nombre, resp.idRol)
+            return resp.estadoMsg;
+          } else {
+            return false;
+          }
+        }),
+        catchError( err => of(false))
+      );
   
-
-
-  
- 
+ }
 }
-
-
-// validaUsuariosAdmin(): Observable<boolean> {
-
-//   const url = `${this.baseUrl}/login/traeUsuarios`
-//   const headers = new HttpHeaders()
-//     .set('x-api-key', localStorage.getItem('apiKey') || '')
-
-//   return this.http.get<LoginResponse>( url )
-//     .pipe(
-//       map( resp => {
-
-//         localStorage.setItem('apiKey', resp.apiKey!)
-//           this._usuario = {
-//               uid: resp.uid!,
-//               idRol: resp.idRol!,
-//               nombre: resp.nombre!,
-//               estado: resp.estado!,
-//               usuarioActivo: resp.usuarioActivo!,
-//               usuarioNoActivo: resp.usuarioNoActivo!,    
-//               apiKey: resp.apiKey!
-//           }
-//           return resp.estadoMsg;
-//       }),
-//       catchError( err => of(false))
-//     );
-
-// }
-
-

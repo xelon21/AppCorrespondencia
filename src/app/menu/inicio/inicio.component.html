@@ -29,7 +29,7 @@
              <span>Filtrar Correspondencia</span>
             </a>
             <a routerLink="./administrador"
-            mat-list-item
+            mat-list-item *ngIf="esAdmin"
             (click)="sidenav.toggle()" >
             <mat-icon mat-list-icon>admin_panel_settings</mat-icon>
              <span>Administracion</span>
