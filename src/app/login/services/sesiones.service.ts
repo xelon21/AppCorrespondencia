@@ -54,7 +54,8 @@ export class SesionesService {
         .pipe(
             tap( resp => {           
             if( resp.estadoMsg ) {
-              localStorage.setItem('apiKey', resp.apiKey!)              
+              localStorage.setItem('apiKey', resp.apiKey!)
+              localStorage.setItem('cookie', resp.idRol.toString())              
               this._usuario = {
                 uid: resp.uid!,
                 idRol: resp.idRol!,
@@ -134,7 +135,7 @@ export class SesionesService {
                   usuarioNoActivo: resp.usuarioNoActivo!,      
                   apiKey: resp.apiKey!
                 }  
-                console.log('ValidaAdmin (fin):  ', resp.nombre, resp.idRol)
+                console.log('ValidaAdmin (fin):  ', this._usuario)
             return resp.estadoMsg;
           } else {
             return false;

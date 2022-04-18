@@ -28,7 +28,7 @@ export class inicioComponent implements OnInit {
   get usuario() {     
     return  this.usuarioService.usuario;
   }
-  esAdmin: boolean = true;
+  esAdmin: boolean = false;
   roles: Roles[] = []
   nombreRol: string = '';
   numeroRol: number = 0; 
@@ -41,7 +41,10 @@ export class inicioComponent implements OnInit {
   ngOnInit(): void {
 
     this.traeRolUsuario();
-        
+    
+    if(localStorage.getItem('cookie') === '1' ){
+      this.esAdmin = true;
+    }
     
   }
  
@@ -55,10 +58,7 @@ export class inicioComponent implements OnInit {
 
   traeRolUsuario() {
 
-    
-    // this.usuarioService.validaAdmin()
-    //     .subscribe( resp => this.esAdmin = resp )
-            
+      
 
   }
 

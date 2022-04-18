@@ -24,7 +24,7 @@ export class ValidaAdminGuard implements CanActivate, CanLoad {
             );
   }
   canLoad(): Observable<boolean> | boolean {  
-    return this.usuarioService.validaApiKey()
+    return this.usuarioService.validaAdmin()
               .pipe( 
                 tap( valid => {
                   if(!valid) {
