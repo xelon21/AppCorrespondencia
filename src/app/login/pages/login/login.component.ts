@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
 
    } 
 
+   /** se crea el formulario para poder validar el usuario  */
  loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email, Validators.minLength(3) ]],
     password: ['', [Validators.required, Validators.minLength(3)] ]
@@ -54,11 +55,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /** Metodo que permite el login de un usuario */
   async login() {
 
     // Se extraen los datos del formulario
     const { email, password } = this.loginForm.value;
     try {
+      /** se valida que los campos email y password no esten vacios */
       if(!email || !password){
         Swal.fire({
           icon: 'error',
@@ -67,6 +70,11 @@ export class LoginComponent implements OnInit {
          
         })
       }else{
+        /** se llama al metodo loginUsuario y se le envian los parametros
+         *  email y password. Dependiendo de la respuesta, ingresara a la pagina
+         *  o le dara un mensaje de error. el usuario no puede ingresar si no 
+         *  se autentica primero.
+         */
         this.loginService.loginUsuario(email, password)
           .subscribe( resp => {
             if(resp) {
@@ -77,8 +85,14 @@ export class LoginComponent implements OnInit {
                 showConfirmButton: false,
                 timer: 1500
               })
+              // redirecciona a la pagina si se autentica correctamente
               this.router.navigateByUrl('/correspondencia/mostrar')
             }else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Las credenciales no coinciden',                
+              })
               console.log('nothin')
             }
           })       
