@@ -65,8 +65,7 @@ export class SesionesService {
                 usuarioActivo: resp.usuarioActivo!,
                 usuarioNoActivo: resp.usuarioNoActivo!,    
                 apiKey: resp.apiKey!
-              }  
-              console.log('login ususario: ', this._usuario)                  
+              }                               
             }
           } ),
             map( resp => resp.estadoMsg),
@@ -82,8 +81,7 @@ export class SesionesService {
 
     return this.http.get<LoginResponse>( url, { headers } )
       .pipe(
-        map( resp => {
-          console.log('validaapiKey (map-localstorage): ', resp.apiKey)
+        map( resp => {          
           localStorage.setItem('apiKey', resp.apiKey!)
               this._usuario = {
                 uid: resp.uid!,
@@ -94,8 +92,7 @@ export class SesionesService {
                 usuarioActivo: resp.usuarioActivo!,
                 usuarioNoActivo: resp.usuarioNoActivo!,      
                 apiKey: resp.apiKey!
-              }  
-              console.log('Validaapikey (fin):  ', resp.nombre, resp.idRol)
+              }                
           return resp.estadoMsg;
         }),
         catchError( err => of(false))
@@ -123,8 +120,7 @@ export class SesionesService {
       .pipe(
         map( resp => { 
           if(resp.idRol === 1) {
-            localStorage.setItem('apiKey', resp.apiKey!)
-            console.log('validaAdmin (map-localstorage): ', resp.apiKey)
+            localStorage.setItem('apiKey', resp.apiKey!)            
                 this._usuario = {
                   uid: resp.uid!,
                   idRol: resp.idRol!,
@@ -134,8 +130,7 @@ export class SesionesService {
                   usuarioActivo: resp.usuarioActivo!,
                   usuarioNoActivo: resp.usuarioNoActivo!,      
                   apiKey: resp.apiKey!
-                }  
-                console.log('ValidaAdmin (fin):  ', this._usuario)
+                }                  
             return resp.estadoMsg;
           } else {
             return false;
