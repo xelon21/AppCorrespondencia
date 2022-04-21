@@ -14,8 +14,8 @@ export interface LoginResponse {
     nombre: string;
     email: string;
     password?: string;
-    usuarioActivo?: Date;
-    usuarioNoActivo?: Date;    
+    usuarioActivo?: string;
+    usuarioNoActivo?: string;    
     apiKey: string;
     estado?: boolean;    
 }
@@ -26,8 +26,8 @@ export interface Usuario {
     email: string;
     password?: string;
     nombre: string;
-    usuarioActivo: Date;
-    usuarioNoActivo: Date; 
+    usuarioActivo: string;
+    usuarioNoActivo: string; 
     estado?: boolean;
     apiKey: string;
 }
@@ -39,8 +39,8 @@ export interface RegistrarUsuario {
     password: string; 
     nombreUsuario: string;
     estado: boolean;
-    activacionUsuario?: Date;
-    desactivacionUsuario?: Date;
+    activacionUsuario?: string;
+    desactivacionUsuario?: string;
 }
 
 export interface Roles {

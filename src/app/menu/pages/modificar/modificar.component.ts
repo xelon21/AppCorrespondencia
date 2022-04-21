@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { switchMap, tap, catchError, map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { SesionesService } from '../../../login/services/sesiones.service';
 
 
 @Component({
@@ -47,7 +48,8 @@ export class ModificarComponent implements OnInit {
 
   constructor( private correoService: CorrespondenciaService,
                private activatedRouter: ActivatedRoute,
-               private router: Router ) { }
+               private router: Router,
+               private loginService: SesionesService ) { }
 
   ngOnInit(): void {    
 
@@ -58,7 +60,8 @@ export class ModificarComponent implements OnInit {
          switchMap( ({ correlativo }) => this.correoService.buscaCorrelativo(correlativo) )
        )
        .subscribe( correo => {                  
-        this.correos = correo         
+        this.correos = correo 
+        console.log(this.correos)        
        })
        this.correoService.getTipoEnvio() 
        .subscribe( tipo => this.tipoEnvio = tipo );
@@ -67,28 +70,24 @@ export class ModificarComponent implements OnInit {
   /** metodo que permite modifiar una correspondencia mediante correlativo */
   async modificar( ){
 
-    if(!this.estadoCorrespondencia(this.correos.estadoCorreo)){      
-         if(this.estado){
-           console.log('1 Pasa por aca')       
-            this.correos.estadoCorreo = 'ANULADO'
-            console.log('2 Pasa por aca') 
+    if(!this.estadoCorrespondencia(this.correos.estadoCorreo)){
+         if(this.estado){            
+            this.correos.estadoCorreo = 'ANULADO'        
             await this.correoService.filtroCorrelativo(this.correos.correlativo)
             .subscribe( result => {              
-              if(this.correos.usuario === result[0].usuario){
+              if(this.loginService.usuario.nombre === result[0].usuario){
                 this.correoService.modificarPorCorrelativo( this.correos )
-                .subscribe( correo => this.correos = correo)  
-                console.log('se subscribe y se modifica')
+                .subscribe( correo => this.correos = correo)                
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
-                  title: 'Your work has been saved',
+                  title: 'Se ha modificado',
                   showConfirmButton: false,
                   timer: 1500
                 }) 
                 this.router.navigate(['/correspondencia/mostrar']) 
 
-              }else {
-                console.log('4 por aca si no son iguales los usuarios')
+              }else {                
                 Swal.fire({
                   icon: 'error',
                   title: 'ERROR',
@@ -103,19 +102,17 @@ export class ModificarComponent implements OnInit {
             .subscribe( result => {              
               if(this.correos.usuario === result[0].usuario){
                 this.correoService.modificarPorCorrelativo( this.correos )
-                .subscribe( correo => this.correos = correo)  
-                console.log('se subscribe y se modifica')
+                .subscribe( correo => this.correos = correo)                 
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
-                  title: 'Your work has been saved',
+                  title: 'Se ha modificado',
                   showConfirmButton: false,
                   timer: 1500
                 }) 
                 this.router.navigate(['/correspondencia/mostrar']) 
 
-              }else {
-                console.log('4 por aca si no son iguales los usuarios')
+              }else {                
                 Swal.fire({
                   icon: 'error',
                   title: 'ERROR',
@@ -125,8 +122,7 @@ export class ModificarComponent implements OnInit {
               }  
             }); 
           } 
-    }else {
-      console.log('6 por aca si la correspondencia esta como anulada')
+    }else {      
       Swal.fire({
             icon: 'error',
             title: 'ERROR',

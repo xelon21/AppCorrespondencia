@@ -67,10 +67,11 @@ export class AgregarComponent implements OnInit  {
     try {
       // Se extraen los datos del formulario
       const { idTipoDocumento, idTipoEnvio, destinatario, referencia } = this.miFormulario.value;
+      const usuario = this.loginService.usuario.nombre; 
+      console.log(usuario)       
       
       /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
        * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
-      let usuario = this.loginService.usuario.nombre;        
       await this.correosService.ingresaCorrespondencia( idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia )
       .subscribe( resp => {      
         Swal.fire({

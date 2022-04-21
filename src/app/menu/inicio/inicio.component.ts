@@ -41,8 +41,8 @@ export class inicioComponent implements OnInit {
   ngOnInit(): void {
 
     this.traeRolUsuario();
-    
-    if(localStorage.getItem('cookie') === '1' ){
+
+    if(this.usuarioService.usuario.idRol === 1 ){
       this.esAdmin = true;
     }
     

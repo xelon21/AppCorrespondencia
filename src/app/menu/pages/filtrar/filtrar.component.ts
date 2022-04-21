@@ -14,15 +14,6 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
     width: 140%;
   } 
  
-  td {
-    background: whitesmoke;
-    text-align: center;    
-  }
-  
-  th {
-    background: #efefef;
-    text-align: center;
-  }
   `]
 })
 export class FiltrarComponent implements OnInit {

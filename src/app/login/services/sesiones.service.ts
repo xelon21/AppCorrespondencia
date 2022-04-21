@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LoginResponse, Roles, Usuario } from '../interface/login.interface';
+import { LoginResponse, Roles, Usuario, RegistrarUsuario } from '../interface/login.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -30,17 +30,20 @@ export class SesionesService {
 
 
   registrarUsuario(idUsuario: number, idRol: number, email: string, 
-    password: string, nombreUsuario: string , estado: number ){
+    password: string, nombreUsuario: string , estado: number, usuarioActivo: string, usuarioNoActivo: string ){
 
       const url = `${this.baseUrl}/login/register`;
-      const body = { idUsuario, idRol, email, password, nombreUsuario , estado };
+      const body = { idUsuario, idRol, email, password, nombreUsuario , estado, usuarioActivo, usuarioNoActivo };
+  
 
-        return this.http.post(url , body )
+      console.log( idUsuario, idRol, email, password, nombreUsuario , estado, usuarioActivo, usuarioNoActivo)
+
+        return this.http.post<RegistrarUsuario>(url , body )
         .pipe(
-            tap( resp => {
-            console.log(resp)
-          } ),
-            map( resp => resp),
+            map( resp => {
+              console.log(resp.estado)
+              
+          } ),            
             catchError( err => of(false) ) 
     );
   }
@@ -53,9 +56,8 @@ export class SesionesService {
     return this.http.post<LoginResponse>(url , body )
         .pipe(
             tap( resp => {           
-            if( resp.estadoMsg ) {
-              localStorage.setItem('apiKey', resp.apiKey!)
-              localStorage.setItem('cookie', resp.idRol.toString())              
+            if( resp.estado ) {
+              localStorage.setItem('apiKey', resp.apiKey!)                          
               this._usuario = {
                 uid: resp.uid!,
                 idRol: resp.idRol!,
@@ -68,7 +70,7 @@ export class SesionesService {
               }                               
             }
           } ),
-            map( resp => resp.estadoMsg),
+            map( resp => resp.estado),
             catchError( err => of(false) )
         )
   }
@@ -140,4 +142,8 @@ export class SesionesService {
       );
   
  }
+ buscaUsuario(filtro: string ): Observable<Usuario[]> {
+  return this.http.get<Usuario[]>(`${this.baseUrl}/login/filtraUsuario/${ filtro }`);
+
+}
 }

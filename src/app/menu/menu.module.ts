@@ -15,6 +15,7 @@ import { TablaCorrespondenciaComponent } from './tablaCorrespondencia/tablaCorre
 import { RegistrarComponent } from './pages/registrarUsuario/registrar.component';
 import { AdministracionComponent } from './pages/administracion/administracion.component';
 import { estadoUsuarioPipe } from './pipe/estadoUsuario.pipe';
+import { NgbDateAdapter, NgbDateNativeUTCAdapter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -40,10 +41,12 @@ import { estadoUsuarioPipe } from './pipe/estadoUsuario.pipe';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,  
+    NgbModule
 
   ],
   providers: [
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+    {provide: NgbDateAdapter, useClass: NgbDateNativeUTCAdapter}
   ]  
 })
 export class MenuModule { }

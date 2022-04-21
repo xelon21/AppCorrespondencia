@@ -78,16 +78,16 @@ export class RegistrarComponent implements OnInit {
     // }
 
 
-    await this.loginService.registrarUsuario( idUsuario, idRol, correoUsuario, password, nombreUsuario, estado)
-    .subscribe( resp => {      
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Se registro un usuario',
-        showConfirmButton: false,
-        timer: 1500
-      })    
-    });
+    // await this.loginService.registrarUsuario( idUsuario, idRol, correoUsuario, password, nombreUsuario, estado)
+    // .subscribe( resp => {      
+    //   Swal.fire({
+    //     position: 'top-end',
+    //     icon: 'success',
+    //     title: 'Se registro un usuario',
+    //     showConfirmButton: false,
+    //     timer: 1500
+    //   })    
+    // });
     
 
   }

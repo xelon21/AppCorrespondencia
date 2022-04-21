@@ -1,3 +1,4 @@
+
 <div fxLayout="columns wrap" fxLayoutAlign="center center">
     <div
     style="font-style: italic"
@@ -9,79 +10,136 @@
             <span>Ingresar Usuario</span>
             <div class="spacer"></div>
             <button mat-raised-button color="primary"
-                routerLink="/correspondencia/mostrar"                     
-                ><mat-icon>reply</mat-icon > Volver</button>
+                routerLink="/correspondencia/mostrar" 
+                fxFlex="10"                    
+                ><mat-icon>reply</mat-icon > Volver</button>             
         </mat-toolbar>
     </div>
-    <div class="ancho2">
-        <mat-card style="margin-top: 10px;" fxLayoutGap>
-            <form [formGroup]="loginForm" (ngSubmit)="ingresar()">
-                <mat-grid-list cols="2" rowHeight="70px">
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="ancho" >                        
-                            <input matInput 
-                                   type="text"                                  
-                                   autocomplete="off"
-                                   formControlName="idUsuario"
-                                   placeholder="ID">
-                          </mat-form-field>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="ancho">
-                            <mat-label>Rol</mat-label>
-                            <mat-select formControlName="idRol"
-                                        type="number">
-                                <mat-option *ngFor="let tipo of roles" [value]="tipo.idRol">
-                                {{ tipo.rol }}                            
-                                </mat-option>
-                            </mat-select>
-                            </mat-form-field>   
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="ancho" >                        
-                            <input matInput                                   
-                                   autocomplete="off"
-                                   type="text"
-                                   formControlName="email"
-                                   placeholder="Email">
-                          </mat-form-field>     
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">                   
-                        <mat-form-field class="ancho">
-                            <input matInput 
-                                   type="text"                                  
-                                   autocomplete="off"
-                                   formControlName="password"
-                                   placeholder="Contraseña">                            
+    <div class="ancho4">
+      <section class="d-flex justify-content-center align-items-center">
+          <div class="card shadow col-md-4 col-sm-4 col-md-4 col-lg-4 p-4 ancho"> 
+              <div class="row">
+                
+                  <h2>  <i class="bi bi-chat-left-quote"></i> &nbsp; Ingrese Los Siguientes Datos</h2>
+              </div>
+              <div class="mb-1 col-4">
+                  <form [formGroup]="registroUsuario" >
+                      <div class="mb-4 d-flex "> 
+                          <div class="col-md-10">
+                            <mat-form-field>                        
+                              <input matInput                                      
+                                     type="text"                                     
+                                     autocomplete="off"
+                                     formControlName="email"
+                                     placeholder="Email">
                             </mat-form-field>
-                    </mat-grid-tile>   
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">                   
-                        <mat-form-field class="ancho">
+                          </div> 
+                          <span class="input"></span>                         
+                          <div class="col-md-10">
+                            <mat-form-field>                        
+                              <input matInput 
+                                     type="text"                                     
+                                     autocomplete="off"
+                                     formControlName="password"
+                                     placeholder="Contraseña">
+                            </mat-form-field>
+                          </div>    
+                          <span class="input"></span>                            
+                          <div class="col-md-10">
+                            <mat-form-field>                        
+                              <input matInput 
+                                     type="text"                                     
+                                     autocomplete="off"
+                                     formControlName="password2"
+                                     placeholder="Confirmar contraseña">
+                            </mat-form-field>
+                          </div> 
+                      </div> 
+                      <div class="mb-4 d-flex ">
+                        <div class="col-md-10">
+                          <mat-form-field>                        
                             <input matInput 
-                                   type="text"                                  
+                                   type="text"                                     
                                    autocomplete="off"
                                    formControlName="nombreUsuario"
-                                   placeholder="Nombre">                            
-                            </mat-form-field>
-                    </mat-grid-tile>                    
-                                 
-                </mat-grid-list>   
-                <div fxLayout="columns wrap" fxLayoutAlign="center" >
-                    <button mat-raised-button color="primary" class="ancho3"                                                 
-                        type="submit" [disabled]="loginForm.invalid">
-                    <mat-icon mat-list-icon >send</mat-icon> Ingresar 
-                </button>  
-                </div>               
-            </form>
-        </mat-card>
+                                   placeholder="Nombre de usuario">
+                          </mat-form-field>                          
+                        </div>
+                        <span class="input"></span>         
+                        <div class="col-md-10">
+                          <mat-form-field>
+                            <mat-label>Rol del usuario</mat-label>
+                            <mat-select formControlName="idRol"
+                                        type="number">
+                                <mat-option *ngFor="let rol of roles" [value]="rol.idRol">
+                                {{ rol.rol}}                            
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>                           
+                        </div>
+                        <span class="input"></span>         
+                        <div class="col-md-10">
+                            <mat-slide-toggle formControlName="estado" fxFlex="15"></mat-slide-toggle>
+                           <h4>Activo/Inactivo</h4>                  
+                        </div>
+                      </div>
+                      <div class="mb-4 d-flex">
+                        <div class="col-md-10">
+                          <form class="row row-cols-sm-auto">
+                            <div class="col-12">
+                              <div class="input-group">                                
+                                 <input class="form-control" placeholder="Fecha Activacion"
+                                        name="dp" [(ngModel)]="usuarioActivo" ngbDatepicker #d="ngbDatepicker">
+                                 <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                   <mat-icon>event</mat-icon>
+                                 </button>
+                               </div>
+                             </div>
+                           </form>
+                        </div>
+                        <span class="input"></span>                         
+                          <div class="col-md-10">
+                            <form class="row row-cols-sm-auto">
+                              <div class="col-12">
+                                <div class="input-group">                                
+                                   <input class="form-control" placeholder="Fecha Desactivacion"
+                                          name="dpd" [(ngModel)]="usuarioNoActivo" ngbDatepicker #d2="ngbDatepicker">
+                                   <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button">
+                                     <mat-icon>event</mat-icon>
+                                   </button>
+                                 </div>
+                               </div>
+                             </form>
+                          </div>
+                        </div>     
+                      <div class="mb-2" >
+                        <button mat-raised-button color="primary" class="ancho3"                                                 
+                        type="submit" [disabled]="registroUsuario.invalid">
+                           <mat-icon mat-list-icon >send</mat-icon> Ingresar 
+                       </button>  
+                      </div> 
+                                
+                  </form>
+              </div>
+          </div>
+      </section>
     </div>
+
+    
     <br>
     <div >
       <div class="ancho2">
         <mat-toolbar>
             <span>Listado Usuarios</span>
-            <div class="spacer"></div>
-            
+            <div class="spacer2"></div>
+            <form autocomplete="off">
+              <input type="text"
+                     name="filtro"
+                     class="form-control salto"
+                     [(ngModel)]="filtro"
+                     (input)="filtrarPorCorrelativo()"
+                     placeholder="Nombre Usuario">
+         </form>  
         </mat-toolbar>
     </div>
       <div class="example-container ancho2" >
@@ -152,8 +210,8 @@
         </table>
         </div>
 </div>
+    </div>
 </div>
-
 
    
 
@@ -162,7 +220,22 @@
 
 
 <!-- 
-    
+                           <form class="row row-cols-sm-auto">
+                            <div class="col-12">
+                              <div class="input-group">
+                                 <input class="form-control" placeholder="yyyy-mm-dd"
+                                        name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                                 <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                   <mat-icon>event</mat-icon>
+                                 </button>
+                               </div>
+                             </div>
+                           </form>  
+
+
+
+
+
      <mat-grid-tile [colspan]="1" [rowspan]="1">                   
               
                             <mat-slide-toggle ngModel name="estado" required>Estado Correo</mat-slide-toggle>                           
@@ -198,3 +271,108 @@
                     </mat-grid-tile>   
 
  -->
+
+ <!--
+   <mat-card style="margin-top: 10px;" fxLayoutGap>
+            <form [formGroup]="loginForm" (ngSubmit)="ingresar()" autocomplete="off">
+                <mat-grid-list cols="2" rowHeight="70px">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-form-field class="ancho" >                        
+                            <input matInput 
+                                   type="text"                                  
+                                   autocomplete="off"
+                                   formControlName="idUsuario"
+                                   placeholder="ID">
+                          </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-form-field class="ancho">
+                            <mat-label>Rol</mat-label>
+                            <mat-select formControlName="idRol"
+                                        type="number">
+                                <mat-option *ngFor="let tipo of roles" [value]="tipo.idRol">
+                                {{ tipo.rol }}                            
+                                </mat-option>
+                            </mat-select>
+                            </mat-form-field>   
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-form-field class="ancho" >                        
+                            <input matInput                                   
+                                   autocomplete="off"
+                                   type="text"
+                                   formControlName="email"
+                                   placeholder="Email">
+                          </mat-form-field>     
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">                   
+                        <mat-form-field class="ancho">
+                            <input matInput 
+                                   type="text"                                  
+                                   autocomplete="off"
+                                   formControlName="password"
+                                   placeholder="Contraseña">                            
+                            </mat-form-field>
+                    </mat-grid-tile>   
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">                   
+                        <mat-form-field class="ancho">
+                            <input matInput 
+                                   type="text"                                  
+                                   autocomplete="off"
+                                   formControlName="nombreUsuario"
+                                   placeholder="Nombre">                            
+                            </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">                                         
+                        <mat-slide-toggle formControlName="estado"  fxFlex="15">Activo</mat-slide-toggle>
+                  </mat-grid-tile> 
+                    <mat-grid-tile [colspan]="1" [rowspan]="1" >
+                      <p>
+                        <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
+                          aria-controls="collapseExample">
+                          Toggle
+                        </button>
+                      </p>
+                      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                        <div class="card">
+                          <div class="card-body">
+                            <form class="row row-cols-sm-auto">
+                              <div class="col-12">
+                                <div class="input-group">
+                                   <input class="form-control" placeholder="yyyy-mm-dd"
+                                          name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                                   <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                     <mat-icon>event</mat-icon>
+                                   </button>
+                                 </div>
+                               </div>
+                             </form> 
+                          </div>
+                        </div>
+                      </div>
+                  </mat-grid-tile>
+                  <mat-grid-tile [colspan]="1" [rowspan]="1">                   
+                    <form class="row row-cols-sm-auto">
+                      <div class="col-12">
+                        <div class="input-group">
+                           <input class="form-control" placeholder="yyyy-mm-dd"
+                                  name="dpo" [(ngModel)]="modelo" ngbDatepicker #d="ngbDatepicker">
+                           <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                             <mat-icon>event</mat-icon>
+                           </button>
+                         </div>
+                       </div>
+                     </form>   
+                </mat-grid-tile>
+                </mat-grid-list>   
+                <div fxLayout="columns wrap" fxLayoutAlign="center" >
+                    <button mat-raised-button color="primary" class="ancho3"                                                 
+                        type="submit" [disabled]="loginForm.invalid">
+                    <mat-icon mat-list-icon >send</mat-icon> Ingresar 
+                </button>  
+                </div>               
+            </form>
+        </mat-card>
+-->
+
+
