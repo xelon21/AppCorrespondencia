@@ -29,20 +29,16 @@ export class SesionesService {
   }
 
 
-  registrarUsuario(idUsuario: number, idRol: number, email: string, 
-    password: string, nombreUsuario: string , estado: number, usuarioActivo: string, usuarioNoActivo: string ){
+  registrarUsuario(idRol: number, email: string, 
+    password: string, nombreUsuario: string , estado: number, fech1: string, fech2: string ){
 
       const url = `${this.baseUrl}/login/register`;
-      const body = { idUsuario, idRol, email, password, nombreUsuario , estado, usuarioActivo, usuarioNoActivo };
+      const body = { idRol, email, password, nombreUsuario , estado, fech1, fech2 };
   
-
-      console.log( idUsuario, idRol, email, password, nombreUsuario , estado, usuarioActivo, usuarioNoActivo)
-
         return this.http.post<RegistrarUsuario>(url , body )
         .pipe(
             map( resp => {
-              console.log(resp.estado)
-              
+             resp.nombreUsuario              
           } ),            
             catchError( err => of(false) ) 
     );

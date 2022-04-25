@@ -32,8 +32,7 @@ export interface Usuario {
     apiKey: string;
 }
 
-export interface RegistrarUsuario {
-    idUsuario: number;
+export interface RegistrarUsuario {    
     idRol: number;
     correoUsuario: string;
     password: string; 

@@ -1,12 +1,58 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SesionesService } from '../../../login/services/sesiones.service';
-import { RegistrarUsuario, Roles, Usuario } from '../../../login/interface/login.interface';
+import { Roles, Usuario } from '../../../login/interface/login.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import Swal from 'sweetalert2';
 
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
+
+@Injectable()
+export class CustomAdapter extends NgbDateAdapter<string> {
+
+  readonly DELIMITER = '-';  
+  fromModel(value: string | null): NgbDateStruct | null {
+    if (value) {
+      const date = value.split(this.DELIMITER);
+      return {
+        day : parseInt(date[0], 10),
+        month : parseInt(date[1], 10),
+        year : parseInt(date[2], 10),
+      };
+    }
+    return null;
+  }
+
+  toModel(date: NgbDateStruct | null): string | null {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
+  }
+}
+
+/**
+ * This Service handles how the date is rendered and parsed from keyboard i.e. in the bound input field.
+ */
+@Injectable()
+export class CustomDateParserFormatter extends NgbDateParserFormatter {
+
+  readonly DELIMITER = '/';  
+  parse(value: string): NgbDateStruct | null {
+    if (value) {
+      const date = value.split(this.DELIMITER);
+      return {
+        day : parseInt(date[0], 10),
+        month : parseInt(date[1], 10),
+        year : parseInt(date[2], 10),
+      };      
+    }
+    return null;
+  }
+
+  format(date: NgbDateStruct | null): string {   
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
+
+  }
+}
 
 
 @Component({
@@ -45,7 +91,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
     }
     .ancho4 {
       width: 175%;
-      background-color: lightgray;
+      background-color: #efefef;
     }
 
     .salto {
@@ -107,16 +153,24 @@ tr.example-element-row:not(.example-expanded-row):active {
       state('expanded', style({height: '*'})),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
+  ],
+  providers: [
+    {provide: NgbDateAdapter, useClass: CustomAdapter},
+    {provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter}
   ] 
 })
 export class AdministracionComponent implements OnInit {
 
-  usuarioActivo!: NgbDateStruct;
-  usuarioNoActivo!: NgbDateStruct;
+  usuarioActivo!: string;
+  strin!: NgbDate;
+  usuarioNoActivo!: string;
 
-  public isCollapsed = false;
-
-  existe!: boolean;
+  formato!: string;
+  anio!: string;
+  mes!: string;
+  dia!: string;
+ 
+  //existe!: boolean;
   userActivo!: string;
   userNoActivo!: string;
   usuario: Usuario[] = [];
@@ -126,19 +180,19 @@ export class AdministracionComponent implements OnInit {
   filtro: string = '';
 
   registroUsuario: FormGroup = this.fb.group({
-    idUsuario: 0,
-    idRol: 0,
-    email: '',
-    password: '',
-    password2: '',
-    nombreUsuario: '',
-    estado: false,
-    usuarioActivo: '',
-    usuarioNoActivo: ''
+    idRol: [0 ,[Validators.required]],
+    email: ['', [Validators.required, Validators.email, Validators.minLength(3) ]],
+    password: ['', [Validators.required, Validators.minLength(3) ]],
+    password2: ['', [Validators.required, Validators.minLength(3) ]],
+    nombreUsuario: ['', [Validators.required, Validators.minLength(3) ]],
+    estado: [false ],
+    usuarioActivo: [],
+    usuarioNoActivo: [''],
   })
 
   constructor(private fb: FormBuilder,
-              private loginService: SesionesService) { }
+              private loginService: SesionesService,
+              private ngbCalendar: NgbCalendar, private dateAdapter: NgbDateAdapter<string>) { }
 
   ngOnInit(): void {
 
@@ -167,38 +221,45 @@ export class AdministracionComponent implements OnInit {
   registrar(){
     console.log(this.registroUsuario.value)
   }
-
-  fechaDesactivacion() {
-
-  }
   
+  get today() {
+    return this.dateAdapter.toModel(this.ngbCalendar.getToday())!;
+  }
 
   async ingresar(){
     
     // Se extraen los datos del formulario
-    const { idUsuario, idRol, email, password, nombreUsuario , estado, usuarioActivo, usuarioNoActivo } = this.registroUsuario.value;
-    
-    this.userActivo = usuarioActivo._i.year + '-' + (usuarioActivo._i.month +1).toString() + '-' + usuarioActivo._i.date;
-    this.userNoActivo = usuarioNoActivo._i.year + '-' + (usuarioNoActivo._i.month +1).toString() + '-' + usuarioNoActivo._i.date;
-  
+    const { idRol, email, password, nombreUsuario , estado, password2 } = this.registroUsuario.value;
+
     try {
        
-        console.log(idUsuario, idRol, email, password, nombreUsuario , estado, this.userActivo, this.userNoActivo )
-    
-        /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
-         * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
-        // this.loginService.registrarUsuario( idUsuario, idRol, email, password, nombreUsuario, estado, this.userActivo, this.userNoActivo )
-        // .subscribe( resp => {
-        // //  if(!this.existe){
-        //     Swal.fire({
-        //       position: 'top-end',
-        //       icon: 'success',
-        //       title: 'Usuario Guardada Con Exito',
-        //       showConfirmButton: false,
-        //       timer: 1500
-        //     }) 
-        //  // }
-        // });
+        
+        if( password === password2){
+          
+          let fech1 = this.FormatoFecha(this.usuarioActivo)
+          let fech2 = this.FormatoFecha(this.usuarioNoActivo)
+
+          /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
+           * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
+          this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, estado, fech1, fech2 )
+          .subscribe( resp => {
+            if(resp){
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Usuario Guardada Con Exito',
+                showConfirmButton: false,
+                timer: 1500
+              }) 
+            }
+          })
+        }else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Las contraseñas no coinciden',                
+          })
+        }        
       } catch (error) {
         console.log(error)
         Swal.fire({
@@ -210,8 +271,70 @@ export class AdministracionComponent implements OnInit {
     }
   }
 
+  FormatoFecha( fecha: string ): string{     
+    
+    if(fecha){
+      this.formato = '';
+      this.anio = '';
+      this.mes= '';
+      this.dia= '';
+  
+      for (let i= 0; i < fecha.length; i++) {    
+  
+        if( i >= 4 && i <= 9){
+          if(fecha[i] === '-'){
+            this.anio = '';
+          }else {
+            this.anio += fecha[i];          
+          }       
+  
+        }else if( i >= 2 && i <= 4 ){
+          if( fecha[i] != '-' ){ 
+              this.mes += fecha[i];
+              i++;
+              if( fecha[i] != '-'){
+                this.mes += fecha[i];
+                i++;
+              }else{
+                if( fecha[i] === '-' ){
+                  this.mes = '';
+                  this.mes += '0' + fecha[2];
+                }
+              }
+          }else {
+            i++;
+            if(fecha[i] != '-'){
+              this.mes += fecha[i];   
+              i++;
+              if(fecha[i] != '-'){
+                this.mes += fecha[i]; 
+              }else{
+                this.mes = '';
+                this.mes += '0'+ fecha[3];               
+              }
+            }
+          }
+        }else if( i >= 0 && i <= 1){
+          if( fecha[i] === '-'){
+            this.dia = '';
+            this.dia += '0' + fecha[0]          
+          }else {
+            this.dia += fecha[i];          
+          }
+        }
+      }
+     
+      return this.formato += this.anio + '-' + this.mes + '-' + this.dia ;
+    }else{
+      return '2023-01-01';
+    }
+    
+    
+  }
+
 
   dataSource = this.users;
   columnsToDisplay = ['IdUsuario','Rol', 'NombreUsuario', 'Email', 'Estado', 'FechaActivacion', 'FechaDesactivacion', 'acciones'];
   expandedElement!: Usuario | null;
 }
+

@@ -23,7 +23,7 @@
                   <h2>  <i class="bi bi-chat-left-quote"></i> &nbsp; Ingrese Los Siguientes Datos</h2>
               </div>
               <div class="mb-1 col-4">
-                  <form [formGroup]="registroUsuario" >
+                  <form [formGroup]="registroUsuario" (ngSubmit)="ingresar()">
                       <div class="mb-4 d-flex "> 
                           <div class="col-md-10">
                             <mat-form-field>                        
@@ -38,7 +38,7 @@
                           <div class="col-md-10">
                             <mat-form-field>                        
                               <input matInput 
-                                     type="text"                                     
+                                     type="password"                                     
                                      autocomplete="off"
                                      formControlName="password"
                                      placeholder="Contraseña">
@@ -48,7 +48,7 @@
                           <div class="col-md-10">
                             <mat-form-field>                        
                               <input matInput 
-                                     type="text"                                     
+                                     type="password"                                     
                                      autocomplete="off"
                                      formControlName="password2"
                                      placeholder="Confirmar contraseña">
@@ -87,12 +87,14 @@
                         <div class="col-md-10">
                           <form class="row row-cols-sm-auto">
                             <div class="col-12">
-                              <div class="input-group">                                
-                                 <input class="form-control" placeholder="Fecha Activacion"
-                                        name="dp" [(ngModel)]="usuarioActivo" ngbDatepicker #d="ngbDatepicker">
-                                 <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                              <div class="input-group">                                                              
+                                 <input type="text" class="form-control" placeholder="Fecha Activacion"
+                                        name="usuarioActivo" [(ngModel)]="usuarioActivo" ngbDatepicker #d1="ngbDatepicker"
+                                        >
+                                 <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
                                    <mat-icon>event</mat-icon>
                                  </button>
+                                 {{ usuarioActivo | json }}
                                </div>
                              </div>
                            </form>
@@ -102,8 +104,8 @@
                             <form class="row row-cols-sm-auto">
                               <div class="col-12">
                                 <div class="input-group">                                
-                                   <input class="form-control" placeholder="Fecha Desactivacion"
-                                          name="dpd" [(ngModel)]="usuarioNoActivo" ngbDatepicker #d2="ngbDatepicker">
+                                   <input class="form-control" placeholder="Fecha Desactivacion" type="text"
+                                          name="usuarioNoActivo" [(ngModel)]="usuarioNoActivo" ngbDatepicker #d2="ngbDatepicker">
                                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button">
                                      <mat-icon>event</mat-icon>
                                    </button>

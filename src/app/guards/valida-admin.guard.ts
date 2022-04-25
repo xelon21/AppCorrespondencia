@@ -20,6 +20,10 @@ export class ValidaAdminGuard implements CanActivate, CanLoad {
                 if(!valid) {
                   this.router.navigateByUrl('/correspondencia/administrador')
                 }
+                // console.log('si pasa por aca canactivate')
+                // localStorage.removeItem('apiKey');
+                // this.router.navigateByUrl('/home/login')
+
               })
             );
   }
@@ -30,6 +34,10 @@ export class ValidaAdminGuard implements CanActivate, CanLoad {
                   if(!valid) {
                     this.router.navigateByUrl('/correspondencia/administrador')
                   }
+                  // console.log('si pasa por aca canload')
+                  // localStorage.removeItem('apiKey');
+                  // this.router.navigateByUrl('/home/login')
+
                 })
               );
   }
