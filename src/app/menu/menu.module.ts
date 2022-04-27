@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MenuRoutingModule } from './menu-routing.module';
@@ -12,10 +12,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { FiltroFechasComponent } from './filtro-fechas/filtro-fechas.component';
 import { TablaCorrespondenciaComponent } from './tablaCorrespondencia/tablaCorrespondencia.component';
-import { RegistrarComponent } from './pages/registrarUsuario/registrar.component';
 import { AdministracionComponent } from './pages/administracion/administracion.component';
 import { estadoUsuarioPipe } from './pipe/estadoUsuario.pipe';
 import { NgbDateAdapter, NgbDateNativeUTCAdapter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModificarUsuarioComponent } from './pages/modificar-usuario/modificar-usuario.component';
+import { CambioPasswordComponent } from './pages/cambio-password/cambio-password.component';
+import { ModificarEstadoComponent } from './pages/modificar-estado/modificar-estado.component';
 
 
 
@@ -28,12 +30,13 @@ import { NgbDateAdapter, NgbDateNativeUTCAdapter, NgbModule } from '@ng-bootstra
     MostrarComponent,    
     inicioComponent,
     FiltrarComponent,
-    FiltroFechasComponent,
-    RegistrarComponent,
+    FiltroFechasComponent,    
     AdministracionComponent,
-    estadoUsuarioPipe
-        
-    
+    estadoUsuarioPipe,
+    ModificarUsuarioComponent,
+    CambioPasswordComponent,
+    ModificarEstadoComponent,
+            
   ],
   imports: [
     CommonModule,
@@ -43,10 +46,10 @@ import { NgbDateAdapter, NgbDateNativeUTCAdapter, NgbModule } from '@ng-bootstra
     FormsModule,  
     NgbModule
 
-  ],
+  ],  
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
-    {provide: NgbDateAdapter, useClass: NgbDateNativeUTCAdapter}
+    {provide: NgbDateAdapter, useClass: NgbDateNativeUTCAdapter},    
   ]  
 })
 export class MenuModule { }

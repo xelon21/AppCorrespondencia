@@ -1,0 +1,84 @@
+<div fxLayout="columns wrap" fxLayoutAlign="center center">
+    <div
+    style="font-style: italic"
+    [ngStyle.xs]="{'font-size.px': 10, color: 'blue'}"
+    [ngStyle.sm]="{'font-size.px': 20, color: 'lightblue'}"
+    [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
+    <div class="ancho2">
+        <mat-toolbar>
+            <span>Modificar Usuario</span>
+            <div class="spacer"></div>
+            <button mat-raised-button color="primary"
+                routerLink="/correspondencia/administrador" 
+                fxFlex="10"                    
+                ><mat-icon>reply</mat-icon > Volver</button>             
+        </mat-toolbar>
+    </div>
+    <div class="ancho4">
+      <section class="d-flex justify-content-center align-items-center">
+          <div class="card shadow col-md-4 col-sm-4 col-md-4 col-lg-4 p-4 ancho"> 
+              <div class="row">
+                
+                  <h2>  <i class="bi bi-chat-left-quote"></i> &nbsp; Ingrese Datos a Modificar</h2>
+              </div>
+              <div class="mb-1 col-4">                  
+                      <div class="mb-4 d-flex "> 
+                          <div class="col-md-10">
+                            <mat-form-field>                        
+                              <input matInput                                      
+                                     type="text"                                     
+                                     autocomplete="off"
+                                     [(ngModel)]="usuario.correoUsuario"
+                                     placeholder="Email">
+                            </mat-form-field>
+                          </div> 
+                          <span class="input"></span>                         
+                          <div class="col-md-10">
+                            <mat-form-field>
+                              <mat-label>Rol del usuario</mat-label>
+                              <mat-select [(ngModel)]="usuario.idRol"
+                                          type="number">
+                                  <mat-option *ngFor="let rol of roles" [value]="rol.idRol">
+                                  {{ rol.rol}}                            
+                                  </mat-option>
+                              </mat-select>
+                              </mat-form-field>    
+                          </div>    
+                          <span class="input"></span>                            
+                          <div class="col-md-10">
+                            <button class="boto" mat-raised-button color="primary" (click)="openDialog()"> Cambiar Contraseña </button>
+                          </div>  
+                      </div> 
+                      <div class="mb-4 d-flex ">
+                        <div class="col-md-10">
+                          <mat-form-field>                        
+                            <input matInput 
+                                   type="text" 
+                                   class="form-control"                                    
+                                   autocomplete="off"
+                                   [(ngModel)]="usuario.nombreUsuario"
+                                   placeholder="Nombre de usuario">
+                          </mat-form-field>                          
+                        </div>
+                        <span class="input"></span>         
+                        <div class="col-md-10">                                                 
+                        </div>
+                        <span class="input"></span>         
+                        <div class="col-md-10">
+                          <button class="boto" mat-raised-button color="primary" (click)="openDialog2()"> Cambiar Estado </button>                 
+                        </div>
+                      </div>
+                      <div class="mb-4 d-flex">
+                        </div>     
+                      <div class="mb-2" >
+                        <button mat-raised-button color="primary" class="ancho3"                                                 
+                        (click)="modificar()">
+                           <mat-icon mat-list-icon >send</mat-icon> Ingresar 
+                       </button>  
+                      </div> 
+              </div>
+          </div>
+      </section>
+    </div>
+
+    

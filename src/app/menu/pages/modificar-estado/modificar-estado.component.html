@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Cambiar Contraseña</h2>
+                    <div class="col-md-6 col-sm-6 col-md-6 col-lg-6 p-6 ancho">             
+                        <div class=" col-12">                   
+                                <div class="mb-6 d-flex" >                                    
+                                    <div class="col-md-6">
+                                        <mat-slide-toggle class="input2" [(ngModel)]="estado.estado"> Desactivar Ahora </mat-slide-toggle>
+                                    </div>    
+                                    <span class="input"></span>                                    
+                                        <div>  
+                                            <mat-form-field appearance="fill" [formGroup]="fecha">
+                                                <mat-label> Ingrese fecha de desactivacion </mat-label>                                                
+                                                <input formControlName="desactivacionUsuario" matInput  [matDatepicker]="datepicker">                                               
+                                                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                                <mat-datepicker #datepicker>
+                                                  <mat-datepicker-actions>
+                                                    <button mat-button matDatepickerCancel>Cancel</button>
+                                                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                                                  </mat-datepicker-actions>
+                                                </mat-datepicker>
+                                              </mat-form-field>                                         
+                                        </div>
+                                    <span class="input"></span> 
+                                </div> 
+                        </div>
+                    </div>
+<mat-dialog-actions>
+  <button mat-raised-button color="warn"mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary"[mat-dialog-close]="true" cdkFocusInitial (click)="modificarEstado()">Aceptar</button>
+</mat-dialog-actions>
+
+
+<!-- <mat-date-input [formGroup]="fecha" [matDatepicker]="datepicker">
+    <input matStartDate formControlName="desactivacionUsuario" placeholder="Fecha Inicio"> -->

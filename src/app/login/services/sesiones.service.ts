@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LoginResponse, Roles, Usuario, RegistrarUsuario } from '../interface/login.interface';
+import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion } from '../interface/login.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -137,9 +137,54 @@ export class SesionesService {
         catchError( err => of(false))
       );
   
- }
- buscaUsuario(filtro: string ): Observable<Usuario[]> {
+  }
+  buscaUsuario(filtro: string ): Observable<Usuario[]> {
   return this.http.get<Usuario[]>(`${this.baseUrl}/login/filtraUsuario/${ filtro }`);
+  }
 
-}
+  buscarPorIdUsuario(filtro: number) : Observable<UsuarioModificar>{
+    return this.http.get<UsuarioModificar>(`${this.baseUrl}/login/filtrarUsuariosModificar/${ filtro}`);
+
+  }
+
+  modificarPorIdUsuario(usuario: UsuarioModificar ): Observable<UsuarioModificar> {
+
+    return this.http.put<UsuarioModificar>(`${this.baseUrl}/login/modificar/${ usuario.idUsuario }`, usuario);   
+
+  }
+
+  modificarPassword( password: string, password2: string, idUsuario: number) {
+
+    const url = `${this.baseUrl}/login/modificarPassword/${ idUsuario }`;
+    const body = {  password, password2 };
+  
+        return this.http.put<ModificarPassword>(url , body )
+        .pipe(
+            map( resp => {
+             return resp;             
+          } ),            
+            catchError( err => of(false) ) 
+    );
+    
+  }
+
+  modificarEstado(idUsuario: number, estado: boolean, desactivacionUsuario: string | null) {
+
+    const url = `${this.baseUrl}/login/modificarEstado/${ idUsuario }`;
+    const body = { estado, desactivacionUsuario };
+
+        return this.http.put<ModificarActivacion>(url, body)
+          .pipe(
+            map( resp => {
+              return resp;
+            }
+          ),
+          catchError( err => of(false) )
+          );
+  }
+
+  
+
+
+
 }

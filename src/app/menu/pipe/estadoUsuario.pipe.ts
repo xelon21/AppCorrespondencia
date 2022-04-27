@@ -11,6 +11,18 @@ export class estadoUsuarioPipe implements PipeTransform {
         } else {
             return 'INACTIVO'
         }
+
     }
+
+    transform2( valor: boolean): string {
+
+        if(valor){
+            return 'ACTIVO';
+        }else {
+            return 'INACTIVO';
+        }
+    }
+
+    
 
 }

@@ -47,3 +47,26 @@ export interface Roles {
     rol: string;
     descripcion: string; 
 }
+
+export interface UsuarioModificar {
+    idUsuario: number;
+    idRol: number;
+    correoUsuario: string;
+    password: string; 
+    password2: string;
+    nombreUsuario: string;
+    desactivacionUsuario: string; 
+    estado: boolean;  
+}
+
+export interface ModificarActivacion {
+    idUsuario: number;
+    desactivacionUsuario: string; 
+    estado: boolean;   
+}
+
+export interface ModificarPassword {
+    idUsuario: number;
+    password: string; 
+    password2: string;
+}

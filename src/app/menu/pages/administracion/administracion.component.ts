@@ -243,11 +243,11 @@ export class AdministracionComponent implements OnInit {
            * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
           this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, estado, fech1, fech2 )
           .subscribe( resp => {
-            if(resp){
+            if(!resp){
               Swal.fire({
                 position: 'top-end',
                 icon: 'success',
-                title: 'Usuario Guardada Con Exito',
+                title: 'Usuario Guardado Con Exito',
                 showConfirmButton: false,
                 timer: 1500
               }) 
