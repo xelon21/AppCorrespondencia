@@ -231,35 +231,57 @@ export class AdministracionComponent implements OnInit {
     // Se extraen los datos del formulario
     const { idRol, email, password, nombreUsuario , estado, password2 } = this.registroUsuario.value;
 
-    try {
-       
+    try {  
         
-        if( password === password2){
+         if( password === password2){
           
           let fech1 = this.FormatoFecha(this.usuarioActivo)
-          let fech2 = this.FormatoFecha(this.usuarioNoActivo)
+          let fech2 = '2024-01-01'
+          let diaActual = new Date().getDate().toString()
+          let mesActual = new Date().getMonth()
+          let anioActual = new Date().getFullYear().toString()
+          let fechaActual =+  diaActual + '-' + (mesActual + 1).toString()+ '-' +anioActual
+          // let fechaActual =+ anioActual + '-' + +(mesActual + 1).toString() + '-' + diaActual; 
 
-          /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
-           * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
-          this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, estado, fech1, fech2 )
-          .subscribe( resp => {
-            if(!resp){
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Usuario Guardado Con Exito',
-                showConfirmButton: false,
-                timer: 1500
-              }) 
-            }
-          })
+          if(fech1 === this.FormatoFecha(fechaActual)){
+            let activo = 1;
+            /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
+             * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
+            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, activo, fech1, fech2 )
+            .subscribe( resp => {
+              if(!resp){
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Usuario Guardado Con Exito',
+                  showConfirmButton: false,
+                  timer: 1500
+                }) 
+              }
+            })
+          }else {
+
+            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, estado, fech1, fech2 )
+            .subscribe( resp => {
+              if(!resp){
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Usuario Guardado Con Exito',
+                  showConfirmButton: false,
+                  timer: 1500
+                }) 
+              }
+            })
+          }  
         }else {
           Swal.fire({
             icon: 'error',
             title: 'Error',
             text: 'Las contraseñas no coinciden',                
           })
-        }        
+        }
+
       } catch (error) {
         console.log(error)
         Swal.fire({

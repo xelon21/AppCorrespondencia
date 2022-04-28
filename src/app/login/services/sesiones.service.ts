@@ -66,7 +66,9 @@ export class SesionesService {
               }                               
             }
           } ),
-            map( resp => resp.estado),
+            map( resp => {
+              return resp.estado;
+            }),
             catchError( err => of(false) )
         )
   }

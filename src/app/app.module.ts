@@ -39,15 +39,13 @@ registerLocaleData(localeDe, "es-CL", localeDeExtra);
     
   ],
   exports: [
-    // ModificarUsuarioComponent,
-    // AdministracionComponent
+  
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "es-CL"}]
     ,
   bootstrap: [
-    AppComponent,
-    ModificarUsuarioComponent,
-    AdministracionComponent]
+    AppComponent    
+  ]
 })
 export class AppModule { }

@@ -138,6 +138,7 @@ export class ModificarUsuarioComponent implements OnInit {
     try {      
       await this.loginService.modificarPorIdUsuario(this.usuario)
           .subscribe( datos => {
+            console.log(datos)
             this.usuario = datos                                 
                   Swal.fire({
                     title: 'Estas seguro de guardar los datos?',                  
@@ -152,11 +153,7 @@ export class ModificarUsuarioComponent implements OnInit {
                       }else {
                         this.rolUsuario = 'Administrador'
                       }                      
-                      Swal.fire(` Los siguientes datos:                           
-                                  Email: ${ this.usuario.correoUsuario }   
-                                  Usuario: ${ this.usuario.nombreUsuario } 
-                                  Rol: ${ this.rolUsuario }   
-                                  han sido almacenados                        
+                      Swal.fire(` Los  datos han sido almacenados                        
                       `)                       
                       this.router.navigate(['/correspondencia/administrador'])             
                     } else if (result.isDenied) {
