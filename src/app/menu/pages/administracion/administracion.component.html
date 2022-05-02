@@ -79,18 +79,19 @@
                         </div>
                         <span class="input"></span>
                         <div class="col-md-10">
-                          <form class="row row-cols-sm-auto">
-                            <div class="col-12">
-                              <div class="input-group">                                                              
-                                 <input type="text" class="form-control" placeholder="Fecha Activacion"
-                                        name="usuarioActivo" [(ngModel)]="usuarioActivo" ngbDatepicker #d1="ngbDatepicker"
-                                        >
-                                 <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
-                                   <mat-icon>event</mat-icon>
-                                 </button>                                 
-                               </div>
-                             </div>
-                           </form>
+                          <div>  
+                            <mat-form-field appearance="fill" [formGroup]="fecha">
+                                <mat-label> Ingrese fecha de activacion </mat-label>                                                
+                                <input formControlName="activacionUsuario" matInput  [matDatepicker]="datepicker">                                               
+                                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                <mat-datepicker #datepicker>
+                                  <mat-datepicker-actions>
+                                    <button mat-button matDatepickerCancel>Cancelar</button>
+                                    <button mat-raised-button color="primary" matDatepickerApply>aceptar</button>
+                                  </mat-datepicker-actions>
+                                </mat-datepicker>
+                              </mat-form-field>                                         
+                        </div>
                         </div>
                       </div>
                       <div class="mb-4 d-flex">

@@ -100,7 +100,7 @@ export class ModificarComponent implements OnInit {
           }else{           
             await this.correoService.filtroCorrelativo(this.correos.correlativo)
             .subscribe( result => {              
-              if(this.correos.usuario === result[0].usuario){
+              if(this.loginService.usuario.nombre === result[0].usuario){
                 this.correoService.modificarPorCorrelativo( this.correos )
                 .subscribe( correo => this.correos = correo)                 
                 Swal.fire({

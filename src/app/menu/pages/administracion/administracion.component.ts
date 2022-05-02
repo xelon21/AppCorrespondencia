@@ -1,11 +1,12 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SesionesService } from '../../../login/services/sesiones.service';
 import { Roles, Usuario } from '../../../login/interface/login.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import Swal from 'sweetalert2';
 
 import { NgbCalendar, NgbDate, NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { FormatoFecha } from '../../interface/correspondencia.interface';
 
 
 @Injectable()
@@ -165,6 +166,8 @@ export class AdministracionComponent implements OnInit {
   strin!: NgbDate;
   usuarioNoActivo!: string;
 
+  fecha1!: FormatoFecha;
+
   formato!: string;
   anio!: string;
   mes!: string;
@@ -226,6 +229,10 @@ export class AdministracionComponent implements OnInit {
     return this.dateAdapter.toModel(this.ngbCalendar.getToday())!;
   }
 
+  fecha = new FormGroup({
+    activacionUsuario: new FormControl()    
+  });
+
   async ingresar(){
     
     // Se extraen los datos del formulario
@@ -235,19 +242,20 @@ export class AdministracionComponent implements OnInit {
         
          if( password === password2){
           
-          let fech1 = this.FormatoFecha(this.usuarioActivo)
+          this.fecha1 = this.fecha.controls['activacionUsuario'].value._i
+          let fechaActivacion: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;          
           let fech2 = '2024-01-01'
           let diaActual = new Date().getDate().toString()
           let mesActual = new Date().getMonth()
           let anioActual = new Date().getFullYear().toString()
-          let fechaActual =+  diaActual + '-' + (mesActual + 1).toString()+ '-' +anioActual
-          // let fechaActual =+ anioActual + '-' + +(mesActual + 1).toString() + '-' + diaActual; 
+          //let fechaActual =+  diaActual + '-' + (mesActual + 1).toString()+ '-' +anioActual
+          let fechaActual =+ anioActual + '-' + +(mesActual + 1).toString() + '-' + diaActual; 
 
-          if(fech1 === this.FormatoFecha(fechaActual)){
+          if(fechaActivacion === this.FormatoFecha(fechaActual)){
             let activo = 1;
             /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
              * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
-            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, activo, fech1, fech2 )
+            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, activo, fechaActivacion, fech2 )
             .subscribe( resp => {
               if(!resp){
                 Swal.fire({
@@ -261,7 +269,7 @@ export class AdministracionComponent implements OnInit {
             })
           }else {
 
-            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, estado, fech1, fech2 )
+            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, estado, fechaActivacion, fech2 )
             .subscribe( resp => {
               if(!resp){
                 Swal.fire({
