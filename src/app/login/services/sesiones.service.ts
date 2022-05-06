@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion } from '../interface/login.interface';
@@ -10,15 +10,22 @@ import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, Modi
 })
 export class SesionesService {
 
+  
+
   constructor(private http: HttpClient) {    
    }
 
   private baseUrl: string = environment.baseUrl;
   private _usuario!: Usuario;
+  private refresh = new Subject<void>();
   
 
   get usuario() {
     return { ...this._usuario };
+  }
+
+  get refrescar(){
+    return this.refresh;
   }
 
   obtenerUsuarios(): Observable<Usuario[]> {
@@ -26,6 +33,7 @@ export class SesionesService {
     const url = `${this.baseUrl}/login/traeUsuarios`
 
     return this.http.get<Usuario[]>( url );
+    
   }
 
 
@@ -39,7 +47,10 @@ export class SesionesService {
         .pipe(
             map( resp => {
              resp.nombreUsuario              
-          } ),            
+          } ),     
+          tap(() => {
+            this.refresh.next();
+          }),       
             catchError( err => of(false) ) 
     );
   }
@@ -62,7 +73,7 @@ export class SesionesService {
                 estado: resp.estado!,
                 usuarioActivo: resp.usuarioActivo!,
                 usuarioNoActivo: resp.usuarioNoActivo!,    
-                apiKey: resp.apiKey!
+                apiKey: resp.apiKey!                
               }                               
             }
           } ),
@@ -99,8 +110,19 @@ export class SesionesService {
       );
   }
 
-  logout(){
-    localStorage.removeItem('apiKey');
+  logout(logeado: boolean){
+    
+    const url = `${this.baseUrl}/logout`;
+    const body = { logeado };
+
+    return this.http.post(url , body)
+          .subscribe(resp =>{
+            if(resp){
+              localStorage.removeItem('apiKey');
+            }else {
+              return;
+            }
+          } )
   }
 
   traeRoles(): Observable<Roles[]> {

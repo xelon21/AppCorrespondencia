@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Correspondencia, FormatoFecha } from '../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../services/correspondencia.service';
+import { MatDialogRef } from '@angular/material/dialog';
+
 
 
 @Component({
@@ -34,9 +36,19 @@ export class FiltroFechasComponent implements OnInit {
   hayError: boolean = false;
   correos: Correspondencia[] = [];
   
-  constructor(private correoService: CorrespondenciaService) { } 
-
+  constructor(private correoService: CorrespondenciaService,
+              private dialogRef: MatDialogRef<FiltroFechasComponent>) {
+                dialogRef.disableClose = true;
+                dialogRef.backdropClick().subscribe(_ => {
+                  dialogRef.close();
+                })
+               } 
+        
   ngOnInit(): void {
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 
   /* Metodo que permite filtrar un rango de fechas */

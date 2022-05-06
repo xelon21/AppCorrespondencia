@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 
 import { NgbCalendar, NgbDate, NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FormatoFecha } from '../../interface/correspondencia.interface';
+import { CorrespondenciaService } from '../../services/correspondencia.service';
+import { Subscription } from 'rxjs';
 
 
 @Injectable()
@@ -181,6 +183,7 @@ export class AdministracionComponent implements OnInit {
   roles: Roles[] = [];
   users: Usuario[] = [];
   filtro: string = '';
+  suscription!: Subscription;
 
   registroUsuario: FormGroup = this.fb.group({
     idRol: [0 ,[Validators.required]],
@@ -195,7 +198,8 @@ export class AdministracionComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private loginService: SesionesService,
-              private ngbCalendar: NgbCalendar, private dateAdapter: NgbDateAdapter<string>) { }
+              private ngbCalendar: NgbCalendar,
+              private dateAdapter: NgbDateAdapter<string>) { }
 
   ngOnInit(): void {
 
@@ -203,8 +207,19 @@ export class AdministracionComponent implements OnInit {
         .subscribe( datos => { this.roles = datos })
     
     this.loginService.obtenerUsuarios()
-        .subscribe( datos => { this.users = datos })  
+        .subscribe( datos => { this.users = datos })
+
+    this.suscription = this.loginService.refrescar
+        .subscribe( () => {
+    this.loginService.obtenerUsuarios()
+          .subscribe( datos => { this.users = datos })
+    })    
+  }
+
+  ngOnDestroy(): void {
     
+    this.suscription.unsubscribe();
+
   }
 
   async filtrarPorCorrelativo() {  

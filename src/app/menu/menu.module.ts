@@ -48,6 +48,7 @@ import { ModificarEstadoComponent } from './pages/modificar-estado/modificar-est
 
   ],  
   providers: [
+    AgregarComponent,
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
     {provide: NgbDateAdapter, useClass: NgbDateNativeUTCAdapter},    
   ]  

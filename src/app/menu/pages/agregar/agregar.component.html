@@ -71,6 +71,14 @@
                 </div>               
             </form>
         </mat-card>
+        <div *ngIf="estadoCampos">
+            <div class="alert alert-danger" role="alert" *ngIf="estadoDestinatario">
+                El campo Destinatario no puede estar vacio
+              </div>
+              <div class="alert alert-danger" role="alert" *ngIf="estadoReferencia">
+                El campo Referencia no puede estar vacio
+              </div>
+        </div>        
     </div>
 </div>
 </div>

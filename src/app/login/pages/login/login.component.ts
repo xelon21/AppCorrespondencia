@@ -70,6 +70,10 @@ export class LoginComponent implements OnInit {
          
         })
       }else{
+        
+        // if(this.loginService.usuario.email === email){
+          
+        // }
         /** se llama al metodo loginUsuario y se le envian los parametros
          *  email y password. Dependiendo de la respuesta, ingresara a la pagina
          *  o le dara un mensaje de error. el usuario no puede ingresar si no 
@@ -87,7 +91,7 @@ export class LoginComponent implements OnInit {
                 timer: 1500
               })
               // redirecciona a la pagina si se autentica correctamente
-              this.router.navigateByUrl('/correspondencia/mostrar')
+              this.router.navigateByUrl('/correspondencia/agregar')
             }else {
               Swal.fire({
                 icon: 'error',
@@ -104,35 +108,3 @@ export class LoginComponent implements OnInit {
   }
 
 }
-
-
-
-// this.loginService.validaAdmin(email, password)
-// .subscribe(resp => {
-//   if (!email) {
-//     this.estadoEmail = true;
-//     if (!password) {
-//       this.estadoPassword = true;
-//     }
-//   } else {
-//     this.estadoEmail = false;
-//     this.estadoPassword = false;         
-//       this.loginService.loginUsuario(email, password)
-//         .subscribe(resp => {
-//           if (resp) {                    
-//             Swal.fire({
-//               position: 'top-end',
-//               icon: 'success',
-//               title: 'Se a ingresado correctamente',
-//               showConfirmButton: false,
-//               timer: 1500
-//             })
-//             this.esAdmin = resp;
-//             this.router.navigateByUrl('/correspondencia/mostrar')
-//           } else {
-//             console.log('nothin')
-//           }
-//         });            
-//   }
-// }) 
-

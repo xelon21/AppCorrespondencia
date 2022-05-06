@@ -22,7 +22,7 @@
              [(ngModel)]="filtro"
              (input)="filtrarPorCorrelativo()"
              placeholder="correlativo">
-            </form>  
+            </form>           
             <div >
               <app-tabla [correos]="correos" *ngIf="hayError"></app-tabla>
             </div>

@@ -15,8 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { registerLocaleData } from "@angular/common";
 import localeDe from "@angular/common/locales/es-CL";
 import localeDeExtra from "@angular/common/locales/extra/es-CL";
-import { ModificarUsuarioComponent } from './menu/pages/modificar-usuario/modificar-usuario.component';
-import { AdministracionComponent } from './menu/pages/administracion/administracion.component';
+
 
 registerLocaleData(localeDe, "es-CL", localeDeExtra);
 
@@ -35,15 +34,15 @@ registerLocaleData(localeDe, "es-CL", localeDeExtra);
     FormsModule,
     MaterialModule,
     FlexLayoutModule,
-    NgbModule
+    NgbModule,    
     
   ],
   exports: [
   
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: "es-CL"}]
-    ,
+    { provide: LOCALE_ID, useValue: "es-CL"}
+  ],
   bootstrap: [
     AppComponent    
   ]

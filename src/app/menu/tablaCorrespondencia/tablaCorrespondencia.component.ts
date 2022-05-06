@@ -74,7 +74,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 })
 export class TablaCorrespondenciaComponent {
 
-  @Input() correos: Correspondencia[] = [];
+  @Input() correos: Correspondencia[] = [];  
 
   // Declaracion de variables para poder utilizar los campos en el html
   dataSource = this.correos;

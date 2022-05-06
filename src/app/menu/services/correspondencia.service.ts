@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Correspondencia, CorrespondenciaB, CorrespondenciaModificar, TipoDocumento, TipoEnvio, } from '../interface/correspondencia.interface';
+import { Correspondencia, CorrespondenciaB, CorrespondenciaModificar, TipoDocumento, TipoEnvio, Correlativo } from '../interface/correspondencia.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +13,15 @@ export class CorrespondenciaService {
 
   // Se declara la url desde las variables de entorno
   private baseUrl: string = environment.baseUrl;
+
+  private refresh = new Subject<void>();
   
   // Se inicialica la variable http como tipo HttpClient
   constructor( private http: HttpClient) { }  
+
+  get refrescar(){
+    return this.refresh;
+  }
 
   /* Metodo que trae todas las correspondencias*/
   getCorrespondencia(): Observable<Correspondencia[]> {
@@ -43,6 +49,7 @@ export class CorrespondenciaService {
     return this.http.post(url , body )
           .pipe(
             tap( resp => {
+              this.refresh.next(),
               console.log(resp)
             } ),
             map( resp => resp),
@@ -52,9 +59,11 @@ export class CorrespondenciaService {
 
   /** Metodo que permite modificar una correspondencia por el correlativo */
   modificarPorCorrelativo(correo: CorrespondenciaModificar ): Observable<CorrespondenciaModificar> {
+    return this.http.put<CorrespondenciaModificar>(`${this.baseUrl}/modificar/${ correo.correlativo }`, correo);  
+  }
 
-    return this.http.put<CorrespondenciaModificar>(`${this.baseUrl}/modificar/${ correo.correlativo }`, correo);   
-
+  buscaUltimo(){
+    return this.http.get<Correlativo>(`${this.baseUrl}/mostrar/ultimo`);
   }
 
   /** metodo que trae una correspondencia por el correlativo */

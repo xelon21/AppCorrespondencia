@@ -27,7 +27,7 @@ const routes: Routes = [
         canActivate: [ ValidaAdminGuard ],
         canLoad: [ ValidaAdminGuard ] 
       }, 
-      { path: '**', redirectTo: 'mostrar'}
+      { path: '**', redirectTo: 'agregar'}
     ]
   }
 ];

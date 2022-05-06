@@ -51,8 +51,8 @@ export class inicioComponent implements OnInit {
 
   logout() {    
     
+    this.usuarioService.logout(true);
     this.router.navigateByUrl('/login')
-    this.usuarioService.logout();
 
   }
 
