@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
          */
         this.loginService.loginUsuario(email, password)
           .subscribe( resp => {
-            console.log(resp)
+           // console.log(resp)
             if(resp) {
               Swal.fire({
                 position: 'top-end',

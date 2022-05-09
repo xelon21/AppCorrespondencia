@@ -42,13 +42,14 @@ export class AgregarComponent implements OnInit  {
   miFormulario: FormGroup = this.fb.group({
     idTipoDocumento: 0,
     idTipoEnvio: 0,   
-    destinatario: ['', Validators.required, Validators.minLength(6)],
-    referencia: ['', Validators.required, Validators.minLength(6)]
+    destinatario: ['', [Validators.required, Validators.minLength(6)]],
+    referencia: ['', [Validators.required, Validators.minLength(6)]],
+    usuario: this.loginService.usuario.nombre
   }) 
 
   constructor( private fb: FormBuilder,
                private correosService: CorrespondenciaService,
-               private activatedRoute: ActivatedRoute,
+               //private activatedRoute: ActivatedRoute,
                private router: Router,
                private loginService: SesionesService ) { }
   
@@ -57,7 +58,7 @@ export class AgregarComponent implements OnInit  {
   
     this.traeTipos();
 
-    this.activatedRoute.params.subscribe( ({correlativo}) => console.log(correlativo) )
+    //this.activatedRoute.params.subscribe( ({correlativo}) => console.log(correlativo) )
   }  
   /* Metodo que trae los campos tipo envio y tipo documento y rellena los selects*/
   traeTipos() {
@@ -68,59 +69,32 @@ export class AgregarComponent implements OnInit  {
        .subscribe( tipo => this.tipoDocumento = tipo );
   }
 
-  
-
-  validaDestinatario(destinatario: string): boolean{
-    if(!destinatario || destinatario.length < 6){
-      this.estadoDestinatario = true;
-      return this.estadoDestinatario;
-    }else {
-      this.estadoDestinatario = false;
-      return false;
-    }
-  }
-
   /* Metodo que permite ingresar una correspondencia */
   async ingresar() {    
     try {
-      // Se extraen los datos del formulario
-      const { idTipoDocumento, idTipoEnvio, destinatario, referencia } = this.miFormulario.value;
-
-      const usuario = this.loginService.usuario.nombre; 
-
-      //this.estadoCampos = this.validaCampos(destinatario, referencia)
-      //console.log(usuario)       
+      
       if(!this.estadoCampos){
         /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
          * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
-        await this.correosService.ingresaCorrespondencia( idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia )
+        await this.correosService.ingresaCorrespondencia( this.miFormulario.value)
         .subscribe( resp => {
-          console.log(resp)        
-        });
-        this.correosService.getCorrespondencia()
-        .subscribe( correos => {
-          this.correos = correos;
-        })
-        this.correosService.buscaUltimo()
-        .subscribe( dato => {
-          console.log(dato.correlativo)
-          this.ultimoCorrelativo = dato;
-          Swal.fire({
+            Swal.fire({
             position: 'top-end',
             icon: 'success',
             title: 'Correspondencia Guardada Con Exito',
-            footer:'El correlativo es: ' + this.ultimoCorrelativo.correlativo,
-            showConfirmButton: true             
-        })            
-        }) 
-        //se redirecciona a la pagina que muestra correspondencia 
-        this.router.navigate(['/correspondencia/mostrar'])
-      }else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Los campos no pueden estar vacios',         
-        })
+            footer:'El correlativo es: ' + resp.correlativo,
+            showConfirmButton: true 
+            })
+            //se redirecciona a la pagina que muestra correspondencia 
+            this.router.navigate(['/correspondencia/mostrar'])
+            console.log(resp)        
+          }); 
+          }else {
+          Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Los campos no pueden estar vacios',         
+         })
       }
     } catch (error) {
       console.log(error)

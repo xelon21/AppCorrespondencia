@@ -21,6 +21,15 @@ export interface CorrespondenciaB {
     us: string;
 }
 
+export interface AgregarCorrespondencia {
+    idTipoDocumento: number;
+    idTipoEnvio: number;
+    usuario: string;
+    destinatario: string;
+    referencia: string;
+    correlativo?: string;
+}
+
 export interface TipoEnvio {
     idTipoEnvio: number;
     nombreEnvio: string;

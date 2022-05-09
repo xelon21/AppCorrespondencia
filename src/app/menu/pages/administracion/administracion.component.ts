@@ -191,7 +191,7 @@ export class AdministracionComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(3) ]],
     password2: ['', [Validators.required, Validators.minLength(3) ]],
     nombreUsuario: ['', [Validators.required, Validators.minLength(3) ]],
-    estado: [false ],
+    estado: [ false ],
     usuarioActivo: [],
     usuarioNoActivo: [''],
   })
@@ -248,31 +248,28 @@ export class AdministracionComponent implements OnInit {
     activacionUsuario: new FormControl()    
   });
 
-  async ingresar(){
-    
+  async ingresar(){    
     // Se extraen los datos del formulario
     const { idRol, email, password, nombreUsuario , estado, password2 } = this.registroUsuario.value;
-
     try {  
         
          if( password === password2){
           
           this.fecha1 = this.fecha.controls['activacionUsuario'].value._i
-          let fechaActivacion: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;          
-          let fech2 = '2024-01-01'
+          let fechaActivacion: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;    
           let diaActual = new Date().getDate().toString()
           let mesActual = new Date().getMonth()
-          let anioActual = new Date().getFullYear().toString()
-          //let fechaActual =+  diaActual + '-' + (mesActual + 1).toString()+ '-' +anioActual
+          let anioActual = new Date().getFullYear().toString()          
           let fechaActual =+ anioActual + '-' + +(mesActual + 1).toString() + '-' + diaActual; 
 
-          if(fechaActivacion === this.FormatoFecha(fechaActual)){
+          if(fechaActivacion === fechaActual){
             let activo = 1;
             /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
              * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
-            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, activo, fechaActivacion, fech2 )
+            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, activo, fechaActivacion )
             .subscribe( resp => {
-              if(!resp){
+              console.log('resp 1 : '+resp)
+              if(resp){
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
@@ -280,13 +277,19 @@ export class AdministracionComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 }) 
+              }else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'El usuario ya existe',                
+                })
               }
             })
           }else {
-
-            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, estado, fechaActivacion, fech2 )
+            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, estado, fechaActivacion )
             .subscribe( resp => {
-              if(!resp){
+              console.log('resp2: '+resp)
+              if(resp){
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
@@ -294,6 +297,12 @@ export class AdministracionComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 }) 
+              }else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'El usuario ya existe',                
+                })
               }
             })
           }  
@@ -322,17 +331,14 @@ export class AdministracionComponent implements OnInit {
       this.formato = '';
       this.anio = '';
       this.mes= '';
-      this.dia= '';
-  
-      for (let i= 0; i < fecha.length; i++) {    
-  
+      this.dia= '';  
+      for (let i= 0; i < fecha.length; i++) {   
         if( i >= 4 && i <= 9){
           if(fecha[i] === '-'){
             this.anio = '';
           }else {
             this.anio += fecha[i];          
-          }       
-  
+          }
         }else if( i >= 2 && i <= 4 ){
           if( fecha[i] != '-' ){ 
               this.mes += fecha[i];
@@ -367,14 +373,11 @@ export class AdministracionComponent implements OnInit {
             this.dia += fecha[i];          
           }
         }
-      }
-     
+      }     
       return this.formato += this.anio + '-' + this.mes + '-' + this.dia ;
     }else{
       return '2023-01-01';
-    }
-    
-    
+    } 
   }
 
 

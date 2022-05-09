@@ -38,17 +38,17 @@ export class SesionesService {
 
 
   registrarUsuario(idRol: number, email: string, 
-    password: string, nombreUsuario: string , estado: number, fech1: string, fech2: string ){
+    password: string, nombreUsuario: string , estado: number, fech1: string ){
 
       const url = `${this.baseUrl}/login/register`;
-      const body = { idRol, email, password, nombreUsuario , estado, fech1, fech2 };
+      const body = { idRol, email, password, nombreUsuario , estado, fech1 };
   
         return this.http.post<RegistrarUsuario>(url , body )
         .pipe(
             map( resp => {
-             resp.nombreUsuario              
+             return resp.estadoMsg;
           } ),     
-          tap(() => {
+          tap(() => {            
             this.refresh.next();
           }),       
             catchError( err => of(false) ) 

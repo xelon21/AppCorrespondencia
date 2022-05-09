@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Correspondencia, CorrespondenciaB, CorrespondenciaModificar, TipoDocumento, TipoEnvio, Correlativo } from '../interface/correspondencia.interface';
+import { Correspondencia, CorrespondenciaB, CorrespondenciaModificar, TipoDocumento, TipoEnvio, Correlativo, AgregarCorrespondencia } from '../interface/correspondencia.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -39,21 +39,16 @@ export class CorrespondenciaService {
    }
 
    /** Metodo que ingresa una correspondencia  */
-  ingresaCorrespondencia( idTipoDocumento: number, idTipoEnvio: number,
-                          usuario: string, destinatario: string,
-                          referencia: string ){
+  ingresaCorrespondencia( correo: AgregarCorrespondencia ): Observable<AgregarCorrespondencia>{
 
-    const url = `${this.baseUrl}/ingresar`;
-    const body = { idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia };
-    
-    return this.http.post(url , body )
+     const url = `${this.baseUrl}/ingresar`;
+    // const body = { idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia };    
+    return this.http.post<AgregarCorrespondencia>(url , correo )
           .pipe(
-            tap( resp => {
-              this.refresh.next(),
-              console.log(resp)
-            } ),
-            map( resp => resp),
-            catchError( err => of(false) ) 
+            tap(resp => {
+              //console.log(resp.correlativo)
+              this.refresh.next()
+            })           
           )
   }
 

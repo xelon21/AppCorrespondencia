@@ -40,6 +40,7 @@ export interface RegistrarUsuario {
     estado: boolean;
     activacionUsuario?: string;
     desactivacionUsuario?: string;
+    estadoMsg: boolean;
 }
 
 export interface Roles {
@@ -56,7 +57,7 @@ export interface UsuarioModificar {
     password2: string;
     nombreUsuario: string;
     desactivacionUsuario: string; 
-    estado: boolean;  
+    estado: boolean;     
 }
 
 export interface ModificarActivacion {
