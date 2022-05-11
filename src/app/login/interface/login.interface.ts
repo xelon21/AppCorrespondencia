@@ -23,7 +23,7 @@ export interface LoginResponse {
 export interface Usuario {
     uid: number;
     idRol: number;
-    email: string;
+    correoUsuario: string;
     password?: string;
     nombre: string;
     usuarioActivo: string;
@@ -41,6 +41,12 @@ export interface RegistrarUsuario {
     activacionUsuario?: string;
     desactivacionUsuario?: string;
     estadoMsg: boolean;
+}
+
+export interface ConneccionUsuario {
+    email: string;
+    estado?: string;
+    msg?: string;
 }
 
 export interface Roles {

@@ -40,8 +40,8 @@ export class AgregarComponent implements OnInit  {
 
   // se establece el formulario
   miFormulario: FormGroup = this.fb.group({
-    idTipoDocumento: 0,
-    idTipoEnvio: 0,   
+    idTipoDocumento: [0, [Validators.required, Validators.min(1)]],  
+    idTipoEnvio: [0, [Validators.required, Validators.min(1)]],   
     destinatario: ['', [Validators.required, Validators.minLength(6)]],
     referencia: ['', [Validators.required, Validators.minLength(6)]],
     usuario: this.loginService.usuario.nombre

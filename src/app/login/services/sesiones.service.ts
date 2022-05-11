@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion } from '../interface/login.interface';
+import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion, ConneccionUsuario } from '../interface/login.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -68,7 +68,7 @@ export class SesionesService {
               this._usuario = {
                 uid: resp.uid!,
                 idRol: resp.idRol!,
-                email: resp.email!,
+                correoUsuario: resp.email!,
                 nombre: resp.nombre!,
                 estado: resp.estado!,
                 usuarioActivo: resp.usuarioActivo!,
@@ -98,7 +98,7 @@ export class SesionesService {
                 uid: resp.uid!,
                 idRol: resp.idRol,
                 nombre: resp.nombre!,
-                email: resp.email!,
+                correoUsuario: resp.email!,
                 estado: resp.estado!,
                 usuarioActivo: resp.usuarioActivo!,
                 usuarioNoActivo: resp.usuarioNoActivo!,      
@@ -110,20 +110,30 @@ export class SesionesService {
       );
   }
 
-  logout(logeado: boolean){
-    
-    const url = `${this.baseUrl}/logout`;
-    const body = { logeado };
-
-    return this.http.post(url , body)
-          .subscribe(resp =>{
-            if(resp){
-              localStorage.removeItem('apiKey');
-            }else {
-              return;
-            }
-          } )
+  coneccionUsuario(email: string): Observable<ConneccionUsuario> {
+     const url = `${this.baseUrl}/login/coneccionUsuario`;
+    console.log(email)
+     return this.http.post<ConneccionUsuario>( url, {email})
+              .pipe(
+                tap( resp => {
+                  console.log(resp)
+                  return resp.estado;
+                })
+              )
   }
+
+  desconeccionUsuario(email: string) {
+    console.log(email)
+    const url = `${this.baseUrl}/login/desconeccionUsuario/${email}`;   
+ 
+    return this.http.delete<ConneccionUsuario>(url)
+        .pipe(
+          tap( resp => {
+            localStorage.removeItem('apiKey');
+            return resp.estado;
+          })
+        )            
+ }
 
   traeRoles(): Observable<Roles[]> {
 
@@ -146,8 +156,8 @@ export class SesionesService {
                 this._usuario = {
                   uid: resp.uid!,
                   idRol: resp.idRol!,
-                  nombre: resp.nombre!,
-                  email: resp.email!,
+                  nombre: resp.nombre! ,
+                  correoUsuario: resp.email!,
                   estado: resp.estado!,
                   usuarioActivo: resp.usuarioActivo!,
                   usuarioNoActivo: resp.usuarioNoActivo!,      

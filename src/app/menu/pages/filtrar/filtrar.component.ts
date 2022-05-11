@@ -43,7 +43,7 @@ export class FiltrarComponent implements OnInit {
     this.dialog.open(FiltroFechasComponent,
        {
       width:'1250px',
-     // disableClose: true     
+      disableClose: true     
     });
 
     //  dialogRef.afterClosed().subscribe(result => {

@@ -57,6 +57,7 @@ export interface Correlativo {
     correlativo: string; 
 }
 
+
 export interface FormatoFecha {
     year: string,
     month: number,
