@@ -57,9 +57,9 @@ export class AgregarComponent implements OnInit  {
   ngOnInit(): void {
   
     this.traeTipos();
-
-    //this.activatedRoute.params.subscribe( ({correlativo}) => console.log(correlativo) )
+    
   }  
+
   /* Metodo que trae los campos tipo envio y tipo documento y rellena los selects*/
   traeTipos() {
     this.correosService.getTipoEnvio() 

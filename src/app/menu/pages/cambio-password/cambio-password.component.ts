@@ -67,6 +67,10 @@ export class CambioPasswordComponent implements OnInit {
   }
 
 
+  /** Metodo que permite modificar la contraseña del usuario
+   * [Esto solo esta disponible en la pantalla de administracion
+   * de los usuarios administradores.]
+   */
   modificarPassword() {
     try {
       if( !this.mod.password || !this.mod.password2){

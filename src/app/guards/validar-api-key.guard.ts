@@ -3,6 +3,10 @@ import { CanActivate, CanLoad, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { SesionesService } from '../login/services/sesiones.service';
 
+
+/** ESTE CODIGO PERMITE QUE SOLO LOS USUARIOS ADMINISTRADORES 
+ * QUE SE VALIDEN CON JWT PUEDAN INGRESAR A LA APLICACION Y A LA OPCION DE ADMINISTRACION*/
+
 @Injectable({
   providedIn: 'root'
 })

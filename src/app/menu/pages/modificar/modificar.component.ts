@@ -70,7 +70,9 @@ export class ModificarComponent implements OnInit {
   /** metodo que permite modifiar una correspondencia mediante correlativo */
   async modificar( ){
 
+    /** Se corrobora el estado de la correspondencia  */
     if(!this.estadoCorrespondencia(this.correos.estadoCorreo)){
+      /** Si el checkBox del estado esta activado, Se anula la correspondencia y hace la modificacion */
          if(this.estado){            
             this.correos.estadoCorreo = 'ANULADO'        
             await this.correoService.filtroCorrelativo(this.correos.correlativo)
@@ -97,7 +99,8 @@ export class ModificarComponent implements OnInit {
               }  
             });  
             
-          }else{           
+          }else{   
+            /** Si el checkBox del estado no esta seleccionado, Modifica la correspondencia  */        
             await this.correoService.filtroCorrelativo(this.correos.correlativo)
             .subscribe( result => {              
               if(this.loginService.usuario.nombre === result[0].usuario){

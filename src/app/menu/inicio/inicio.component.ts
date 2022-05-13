@@ -26,14 +26,15 @@ import { Usuario } from '../../login/interface/login.interface';
 })
 export class inicioComponent implements OnInit {
 
+  /**Este get trae la informacion del usuario almacenada en el servicio SessionesServices. */
   get usuario() {     
     return  this.usuarioService.usuario;
   }
+  /**Se declaran variables */
   esAdmin: boolean = false;
   roles: Roles[] = []
   nombreRol: string = '';
-  numeroRol: number = 0; 
-  usuarioLogin: Usuario[] = [];
+  numeroRol: number = 0;  
   email: string ='';
 
 
@@ -43,36 +44,34 @@ export class inicioComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.traeRolUsuario();
-
+    /** Se verifica si el usuario es administrador */
     if(this.usuarioService.usuario.idRol === 1 ){
       this.esAdmin = true;
-    }
-    this.usuarioService.buscaUsuario(this.usuarioService.usuario.nombre)
-            .subscribe( resp => {
-              this.usuarioLogin = resp;
-              this.email = this.usuarioLogin[0].correoUsuario;
-             
-            })  
-    
+    }   
   }
  
 
-  logout() {    
-   
-        
-    this.usuarioService.desconeccionUsuario(this.usuarioLogin[0].correoUsuario)
-            .subscribe(resp => {
-              console.log(resp)
-            })
+  /** Metodo que permite al usuario 
+   * salir de la sesion en la que se encuentra*/
+  logout() {
+    localStorage.removeItem('apiKey');
     this.router.navigateByUrl('/login')
-
-  }
-
-  traeRolUsuario() {
-
-      
-
   }
 
 }
+
+
+/** Historial de codigo en caso de emergencias c: */
+// this.usuarioService.desconeccionUsuario(this.usuarioLogin[0].correoUsuario)
+    //         .subscribe(resp => {
+    //           console.log(resp)
+    //         })
+
+
+  // usuarioLogin: Usuario[] = [];    
+    // this.usuarioService.buscaUsuario(this.usuarioService.usuario.nombre)
+    //         .subscribe( resp => {
+    //           this.usuarioLogin = resp;
+    //           this.email = this.usuarioLogin[0].correoUsuario;
+             
+    //         })  

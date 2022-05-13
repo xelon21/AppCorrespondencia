@@ -43,12 +43,6 @@ export interface RegistrarUsuario {
     estadoMsg: boolean;
 }
 
-export interface ConneccionUsuario {
-    email: string;
-    estado?: string;
-    msg?: string;
-}
-
 export interface Roles {
     idRol: number;
     rol: string;

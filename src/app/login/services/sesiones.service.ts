@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion, ConneccionUsuario } from '../interface/login.interface';
+import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion } from '../interface/login.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class SesionesService {
   
 
   constructor(private http: HttpClient) {    
-   }
+  }
 
   private baseUrl: string = environment.baseUrl;
   private _usuario!: Usuario;
@@ -28,6 +28,7 @@ export class SesionesService {
     return this.refresh;
   }
 
+  /** Metodo que permite obtener todos los usuarios de la base de datos. */
   obtenerUsuarios(): Observable<Usuario[]> {
     
     const url = `${this.baseUrl}/login/traeUsuarios`
@@ -37,6 +38,7 @@ export class SesionesService {
   }
 
 
+  /** Metodo que permite Registrar a un usuario  */
   registrarUsuario(idRol: number, email: string, 
     password: string, nombreUsuario: string , estado: number, fech1: string ){
 
@@ -55,6 +57,24 @@ export class SesionesService {
     );
   }
 
+  /**Metodo que permite eliminar el token y desconectar al usuario */
+  logout(logeado: boolean){
+
+    const url = `${this.baseUrl}/logout`;
+    const body = { logeado };
+
+    return this.http.post(url , body)
+          .subscribe(resp =>{            
+            if(resp){
+              localStorage.removeItem('apiKey');
+            }else {
+              return;
+            }
+          } )
+  }
+  
+
+  /** Metodo que permite que un usuario pueda ingresar a la aplicacion */
  loginUsuario(email: string, password: string) {
 
     const url = `${this.baseUrl}/login`;
@@ -84,6 +104,7 @@ export class SesionesService {
         )
   }
 
+  /**Metodo que permite validar el token del usuario que se inicia sesion */
   validaApiKey(): Observable<boolean> {
 
     const url = `${this.baseUrl}/login/validaKey`;
@@ -109,32 +130,8 @@ export class SesionesService {
         catchError( err => of(false))
       );
   }
-
-  coneccionUsuario(email: string): Observable<ConneccionUsuario> {
-     const url = `${this.baseUrl}/login/coneccionUsuario`;
-    console.log(email)
-     return this.http.post<ConneccionUsuario>( url, {email})
-              .pipe(
-                tap( resp => {
-                  console.log(resp)
-                  return resp.estado;
-                })
-              )
-  }
-
-  desconeccionUsuario(email: string) {
-    console.log(email)
-    const url = `${this.baseUrl}/login/desconeccionUsuario/${email}`;   
  
-    return this.http.delete<ConneccionUsuario>(url)
-        .pipe(
-          tap( resp => {
-            localStorage.removeItem('apiKey');
-            return resp.estado;
-          })
-        )            
- }
-
+  /** Metodo que permite traer los roles de los usuarios  */
   traeRoles(): Observable<Roles[]> {
 
     const url = `${this.baseUrl}/login/traeRoles`
@@ -142,6 +139,7 @@ export class SesionesService {
     return this.http.get<Roles[]>( url )
   }
 
+  /** Metodo que permite la validacion de si un usuario es administrador o no */
   validaAdmin() {
 
     const url = `${this.baseUrl}/login/validaAdmin`;
@@ -172,21 +170,26 @@ export class SesionesService {
       );
   
   }
+
+  //** Metodo que permite buscar usuarios Por el nombre de usuario  */
   buscaUsuario(filtro: string ): Observable<Usuario[]> {
-  return this.http.get<Usuario[]>(`${this.baseUrl}/login/filtraUsuario/${ filtro }`);
+  return this.http.get<Usuario[]>(`${this.baseUrl}/login/filtraUsuario/${ filtro }`);  
   }
 
+  /** Metodo que permite filtrar a un usuario mediante su Correlativo */
   buscarPorIdUsuario(filtro: number) : Observable<UsuarioModificar>{
     return this.http.get<UsuarioModificar>(`${this.baseUrl}/login/filtrarUsuariosModificar/${ filtro}`);
 
   }
-
+/** Metodo que permite modificar al usuario mediante su id. */
   modificarPorIdUsuario(usuario: UsuarioModificar ): Observable<UsuarioModificar> {
 
     return this.http.put<UsuarioModificar>(`${this.baseUrl}/login/modificar/${ usuario.idUsuario }`, usuario);   
 
   }
-
+/** Metodo que permite modificar la contraseña de un usuario
+ * [Cabe recalcar que es soplo una opcion dentro de la ventana de administracion]
+ */
   modificarPassword( password: string, password2: string, idUsuario: number) {
 
     const url = `${this.baseUrl}/login/modificarPassword/${ idUsuario }`;
@@ -202,6 +205,9 @@ export class SesionesService {
     
   }
 
+  /** Metodo que permite modificar el estado de un usuario ya sea inmediatamente o en una fecha especifica
+ * [Cabe recalcar que es soplo una opcion dentro de la ventana de administracion]
+ */
   modificarEstado(idUsuario: number, estado: boolean, desactivacionUsuario: string | null) {
 
     const url = `${this.baseUrl}/login/modificarEstado/${ idUsuario }`;
@@ -217,8 +223,33 @@ export class SesionesService {
           );
   }
 
-  
-
-
-
 }
+
+
+/** CODIGO QUE PODRIA OCUPARSE EN ALGUN MOMENTO c: */
+
+// coneccionUsuario(email: string): Observable<ConneccionUsuario> {
+  //      const url = `${this.baseUrl}/login/coneccionUsuario`;
+  //     console.log(email)
+  //      return this.http.post<ConneccionUsuario>( url, {email})
+  //               .pipe(
+  //                 tap( resp => {
+  //                   console.log(resp)
+  //                   return resp.estado;
+  //                 })
+  //               )
+  //   }
+  
+  //   desconeccionUsuario(email: string) {
+  //     console.log(email)
+  //     const url = `${this.baseUrl}/login/desconeccionUsuario/${email}`;   
+   
+  //     return this.http.delete<ConneccionUsuario>(url)
+  //         .pipe(
+  //           tap( resp => {
+  //             localStorage.removeItem('apiKey');
+  //             return resp.estado;
+  //           })
+  //         )            
+  //  }
+  

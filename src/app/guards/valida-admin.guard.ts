@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { SesionesService } from '../login/services/sesiones.service';
 import { tap } from 'rxjs/operators';
 
+/** ESTE CODIGO PERMITE QUE SOLO LOS USUARIOS QUE SE VALIDEN CON JWT PUEDAN INGRESAR A LA APLICACION */
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,11 +21,7 @@ export class ValidaAdminGuard implements CanActivate, CanLoad {
               tap( valid => {
                 if(!valid) {
                   this.router.navigateByUrl('/correspondencia/administrador')
-                }
-                // console.log('si pasa por aca canactivate')
-                // localStorage.removeItem('apiKey');
-                // this.router.navigateByUrl('/home/login')
-
+                }             
               })
             );
   }
@@ -33,11 +31,7 @@ export class ValidaAdminGuard implements CanActivate, CanLoad {
                 tap( valid => {
                   if(!valid) {
                     this.router.navigateByUrl('/correspondencia/administrador')
-                  }
-                  // console.log('si pasa por aca canload')
-                  // localStorage.removeItem('apiKey');
-                  // this.router.navigateByUrl('/home/login')
-
+                  }                  
                 })
               );
   }

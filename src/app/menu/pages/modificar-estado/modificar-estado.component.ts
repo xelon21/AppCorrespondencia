@@ -83,8 +83,10 @@ export class ModificarEstadoComponent implements OnInit {
   }
 
 
+  /** Metodo que permite modificar el estado de un usuario */
   modificarEstado() {
 
+    /** Se valida que los campos no vengan vacios */
     if(this.fecha.controls['desactivacionUsuario'].valid && this.fecha.value.desactivacionUsuario != null){
       this.estado.estado = false;
       this.fecha1 = this.fecha.controls['desactivacionUsuario'].value._i

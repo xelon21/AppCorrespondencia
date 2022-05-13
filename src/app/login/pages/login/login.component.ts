@@ -71,50 +71,37 @@ export class LoginComponent implements OnInit {
          
         })
       }else{        
-        console.log(email)
-        this.loginService.coneccionUsuario(email)
-              .subscribe( resp => {
-                console.log(resp)
-                if(!resp.estado){
-                  /** se llama al metodo loginUsuario y se le envian los parametros
+            /** se llama al metodo loginUsuario y se le envian los parametros
                    *  email y password. Dependiendo de la respuesta, ingresara a la pagina
                    *  o le dara un mensaje de error. el usuario no puede ingresar si no 
                    *  se autentica primero.
                    */
-                  this.loginService.loginUsuario(email, password)
-                    .subscribe( resp => {
-                     // console.log(resp)
-                      if(resp) {
-                        Swal.fire({
-                          position: 'top-end',
-                          icon: 'success',
-                          title: 'Se a ingresado correctamente',
-                          showConfirmButton: false,
-                          timer: 1500
-                        })
-                        // redirecciona a la pagina si se autentica correctamente
-                        this.router.navigateByUrl('/correspondencia/agregar')
-                      }else {
-                        Swal.fire({
-                          icon: 'error',
-                          title: 'Error',
-                          text: 'Las credenciales no coinciden',                
-                        })
-                        console.log('nothin')
-                      }
-                    })    
-                }else {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'El usuario ya se encuentra conectado',                
-                  })
-                }
-              })
-      }
+            this.loginService.loginUsuario(email, password)
+                .subscribe( resp => {                  
+                  if(resp) {
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Se a ingresado correctamente',
+                      showConfirmButton: false,
+                      timer: 1500
+                    })
+                    // redirecciona a la pagina si se autentica correctamente
+                    this.router.navigateByUrl('/correspondencia/agregar')
+                    }else {
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Las credenciales no coinciden',                
+                      })
+                    console.log('nothin')
+                    }
+            })    
+          }
     } catch (error) {
       console.log(error)
     }
   }
 
 }
+

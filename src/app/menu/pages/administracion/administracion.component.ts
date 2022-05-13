@@ -63,6 +63,12 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   templateUrl: './administracion.component.html',
   styles:[`
 
+  .anchoAlerta {
+    height: 35px;
+    text-align: center;
+
+  }
+
   *{
     padding: 0;
     margin: 0;
@@ -182,6 +188,8 @@ export class AdministracionComponent implements OnInit {
   estadoCorreo!: boolean;
   roles: Roles[] = [];
   users: Usuario[] = [];
+  hayError: boolean = false;
+  // filtroUsuarios: Usuario[] = [];
   filtro: string = '';
   suscription!: Subscription;
 
@@ -203,58 +211,69 @@ export class AdministracionComponent implements OnInit {
 
   ngOnInit(): void {
 
+    /**Metodo que trae los roles  */
     this.loginService.traeRoles()
         .subscribe( datos => { this.roles = datos })
-    
+    /**Metodo que trae a los usuarios */
     this.loginService.obtenerUsuarios()
         .subscribe( datos => { this.users = datos })
-
+    /** Metodo que permite hacer Refresh 
+     * de la tabla de usuarios al agregar un usuario */
     this.suscription = this.loginService.refrescar
-        .subscribe( () => {
-    this.loginService.obtenerUsuarios()
-          .subscribe( datos => { this.users = datos })
+        .subscribe( () => {    
+            this.loginService.obtenerUsuarios()
+                .subscribe( datos => { this.users = datos })    
     })    
   }
 
-  ngOnDestroy(): void {
-    
+  /** Metodo necesario para que se pueda refrescar la lista de usuarios al agregar un usuario
+   * Se hace un unsubscribe dentro del ngOnDestroy para que se desuscriba a la promesa del metodo
+   * que permite refrescar la lista para volver a actualizarla una ves que se agregue un usuario
+   */
+  ngOnDestroy(): void {    
     this.suscription.unsubscribe();
-
   }
 
-  async filtrarPorCorrelativo() {  
+  /** Metodo que permite filtrar un usuario por nombre. */
+  async filtrarPorNombreUsuario() { 
+     
     await this.loginService.buscaUsuario(this.filtro)
-        .subscribe( users => {
-          if(users){           
-             this.users = users  
-          }else { 
-            Swal.fire(
-              'El nombre de usuario no se encuentra',
-              'question'
-            )           
-          }  
+        .subscribe( users => {     
+            this.hayError = false;
+            this.users = users
+        }, (err) => {
+          this.hayError = true;         
         })
+        
   }
   
-  registrar(){
-    console.log(this.registroUsuario.value)
-  }
   
+  /** Este get trae la fecha actual para poder ingresarla
+   * al registrar un usuario.
+   */
   get today() {
     return this.dateAdapter.toModel(this.ngbCalendar.getToday())!;
   }
 
+  /** Se le da formato a la fecha para poder extraerla del formulario */
   fecha = new FormGroup({
     activacionUsuario: new FormControl()    
   });
 
+  /** Metodo que registra un usuario */
   async ingresar(){    
     // Se extraen los datos del formulario
     const { idRol, email, password, nombreUsuario , estado, password2 } = this.registroUsuario.value;
     try {  
         
+        /** Se corrobora que las 2 contraseñas sean identicas */
          if( password === password2){
-          
+
+          /** Se extrae la fecha del formulario y se le da formato para poder trabajarla
+           * Cabe decir que en este caso Mysql recive la fecha de la forma [YYYY-MM-DD]
+           * y el formulario la entra de otra forma, por lo que se trabaja la fecha para 
+           * poder hacer la insercion mas tarde.
+           */
           this.fecha1 = this.fecha.controls['activacionUsuario'].value._i
           let fechaActivacion: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;    
           let diaActual = new Date().getDate().toString()
@@ -262,13 +281,15 @@ export class AdministracionComponent implements OnInit {
           let anioActual = new Date().getFullYear().toString()          
           let fechaActual =+ anioActual + '-' + +(mesActual + 1).toString() + '-' + diaActual; 
 
+          /** En el caso de que la fecha seleccionada de activacion sea igual a la de ahora, el usuario
+           *  quedara ingresado como ACTIVO.
+           */
           if(fechaActivacion === fechaActual){
             let activo = 1;
             /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
              * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
             this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, activo, fechaActivacion )
-            .subscribe( resp => {
-              console.log('resp 1 : '+resp)
+            .subscribe( resp => {              
               if(resp){
                 Swal.fire({
                   position: 'top-end',
@@ -286,9 +307,12 @@ export class AdministracionComponent implements OnInit {
               }
             })
           }else {
+            /** Caso contrario enb el que la fecha no es igual a la fecha del dia de hoy,
+             * El usuario ingresado quedara INACTIVO hasta el dia de la fecha seleccionada
+             * en el formulario de ingreso
+             */
             this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, estado, fechaActivacion )
-            .subscribe( resp => {
-              console.log('resp2: '+resp)
+            .subscribe( resp => {             
               if(resp){
                 Swal.fire({
                   position: 'top-end',
@@ -325,64 +349,69 @@ export class AdministracionComponent implements OnInit {
     }
   }
 
-  FormatoFecha( fecha: string ): string{     
-    
-    if(fecha){
-      this.formato = '';
-      this.anio = '';
-      this.mes= '';
-      this.dia= '';  
-      for (let i= 0; i < fecha.length; i++) {   
-        if( i >= 4 && i <= 9){
-          if(fecha[i] === '-'){
-            this.anio = '';
-          }else {
-            this.anio += fecha[i];          
-          }
-        }else if( i >= 2 && i <= 4 ){
-          if( fecha[i] != '-' ){ 
-              this.mes += fecha[i];
-              i++;
-              if( fecha[i] != '-'){
-                this.mes += fecha[i];
-                i++;
-              }else{
-                if( fecha[i] === '-' ){
-                  this.mes = '';
-                  this.mes += '0' + fecha[2];
-                }
-              }
-          }else {
-            i++;
-            if(fecha[i] != '-'){
-              this.mes += fecha[i];   
-              i++;
-              if(fecha[i] != '-'){
-                this.mes += fecha[i]; 
-              }else{
-                this.mes = '';
-                this.mes += '0'+ fecha[3];               
-              }
-            }
-          }
-        }else if( i >= 0 && i <= 1){
-          if( fecha[i] === '-'){
-            this.dia = '';
-            this.dia += '0' + fecha[0]          
-          }else {
-            this.dia += fecha[i];          
-          }
-        }
-      }     
-      return this.formato += this.anio + '-' + this.mes + '-' + this.dia ;
-    }else{
-      return '2023-01-01';
-    } 
-  }
-
-
+/** datos necesarios para poder mostrar la informacion en la tabla del html
+ * 
+ */
   dataSource = this.users;
   columnsToDisplay = ['IdUsuario','Rol', 'NombreUsuario', 'Email', 'Estado', 'FechaActivacion', 'FechaDesactivacion', 'acciones'];
   expandedElement!: Usuario | null;
 }
 
+
+
+/** CODIGO QUE NO SE OCUPA PERO PODRIA OCUPARSE */
+
+// FormatoFecha( fecha: string ): string{     
+    
+//   if(fecha){
+//     this.formato = '';
+//     this.anio = '';
+//     this.mes= '';
+//     this.dia= '';  
+//     for (let i= 0; i < fecha.length; i++) {   
+//       if( i >= 4 && i <= 9){
+//         if(fecha[i] === '-'){
+//           this.anio = '';
+//         }else {
+//           this.anio += fecha[i];          
+//         }
+//       }else if( i >= 2 && i <= 4 ){
+//         if( fecha[i] != '-' ){ 
+//             this.mes += fecha[i];
+//             i++;
+//             if( fecha[i] != '-'){
+//               this.mes += fecha[i];
+//               i++;
+//             }else{
+//               if( fecha[i] === '-' ){
+//                 this.mes = '';
+//                 this.mes += '0' + fecha[2];
+//               }
+//             }
+//         }else {
+//           i++;
+//           if(fecha[i] != '-'){
+//             this.mes += fecha[i];   
+//             i++;
+//             if(fecha[i] != '-'){
+//               this.mes += fecha[i]; 
+//             }else{
+//               this.mes = '';
+//               this.mes += '0'+ fecha[3];               
+//             }
+//           }
+//         }
+//       }else if( i >= 0 && i <= 1){
+//         if( fecha[i] === '-'){
+//           this.dia = '';
+//           this.dia += '0' + fecha[0]          
+//         }else {
+//           this.dia += fecha[i];          
+//         }
+//       }
+//     }     
+//     return this.formato += this.anio + '-' + this.mes + '-' + this.dia ;
+//   }else{
+//     return '2023-01-01';
+//   } 
+// }

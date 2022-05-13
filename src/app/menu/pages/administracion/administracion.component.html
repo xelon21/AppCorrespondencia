@@ -121,12 +121,13 @@
                      name="filtro"
                      class="form-control salto"
                      [(ngModel)]="filtro"
-                     (input)="filtrarPorCorrelativo()"
+                     (input)="filtrarPorNombreUsuario()"
                      placeholder="Nombre Usuario">
          </form>  
         </mat-toolbar>
+        <div class="alert alert-danger anchoAlerta" *ngIf="hayError"> Usuario no Encontrado</div>
     </div>
-      <div class="example-container ancho2" >
+      <div class="example-container ancho2" *ngIf="!hayError">
         <table mat-table
         [dataSource]="users" multiTemplateDataRows
         class="mat-elevation-z8">

@@ -61,11 +61,7 @@ export class CorrespondenciaService {
             })
           );  
   }
-
-  buscaUltimo(){
-    return this.http.get<Correlativo>(`${this.baseUrl}/mostrar/ultimo`);
-  }
-
+  
   /** metodo que trae una correspondencia por el correlativo */
   buscaCorrelativo(filtro: string ): Observable<CorrespondenciaB> {
     return this.http.get<CorrespondenciaB>(`${this.baseUrl}/filtro/${ filtro }`);
@@ -84,3 +80,10 @@ export class CorrespondenciaService {
   }
 
 }
+
+
+/** Codigo Desechado */
+
+// buscaUltimo(){
+  //   return this.http.get<Correlativo>(`${this.baseUrl}/mostrar/ultimo`);
+  // }

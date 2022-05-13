@@ -60,11 +60,11 @@ export class FiltroFechasComponent implements OnInit {
           this.hayError = true;
           this.inicial = this.range.value.start._i;
           this.final = this.range.value.end._i; 
-         
+          
+          /** Se les da formato a las fechas para trabajar con ellas de mejor manera */
           let fechaInicio: string = this.inicial.year + '-' + (this.inicial.month + 1 ).toString() + '-' + this.inicial.date;
           let fechaFinal: string = this.final.year + '-' + (this.final.month + 1 ).toString() + '-' + this.final.date;
  
-                  
           await this.correoService.filtroFechas( fechaInicio, fechaFinal )
             .subscribe( datos => {              
               this.correos = datos;              

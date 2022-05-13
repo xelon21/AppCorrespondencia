@@ -33,22 +33,17 @@ export class FiltrarComponent implements OnInit {
   }  
 
   /** Metodo que despliega el cuadro de dialogo el cual filtra por rango de fechas */
-  openDialog() {    
-    // const dialogConfig = new MatDialogConfig();
-    
-    // dialogConfig.disableClose = true;
-    // //dialogConfig.autoFocus = true;
-    // dialogConfig.width = '1250px'
-    
+  openDialog() {  
     this.dialog.open(FiltroFechasComponent,
        {
       width:'1250px',
       disableClose: true     
     });
-
-    //  dialogRef.afterClosed().subscribe(result => {
-    //    console.log(result);
-    //   });
+    /** Al dia de hoy 13/05/2022, Todavia no logro desifrar como hacer
+     * que el dialogo de angular material se cierre cuando se hace click
+     * fuera de el. De momento solo se cierra si el usuario hace click en
+     * el boton VOLVER.
+     */
   }
   
   /** Metodo que trae todas las correspondencias */

@@ -90,13 +90,7 @@ export class ModificarUsuarioComponent implements OnInit {
          switchMap( ({ idUsuario }) => this.loginService.buscarPorIdUsuario(idUsuario) )
        )
        .subscribe( usuario => {       
-         this.usuario = usuario   
-        //  if(this.usuario.estado){
-        //   this.activoInactivo = 'Usuario Activado';
-          
-        // }else {
-        //   this.activoInactivo = 'Usuario Desactivado';
-        // }  
+         this.usuario = usuario          
        })
        this.loginService.traeRoles()
        .subscribe( datos => {
@@ -107,6 +101,7 @@ export class ModificarUsuarioComponent implements OnInit {
 
   }
 
+  /**Metodo que permite abrir el dialog de cambio de contraseña */
   openDialog() {
     const dialogRef = this.dialog.open(CambioPasswordComponent, {
       data: {
@@ -118,7 +113,7 @@ export class ModificarUsuarioComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
-
+/**Metodo que permite abrir el dialogo de modificar el estado del usuario */
   openDialog2() {
     const dialogRef = this.dialog.open(ModificarEstadoComponent, {
       data: {
@@ -132,7 +127,7 @@ export class ModificarUsuarioComponent implements OnInit {
   }
 
 
-
+/** Metodo que Permite modificar a usuario por su id */
   async modificar() {   
 
     try {      

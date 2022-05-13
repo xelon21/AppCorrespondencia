@@ -42,8 +42,7 @@ export class MostrarComponent implements OnInit, OnDestroy {
 
   
   constructor( private correosService: CorrespondenciaService, 
-               private router: Router,
-               private correlativoComponent: AgregarComponent ) { }
+               private router: Router) { }
 
   ngOnInit(): void {
 
@@ -63,7 +62,9 @@ export class MostrarComponent implements OnInit, OnDestroy {
   }
 
  
-
+  /** Revisar el AdministrarComponente, Ahi se explica que hace 
+   * este metodo xD 
+   */
   ngOnDestroy(): void {
     
     this.suscription.unsubscribe();
