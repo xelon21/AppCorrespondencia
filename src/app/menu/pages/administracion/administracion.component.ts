@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SesionesService } from '../../../login/services/sesiones.service';
 import { Roles, Usuario } from '../../../login/interface/login.interface';
@@ -9,6 +9,8 @@ import { NgbCalendar, NgbDate, NgbDateStruct, NgbDateAdapter, NgbDateParserForma
 import { FormatoFecha } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 
 @Injectable()
@@ -63,6 +65,11 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   templateUrl: './administracion.component.html',
   styles:[`
 
+  .btn {
+    margin-right: 10px;
+    width: 180px;
+  }
+
   .anchoAlerta {
     height: 35px;
     text-align: center;
@@ -103,6 +110,10 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
       background-color: #efefef;
     }
 
+    .busqueda {
+      margin-left: 120%;
+    }
+    
     .salto {
       margin-top: 10px;
     }
@@ -189,9 +200,10 @@ export class AdministracionComponent implements OnInit {
   roles: Roles[] = [];
   users: Usuario[] = [];
   hayError: boolean = false;
-  // filtroUsuarios: Usuario[] = [];
-  filtro: string = '';
+  //filtroUsuarios: Usuario[] = [];
+  filtroNombre: string = '';
   suscription!: Subscription;
+ 
 
   registroUsuario: FormGroup = this.fb.group({
     idRol: [0 ,[Validators.required]],
@@ -207,16 +219,20 @@ export class AdministracionComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private loginService: SesionesService,
               private ngbCalendar: NgbCalendar,
-              private dateAdapter: NgbDateAdapter<string>) { }
+              private dateAdapter: NgbDateAdapter<string>,
+              private router: Router) { }
 
   ngOnInit(): void {
-
+   
     /**Metodo que trae los roles  */
     this.loginService.traeRoles()
         .subscribe( datos => { this.roles = datos })
     /**Metodo que trae a los usuarios */
     this.loginService.obtenerUsuarios()
-        .subscribe( datos => { this.users = datos })
+        .subscribe( datos => {
+          console.log(datos)
+           this.users = datos 
+          })
     /** Metodo que permite hacer Refresh 
      * de la tabla de usuarios al agregar un usuario */
     this.suscription = this.loginService.refrescar
@@ -234,18 +250,25 @@ export class AdministracionComponent implements OnInit {
     this.suscription.unsubscribe();
   }
 
-  /** Metodo que permite filtrar un usuario por nombre. */
-  async filtrarPorNombreUsuario() { 
-     
-    await this.loginService.buscaUsuario(this.filtro)
-        .subscribe( users => {     
-            this.hayError = false;
-            this.users = users
-        }, (err) => {
-          this.hayError = true;         
-        })
-        
+  filtroValor = ''
+  handleSearch(value: string) {
+    this.filtroValor = value;
   }
+
+  
+  
+  /** Metodo que permite filtrar un usuario por nombre. */
+  // async filtrarPorNombreUsuario() { 
+     
+  //   await this.loginService.buscaUsuario(this.filtroNombre)
+  //       .subscribe( users => {         
+  //           this.hayError = false;
+  //           this.users = users
+  //         }, (err) => {
+  //           this.hayError = true;         
+  //         })
+            
+  // }
   
   
   /** Este get trae la fecha actual para poder ingresarla
@@ -259,6 +282,14 @@ export class AdministracionComponent implements OnInit {
   fecha = new FormGroup({
     activacionUsuario: new FormControl()    
   });
+
+  cargarLista() {
+    this.hayError = false;
+    this.suscription = this.loginService.obtenerUsuarios()  
+              .subscribe( datos => {
+                this.users = datos
+              }) 
+  }
 
   /** Metodo que registra un usuario */
   async ingresar(){    
@@ -352,9 +383,9 @@ export class AdministracionComponent implements OnInit {
 /** datos necesarios para poder mostrar la informacion en la tabla del html
  * 
  */
-  dataSource = this.users;
-  columnsToDisplay = ['IdUsuario','Rol', 'NombreUsuario', 'Email', 'Estado', 'FechaActivacion', 'FechaDesactivacion', 'acciones'];
-  expandedElement!: Usuario | null;
+  // dataSource = this.users;
+  // columnsToDisplay = ['IdUsuario','Rol', 'NombreUsuario', 'Email', 'Estado', 'FechaActivacion', 'FechaDesactivacion', 'acciones'];
+  // expandedElement!: Usuario | null;
 }
 
 

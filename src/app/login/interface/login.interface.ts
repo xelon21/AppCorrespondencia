@@ -9,7 +9,7 @@ export interface LoginUsuario {
 export interface LoginResponse {
     estadoMsg: boolean;
     msg: string;    
-    uid: number;
+    idUsuario: number;
     idRol: number;    
     nombre: string;
     email: string;
@@ -20,14 +20,27 @@ export interface LoginResponse {
     estado?: boolean;    
 }
 
-export interface Usuario {
-    uid: number;
+export interface Usuario2 {
+    idUsuario: number;
     idRol: number;
     correoUsuario: string;
     password?: string;
-    nombre: string;
-    usuarioActivo: string;
-    usuarioNoActivo: string; 
+    nombreUsuario: string;
+    activacionUsuario: string;
+    desactivacionUsuario: string; 
+    estado?: boolean;
+    apiKey: string;
+}
+
+export interface Usuario {
+    idUsuario: number;
+    idRol: number;
+    rol?: string;
+    correoUsuario: string;
+    password?: string;
+    nombreUsuario: string;
+    activacionUsuario: string;
+    desactivacionUsuario: string; 
     estado?: boolean;
     apiKey: string;
 }

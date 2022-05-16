@@ -29,6 +29,7 @@ import { SesionesService } from '../../../login/services/sesiones.service';
 })
 export class AgregarComponent implements OnInit  {  
 
+  
   // Se declaran los arreglos
   tipoEnvio: TipoEnvio[] = [];
   tipoDocumento: TipoDocumento[] = [];
@@ -44,7 +45,7 @@ export class AgregarComponent implements OnInit  {
     idTipoEnvio: [0, [Validators.required, Validators.min(1)]],   
     destinatario: ['', [Validators.required, Validators.minLength(6)]],
     referencia: ['', [Validators.required, Validators.minLength(6)]],
-    usuario: this.loginService.usuario.nombre
+    usuario: this.loginService.usuario.nombreUsuario
   }) 
 
   constructor( private fb: FormBuilder,
@@ -57,7 +58,7 @@ export class AgregarComponent implements OnInit  {
   ngOnInit(): void {
   
     this.traeTipos();
-    
+
   }  
 
   /* Metodo que trae los campos tipo envio y tipo documento y rellena los selects*/

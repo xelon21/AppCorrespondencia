@@ -8,7 +8,10 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   selector: 'app-filtrar',
   templateUrl: './filtrar.component.html',
   styles: [`
-
+.fil {
+  margin-left: 15px;
+  width: 40%;
+}
   
 .ancho{
     width: 140%;
@@ -55,16 +58,21 @@ export class FiltrarComponent implements OnInit {
       });  
   }
 
-  /** Metodo que filtra por correlativo  */
-  async filtrarPorCorrelativo() {  
-    await this.correosService.filtroCorrelativo(this.filtro)
-        .subscribe( correos => {
-          if(!correos){                        
-            this.hayError = false;
-          }else {
-            this.hayError = true
-            this.correos = correos   
-          }  
-        })
+  filtroValor = ''
+  handleSearch(value: string) {
+    this.filtroValor = value;
   }
+
+  /** Metodo que filtra por correlativo  */
+  // async filtrarPorCorrelativo() {  
+  //   await this.correosService.filtroCorrelativo(this.filtro)
+  //       .subscribe( correos => {
+  //         if(!correos){                        
+  //           this.hayError = false;
+  //         }else {
+  //           this.hayError = true
+  //           this.correos = correos   
+  //         }  
+  //       })
+  // }
 }

@@ -18,6 +18,9 @@ import { NgbDateAdapter, NgbDateNativeUTCAdapter, NgbModule } from '@ng-bootstra
 import { ModificarUsuarioComponent } from './pages/modificar-usuario/modificar-usuario.component';
 import { CambioPasswordComponent } from './pages/cambio-password/cambio-password.component';
 import { ModificarEstadoComponent } from './pages/modificar-estado/modificar-estado.component';
+import { FiltroUsuarioPipe } from './pipe/filtroUsuario.pipe';
+import { FiltroBusquedaComponent } from './pages/filtro-busqueda/filtro-busqueda.component';
+import { FiltroCorrelativoPipe } from './pipe/filtroCorrelativo.pipe';
 
 
 
@@ -33,9 +36,12 @@ import { ModificarEstadoComponent } from './pages/modificar-estado/modificar-est
     FiltroFechasComponent,    
     AdministracionComponent,
     estadoUsuarioPipe,
+    FiltroCorrelativoPipe,
+    FiltroUsuarioPipe,
     ModificarUsuarioComponent,
     CambioPasswordComponent,
     ModificarEstadoComponent,
+    FiltroBusquedaComponent,
             
   ],
   imports: [

@@ -34,6 +34,7 @@ export class SesionesService {
     const url = `${this.baseUrl}/login/traeUsuarios`
 
     return this.http.get<Usuario[]>( url );
+          
     
   }
 
@@ -86,13 +87,13 @@ export class SesionesService {
             if( resp.estado ) {
               localStorage.setItem('apiKey', resp.apiKey!)                          
               this._usuario = {
-                uid: resp.uid!,
+                idUsuario: resp.idUsuario!,
                 idRol: resp.idRol!,
                 correoUsuario: resp.email!,
-                nombre: resp.nombre!,
+                nombreUsuario: resp.nombre!,
                 estado: resp.estado!,
-                usuarioActivo: resp.usuarioActivo!,
-                usuarioNoActivo: resp.usuarioNoActivo!,    
+                activacionUsuario: resp.usuarioActivo!,
+                desactivacionUsuario: resp.usuarioNoActivo!,    
                 apiKey: resp.apiKey!                
               }                               
             }
@@ -116,13 +117,13 @@ export class SesionesService {
         map( resp => {          
           localStorage.setItem('apiKey', resp.apiKey!)
               this._usuario = {
-                uid: resp.uid!,
+                idUsuario: resp.idUsuario!,
                 idRol: resp.idRol,
-                nombre: resp.nombre!,
+                nombreUsuario: resp.nombre!,
                 correoUsuario: resp.email!,
                 estado: resp.estado!,
-                usuarioActivo: resp.usuarioActivo!,
-                usuarioNoActivo: resp.usuarioNoActivo!,      
+                activacionUsuario: resp.usuarioActivo!,
+                desactivacionUsuario: resp.usuarioNoActivo!,      
                 apiKey: resp.apiKey!
               }                
           return resp.estadoMsg;
@@ -152,13 +153,13 @@ export class SesionesService {
           if(resp.idRol === 1) {
             localStorage.setItem('apiKey', resp.apiKey!)            
                 this._usuario = {
-                  uid: resp.uid!,
+                  idUsuario: resp.idUsuario!,
                   idRol: resp.idRol!,
-                  nombre: resp.nombre! ,
+                  nombreUsuario: resp.nombre! ,
                   correoUsuario: resp.email!,
                   estado: resp.estado!,
-                  usuarioActivo: resp.usuarioActivo!,
-                  usuarioNoActivo: resp.usuarioNoActivo!,      
+                  activacionUsuario: resp.usuarioActivo!,
+                  desactivacionUsuario: resp.usuarioNoActivo!,      
                   apiKey: resp.apiKey!
                 }                  
             return resp.estadoMsg;

@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 export class estadoUsuarioPipe implements PipeTransform {
 
-    transform( valor: number): string {
-        if(valor === 1){
+    transform( valor2: boolean): string {
+        if(valor2){
             return 'ACTIVO';
         } else {
             return 'INACTIVO'

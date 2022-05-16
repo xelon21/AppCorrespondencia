@@ -77,7 +77,7 @@ export class ModificarComponent implements OnInit {
             this.correos.estadoCorreo = 'ANULADO'        
             await this.correoService.filtroCorrelativo(this.correos.correlativo)
             .subscribe( result => {              
-              if(this.loginService.usuario.nombre === result[0].usuario){
+              if(this.loginService.usuario.nombreUsuario === result[0].usuario){
                 this.correoService.modificarPorCorrelativo( this.correos )
                 .subscribe( correo => this.correos = correo)                
                 Swal.fire({
@@ -103,7 +103,7 @@ export class ModificarComponent implements OnInit {
             /** Si el checkBox del estado no esta seleccionado, Modifica la correspondencia  */        
             await this.correoService.filtroCorrelativo(this.correos.correlativo)
             .subscribe( result => {              
-              if(this.loginService.usuario.nombre === result[0].usuario){
+              if(this.loginService.usuario.nombreUsuario === result[0].usuario){
                 this.correoService.modificarPorCorrelativo( this.correos )
                 .subscribe( correo => this.correos = correo)                 
                 Swal.fire({
