@@ -112,49 +112,44 @@
     
     <br>
     <div >
-      <div class="ancho2w">
+      <div class="ancho2">
         <mat-toolbar>
-            <span>Listado Usuarios</span>
-            <!-- <div class="spacer2"></div>  -->
-            <!-- <button mat-raised-button color="primary"
-                    class="btn" (click)="cargarLista()">
-              Cargar lista nuevamente
-            </button>            -->
-            <div class="busqueda">
-              <app-filtro-busqueda (search)="handleSearch( $event )"></app-filtro-busqueda>
+          
+            <span>Listado Usuarios</span>            
+            <div >
+              <app-filtro-busqueda (search)="handleSearch( $event )" class="busqueda"></app-filtro-busqueda>
             </div>
-        </mat-toolbar>
-        <div class="alert alert-danger anchoAlerta" *ngIf="hayError"> Usuario no Encontrado</div>
+        </mat-toolbar>        
     </div>
       <div class="container-fluid ancho2" *ngIf="!hayError">
         <div class="row">
           <div class="col-lg-12 col-md-6 col-12">
             <div class="card-header">              
-            </div>
+            </div>           
             <div class="card-body">
               <table class="table table-hover table-responsive">
                 <thead>
-                  <tr>
-                    <th>ID Usuario</th>
+                  <tr class="fondoEncabezados text-white" id="miTablaPersonalizada">
+                    <th>Id Usuario</th>
                     <th>Rol</th>
                     <th>Nombre</th>
                     <th>Email</th>
-                    <th>Estado</th>
-                    <th>Fecha Activacion</th>
-                    <th>Fecha Desactivacion</th>
-                    <th>Editar</th>
+                    <th class="centrarTexto">Estado</th>
+                    <th class="centrarTexto">Fecha Activacion</th>
+                    <th class="centrarTexto">Fecha Desactivacion</th>
+                    <th class="centrarTexto">Editar</th>
                   </tr>
                 </thead>
                 <tbody *ngFor="let usuario of users | search: filtroValor ">
-                  <tr>
-                    <td> {{ usuario.idUsuario }} </td>
+                  <tr id="miTablaPersonalizada2">
+                    <td class="centrarTexto"> {{ usuario.idUsuario }} </td>
                     <td> {{ usuario.rol }} </td>
                     <td> {{ usuario.nombreUsuario }} </td>
                     <td> {{ usuario.correoUsuario }} </td>
-                    <td> {{ usuario.estado! | estado }} </td>
-                    <td> {{ usuario.activacionUsuario | date: 'dd/MM/yyy' }} </td>
-                    <td> {{ usuario.desactivacionUsuario | date: 'dd/MM/yyy' }} </td>
-                    <td> <a class="pointer" style="color: #e15639" matTooltip="Editar Usuario"
+                    <td class="centrarTexto"> {{ usuario.estado | estado }} </td>
+                    <td class="centrarTexto"> {{ usuario.activacionUsuario | date: 'dd/MM/yyy' }} </td>
+                    <td class="centrarTexto"> {{ usuario.desactivacionUsuario | date: 'dd/MM/yyy' }} </td>
+                    <td class="centrarTexto"> <a class="pointer" style="color: #e15639" matTooltip="Editar Usuario"
                       [routerLink]="['/correspondencia/modificarUsuario/', usuario.idUsuario]">           
                       <mat-icon>edit</mat-icon>
                   </a></td>               
@@ -233,3 +228,25 @@
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table> -->
+
+  <!-- <p class="text-muted">text-muted</p>
+  <p class="text-primary">text-primary</p>
+  <p class="text-success">text-success</p>
+  <p class="text-info">text-info</p>
+  <p class="text-warning">text-warning</p>
+  <p class="text-danger">text-danger</p>
+  <p class="text-secondary">text-secondary</p>
+  <p class="text-white">text-white</p>
+  <p class="text-dark">text-dark</p>
+  <p class="text-light">text-light</p>
+  
+  <p class="bg-muted">bg-muted</p>
+  <p class="bg-primary">bg-primary</p>
+  <p class="bg-success">bg-success</p>
+  <p class="bg-info">bg-info</p>
+  <p class="bg-warning">bg-warning</p>
+  <p class="bg-danger">bg-danger</p>
+  <p class="bg-secondary">bg-secondary</p>
+  <p class="bg-white">bg-white</p>
+  <p class="bg-dark">bg-dark</p>
+  <p class="bg-light">bg-light</p> -->

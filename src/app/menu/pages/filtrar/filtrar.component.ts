@@ -12,6 +12,31 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   margin-left: 15px;
   width: 40%;
 }
+
+.fondoEncabezados {
+    background-color: #4D66F9;
+    font-family: Roboto;
+    
+    
+  }
+
+ #miTablaPersonalizada th {
+    width: 50px;
+    font-weight: normal;
+  }
+
+  .centrarTexto {
+    text-align: center;
+  }
+
+ 
+  #miTablaPersonalizada2 td {
+    width: 50px;
+    overflow: auto;
+    border: 0.1px solid;
+    border-bottom: 0.1px solid;
+  }
+
   
 .ancho{
     width: 140%;

@@ -27,28 +27,29 @@
                     <div class="card-body">
                       <table class="table table-hover table-responsive">
                         <thead>
-                          <tr>
-                            <th>ID Usuario</th>
-                            <th>Rol</th>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Estado</th>
-                            <th>Fecha Activacion</th>
-                            <th>Fecha Desactivacion</th>
-                            <th>Editar</th>
+                          <tr class="fondoEncabezados text-white" id="miTablaPersonalizada">
+                            <th>Usuario</th>
+                            <th>Tipo Envio</th>
+                            <th>Tipo Documento</th>
+                            <th>Destinatario</th>
+                            <th>Referencia</th>
+                            <th class="centrarTexto">Fecha</th>
+                            <th class="centrarTexto">Correlativo</th>
+                            <th class="centrarTexto">Estado</th>
+                            <th class="centrarTexto">Editar</th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let correo of correos | filtroCorrelativo: filtroValor ">
-                          <tr>
+                          <tr id="miTablaPersonalizada2">
                             <td> {{ correo.usuario }} </td>
                             <td> {{ correo.nombreEnvio }} </td>
                             <td> {{ correo.nombreDocumento }} </td>
                             <td> {{ correo.destinatario }} </td>
                             <td> {{ correo.referencia }} </td>
-                            <td> {{ correo.fecha | date: 'dd/MM/yyyy'}} </td>
-                            <td> {{ correo.correlativo }} </td>
-                            <td> {{ correo.estadoCorreo }} </td>
-                            <td> <a class="pointer" style="color: #e15639" matTooltip="Editar correspondencia"
+                            <td class="centrarTexto"> {{ correo.fecha | date: 'dd/MM/yyyy'}} </td>
+                            <td class="centrarTexto"> {{ correo.correlativo }} </td>
+                            <td class="centrarTexto"> {{ correo.estadoCorreo }} </td>
+                            <td class="centrarTexto"> <a class="pointer" style="color: #e15639" matTooltip="Editar correspondencia"
                               [routerLink]="['/correspondencia/modificar/', correo.correlativo]">           
                               <mat-icon>edit</mat-icon>
                           </a></td>               

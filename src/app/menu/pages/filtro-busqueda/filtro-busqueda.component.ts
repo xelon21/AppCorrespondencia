@@ -6,7 +6,9 @@ import { debounceTime } from 'rxjs/operators';
   selector: 'app-filtro-busqueda',
   templateUrl: './filtro-busqueda.component.html',
   styles: [`
-   
+   .ancho{
+    width: 300px;
+   }
   `
   ]
 })

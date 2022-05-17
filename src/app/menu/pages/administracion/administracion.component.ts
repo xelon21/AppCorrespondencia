@@ -65,6 +65,29 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   templateUrl: './administracion.component.html',
   styles:[`
 
+  .fondoEncabezados {
+    background-color: #4D66F9;
+    font-family: Roboto;
+    
+  }
+
+  #miTablaPersonalizada th {
+    width: 20px;
+    font-weight: normal;
+  }
+
+  .centrarTexto {
+    text-align: center;
+  }
+
+ 
+  #miTablaPersonalizada2 td {
+    width: 20px;
+    overflow: auto;
+    border: 1px solid;
+    border-bottom: 1px solid;
+  }
+
   .btn {
     margin-right: 10px;
     width: 180px;
@@ -111,7 +134,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
     }
 
     .busqueda {
-      margin-left: 120%;
+      margin-left: 10%;
     }
     
     .salto {
@@ -229,8 +252,7 @@ export class AdministracionComponent implements OnInit {
         .subscribe( datos => { this.roles = datos })
     /**Metodo que trae a los usuarios */
     this.loginService.obtenerUsuarios()
-        .subscribe( datos => {
-          console.log(datos)
+        .subscribe( datos => {          
            this.users = datos 
           })
     /** Metodo que permite hacer Refresh 
@@ -257,20 +279,6 @@ export class AdministracionComponent implements OnInit {
 
   
   
-  /** Metodo que permite filtrar un usuario por nombre. */
-  // async filtrarPorNombreUsuario() { 
-     
-  //   await this.loginService.buscaUsuario(this.filtroNombre)
-  //       .subscribe( users => {         
-  //           this.hayError = false;
-  //           this.users = users
-  //         }, (err) => {
-  //           this.hayError = true;         
-  //         })
-            
-  // }
-  
-  
   /** Este get trae la fecha actual para poder ingresarla
    * al registrar un usuario.
    */
@@ -282,13 +290,13 @@ export class AdministracionComponent implements OnInit {
   fecha = new FormGroup({
     activacionUsuario: new FormControl()    
   });
-
+  
   cargarLista() {
     this.hayError = false;
     this.suscription = this.loginService.obtenerUsuarios()  
-              .subscribe( datos => {
-                this.users = datos
-              }) 
+    .subscribe( datos => {
+      this.users = datos
+    }) 
   }
 
   /** Metodo que registra un usuario */
@@ -297,9 +305,9 @@ export class AdministracionComponent implements OnInit {
     const { idRol, email, password, nombreUsuario , estado, password2 } = this.registroUsuario.value;
     try {  
         
-        /** Se corrobora que las 2 contraseñas sean identicas */
+      /** Se corrobora que las 2 contraseñas sean identicas */
          if( password === password2){
-
+           
           /** Se extrae la fecha del formulario y se le da formato para poder trabajarla
            * Cabe decir que en este caso Mysql recive la fecha de la forma [YYYY-MM-DD]
            * y el formulario la entra de otra forma, por lo que se trabaja la fecha para 
@@ -311,7 +319,7 @@ export class AdministracionComponent implements OnInit {
           let mesActual = new Date().getMonth()
           let anioActual = new Date().getFullYear().toString()          
           let fechaActual =+ anioActual + '-' + +(mesActual + 1).toString() + '-' + diaActual; 
-
+          
           /** En el caso de que la fecha seleccionada de activacion sea igual a la de ahora, el usuario
            *  quedara ingresado como ACTIVO.
            */
@@ -368,7 +376,7 @@ export class AdministracionComponent implements OnInit {
             text: 'Las contraseñas no coinciden',                
           })
         }
-
+        
       } catch (error) {
         console.log(error)
         Swal.fire({
@@ -376,73 +384,88 @@ export class AdministracionComponent implements OnInit {
           title: 'Error',
           text: 'Debe ingresar datos para registrar un usuario',                
         })
-           
-    }
+        
+      }
   }
 
-/** datos necesarios para poder mostrar la informacion en la tabla del html
- * 
- */
-  // dataSource = this.users;
-  // columnsToDisplay = ['IdUsuario','Rol', 'NombreUsuario', 'Email', 'Estado', 'FechaActivacion', 'FechaDesactivacion', 'acciones'];
-  // expandedElement!: Usuario | null;
 }
 
 
 
 /** CODIGO QUE NO SE OCUPA PERO PODRIA OCUPARSE */
+/** datos necesarios para poder mostrar la informacion en la tabla del html
+ * 
+ */
+// dataSource = this.users;
+// columnsToDisplay = ['IdUsuario','Rol', 'NombreUsuario', 'Email', 'Estado', 'FechaActivacion', 'FechaDesactivacion', 'acciones'];
+// expandedElement!: Usuario | null;
 
 // FormatoFecha( fecha: string ): string{     
-    
+  
+  
+  
+  /** Metodo que permite filtrar un usuario por nombre. */
+  // async filtrarPorNombreUsuario() { 
+     
+  //   await this.loginService.buscaUsuario(this.filtroNombre)
+  //       .subscribe( users => {         
+  //           this.hayError = false;
+  //           this.users = users
+  //         }, (err) => {
+  //           this.hayError = true;         
+  //         })
+            
+  // }
 //   if(fecha){
 //     this.formato = '';
 //     this.anio = '';
 //     this.mes= '';
 //     this.dia= '';  
 //     for (let i= 0; i < fecha.length; i++) {   
-//       if( i >= 4 && i <= 9){
-//         if(fecha[i] === '-'){
-//           this.anio = '';
-//         }else {
-//           this.anio += fecha[i];          
+  //       if( i >= 4 && i <= 9){
+    //         if(fecha[i] === '-'){
+      //           this.anio = '';
+      //         }else {
+        //           this.anio += fecha[i];          
 //         }
 //       }else if( i >= 2 && i <= 4 ){
 //         if( fecha[i] != '-' ){ 
-//             this.mes += fecha[i];
-//             i++;
-//             if( fecha[i] != '-'){
-//               this.mes += fecha[i];
-//               i++;
-//             }else{
-//               if( fecha[i] === '-' ){
+  //             this.mes += fecha[i];
+  //             i++;
+  //             if( fecha[i] != '-'){
+    //               this.mes += fecha[i];
+    //               i++;
+    //             }else{
+      //               if( fecha[i] === '-' ){
 //                 this.mes = '';
 //                 this.mes += '0' + fecha[2];
 //               }
 //             }
 //         }else {
-//           i++;
+  //           i++;
 //           if(fecha[i] != '-'){
-//             this.mes += fecha[i];   
+  //             this.mes += fecha[i];   
 //             i++;
 //             if(fecha[i] != '-'){
-//               this.mes += fecha[i]; 
-//             }else{
-//               this.mes = '';
-//               this.mes += '0'+ fecha[3];               
-//             }
-//           }
-//         }
-//       }else if( i >= 0 && i <= 1){
-//         if( fecha[i] === '-'){
-//           this.dia = '';
-//           this.dia += '0' + fecha[0]          
-//         }else {
-//           this.dia += fecha[i];          
-//         }
-//       }
-//     }     
-//     return this.formato += this.anio + '-' + this.mes + '-' + this.dia ;
-//   }else{
-//     return '2023-01-01';
-//   } 
-// }
+  //               this.mes += fecha[i]; 
+  //             }else{
+    //               this.mes = '';
+    //               this.mes += '0'+ fecha[3];               
+    //             }
+    //           }
+    //         }
+    //       }else if( i >= 0 && i <= 1){
+      //         if( fecha[i] === '-'){
+        //           this.dia = '';
+        //           this.dia += '0' + fecha[0]          
+        //         }else {
+          //           this.dia += fecha[i];          
+          //         }
+          //       }
+          //     }     
+          //     return this.formato += this.anio + '-' + this.mes + '-' + this.dia ;
+          //   }else{
+            //     return '2023-01-01';
+            //   } 
+            // }
+            

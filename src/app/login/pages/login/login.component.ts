@@ -93,8 +93,7 @@ export class LoginComponent implements OnInit {
                         icon: 'error',
                         title: 'Error',
                         text: 'Las credenciales no coinciden',                
-                      })
-                    console.log('nothin')
+                      })                                         
                     }
             })    
           }
