@@ -113,11 +113,10 @@
     <br>
     <div >
       <div class="ancho2">
-        <mat-toolbar>
-          
-            <span>Listado Usuarios</span>            
-            <div >
-              <app-filtro-busqueda (search)="handleSearch( $event )" class="busqueda"></app-filtro-busqueda>
+        <mat-toolbar>          
+            <span>Filtrar Usuarios Por Nombre: </span>                        
+            <div class="busqueda">              
+              <app-filtro-busqueda (search)="handleSearch( $event )" class="busqueda" ></app-filtro-busqueda>
             </div>
         </mat-toolbar>        
     </div>

@@ -1,59 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FiltroFechasComponent } from '../../filtro-fechas/filtro-fechas.component';
 import { Correspondencia } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 
+
 @Component({
-  selector: 'app-filtrar',
-  templateUrl: './filtrar.component.html',
+  selector: 'app-filtro-nombre',
+  templateUrl: './filtro-nombre.component.html',
   styles: [`
-.fil {
-  margin-left: 35px;
-  width: 40%;
-}
-
-.filtroFecha {
-  margin-left: 35px;
-}
-
-.separacionIconos {
-  margin-right: 5px;
-}
-
-.fondoEncabezados {
-    background-color: #4D66F9;
-    font-family: Roboto;
-    
-  }
-
- #miTablaPersonalizada th {
-    width: 50px;
-    font-weight: normal;
-  }
-
-  .centrarTexto {
-    text-align: center;
-  }
- 
-  #miTablaPersonalizada2 td {
-    width: 50px;
-    overflow: auto;
-    border: 0.1px solid;
-    border-bottom: 0.1px solid;
+  .fil {
+    margin-left: 35px;
+    width: 40%;
   }
   
-  .ancho{
-    width: 140%;
-  } 
- 
-  `]
+  .filtroFecha {
+    margin-left: 35px;
+  }
+  
+  .separacionIconos {
+    margin-right: 5px;
+  }
+  
+  .fondoEncabezados {
+      background-color: #4D66F9;
+      font-family: Roboto;
+      
+    }
+  
+   #miTablaPersonalizada th {
+      width: 50px;
+      font-weight: normal;
+    }
+  
+    .centrarTexto {
+      text-align: center;
+    }
+   
+    #miTablaPersonalizada2 td {
+      width: 50px;
+      overflow: auto;
+      border: 0.1px solid;
+      border-bottom: 0.1px solid;
+    }
+    
+    .ancho{
+      width: 140%;
+    } 
+   
+    `]
 })
-export class FiltrarComponent implements OnInit {
+export class FiltroNombreComponent implements OnInit {
 
   correos: Correspondencia[] = [];  
   filtro: string = '';
   hayError: boolean = false;  
+ 
 
   constructor( private correosService: CorrespondenciaService,
                private dialog: MatDialog) { 

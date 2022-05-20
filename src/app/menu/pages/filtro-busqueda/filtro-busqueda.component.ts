@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
@@ -7,7 +7,7 @@ import { debounceTime } from 'rxjs/operators';
   templateUrl: './filtro-busqueda.component.html',
   styles: [`
    .ancho{
-    width: 300px;
+    width: 200px;
    }
   `
   ]
@@ -15,24 +15,25 @@ import { debounceTime } from 'rxjs/operators';
 export class FiltroBusquedaComponent implements OnInit {
 
   search = new FormControl('');
-  
+
+
   constructor() { }
 
   ngOnInit(): void {
     this.search.valueChanges
       .pipe(
-        debounceTime(300)
+        debounceTime(200)
       )
       .subscribe( valor => {
       this.searchEmitter.emit(valor)
-      this.correoEmitter.emit(valor)
+      this.correoEmitter.emit(valor) 
     })
-
   }
+
+  
 
   @Output('search') searchEmitter = new EventEmitter<string>();
 
   @Output('correoSearch') correoEmitter = new EventEmitter<string>();
-
-
+ 
 }

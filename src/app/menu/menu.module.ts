@@ -21,6 +21,8 @@ import { ModificarEstadoComponent } from './pages/modificar-estado/modificar-est
 import { FiltroUsuarioPipe } from './pipe/filtroUsuario.pipe';
 import { FiltroBusquedaComponent } from './pages/filtro-busqueda/filtro-busqueda.component';
 import { FiltroCorrelativoPipe } from './pipe/filtroCorrelativo.pipe';
+import { FiltroNombreComponent } from './pages/filtro-nombre/filtro-nombre.component';
+import { FiltroNombrePipe } from './pipe/filtroNombre.pipe';
 
 
 
@@ -38,10 +40,12 @@ import { FiltroCorrelativoPipe } from './pipe/filtroCorrelativo.pipe';
     estadoUsuarioPipe,
     FiltroCorrelativoPipe,
     FiltroUsuarioPipe,
+    FiltroNombrePipe,
     ModificarUsuarioComponent,
     CambioPasswordComponent,
     ModificarEstadoComponent,
     FiltroBusquedaComponent,
+    FiltroNombreComponent,
             
   ],
   imports: [

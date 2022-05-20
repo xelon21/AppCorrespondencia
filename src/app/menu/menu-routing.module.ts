@@ -8,6 +8,7 @@ import { FiltrarComponent } from './pages/filtrar/filtrar.component';
 import { AdministracionComponent } from './pages/administracion/administracion.component';
 import { ValidaAdminGuard } from '../guards/valida-admin.guard';
 import { ModificarUsuarioComponent } from './pages/modificar-usuario/modificar-usuario.component';
+import { FiltroNombreComponent } from './pages/filtro-nombre/filtro-nombre.component';
 
 // Se definen las rutas hijas a ocupar
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
       { path: 'mostrar', component: MostrarComponent },
       { path: 'agregar', component: AgregarComponent },    
       { path: 'modificar/:correlativo', component: ModificarComponent },      
-      { path: 'filtrar/:correlativo', component: FiltrarComponent },      
+      { path: 'filtrar', component: FiltrarComponent },
+      { path: 'filtroNombre', component: FiltroNombreComponent},     
       { path: 'administrador', component: AdministracionComponent, 
         canActivate: [ ValidaAdminGuard ],
         canLoad: [ ValidaAdminGuard ] 

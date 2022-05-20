@@ -126,10 +126,8 @@ export class ModificarUsuarioComponent implements OnInit {
     });
   }
 
-
 /** Metodo que Permite modificar a usuario por su id */
   async modificar() {   
-
     try {      
       await this.loginService.modificarPorIdUsuario(this.usuario)
           .subscribe( datos => {

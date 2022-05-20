@@ -6,12 +6,10 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 export class FiltroUsuarioPipe implements PipeTransform {
 
-    transform( lista: any[], texto: string ): any[] {       
-        
+    transform( lista: any[], texto: string ): any[] {
       if(!texto) return lista;
-      return lista.filter(user => user.nombreUsuario.toUpperCase().includes(texto.toUpperCase())                     ///indexOf(texto) >- 1
+      return lista.filter(user => user.nombreUsuaio.toUpperCase().includes(texto.toUpperCase())                     ///indexOf(texto) >- 1
       )
-      
     }
   
 }

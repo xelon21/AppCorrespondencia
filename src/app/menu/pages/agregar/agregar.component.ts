@@ -82,8 +82,8 @@ export class AgregarComponent implements OnInit  {
             Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Correspondencia Guardada Con Exito',
-            footer:'El correlativo es: ' + resp.correlativo,
+            title: `Correspondencia Guardada Con Exito \n
+                    El correlativo es: ${resp.correlativo}`, 
             showConfirmButton: true 
             })
             //se redirecciona a la pagina que muestra correspondencia 

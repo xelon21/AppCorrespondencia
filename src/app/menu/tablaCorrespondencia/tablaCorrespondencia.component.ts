@@ -78,7 +78,7 @@ export class TablaCorrespondenciaComponent {
 
   // Declaracion de variables para poder utilizar los campos en el html
   dataSource = this.correos;
-  columnsToDisplay = ['usuario', 'nombreDocumento', 'tipoEnvio', 'destinatario', 'referencia', 'fecha', 'correlativo', 'estadoCorreo', 'acciones'];
+  columnsToDisplay = ['correlativo', 'nombreDocumento', 'tipoEnvio', 'destinatario', 'referencia', 'fecha', 'usuario', 'estadoCorreo', 'acciones'];
   expandedElement!: Correspondencia | null;
 
 }

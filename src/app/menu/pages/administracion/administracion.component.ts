@@ -134,8 +134,10 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
     }
 
     .busqueda {
-      margin-left: 10%;
+      margin-left: 1%;
     }
+
+    
     
     .salto {
       margin-top: 10px;

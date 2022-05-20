@@ -5,10 +5,15 @@
   [ngStyle.sm]="{'font-size.px': 20, color: 'lightblue'}"
   [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
   
-<div class="example-container" >
-<table mat-table
-[dataSource]="correos" multiTemplateDataRows
-class="mat-elevation-z8">
+  <div class="example-container" >
+    <table mat-table
+    [dataSource]="correos" multiTemplateDataRows
+    class="mat-elevation-z8">
+    
+<ng-container matColumnDef="correlativo">
+      <th mat-header-cell *matHeaderCellDef> Correlativo </th>
+      <td mat-cell *matCellDef="let correo"> {{correo.correlativo}} </td>
+</ng-container>
 
 <ng-container matColumnDef="usuario">
   <th mat-header-cell *matHeaderCellDef> Usuario </th>
@@ -38,11 +43,6 @@ class="mat-elevation-z8">
   <ng-container matColumnDef="fecha">
     <th mat-header-cell *matHeaderCellDef> Fecha </th>
     <td mat-cell *matCellDef="let correo"> {{correo.fecha | date: 'dd/MM/yyyy' }} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="correlativo">
-    <th mat-header-cell *matHeaderCellDef> Correlativo </th>
-    <td mat-cell *matCellDef="let correo"> {{correo.correlativo}} </td>
   </ng-container>
 
   <ng-container matColumnDef="estadoCorreo">
