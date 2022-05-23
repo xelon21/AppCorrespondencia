@@ -14,8 +14,7 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class FiltroBusquedaComponent implements OnInit {
 
-  search = new FormControl('');
-
+  search = new FormControl('');  
 
   constructor() { }
 
@@ -25,15 +24,14 @@ export class FiltroBusquedaComponent implements OnInit {
         debounceTime(200)
       )
       .subscribe( valor => {
-      this.searchEmitter.emit(valor)
-      this.correoEmitter.emit(valor) 
+      this.searchEmitter.emit(valor)         
     })
   }
 
   
 
-  @Output('search') searchEmitter = new EventEmitter<string>();
+  
 
-  @Output('correoSearch') correoEmitter = new EventEmitter<string>();
+  @Output('search') searchEmitter = new EventEmitter<string>();
  
 }

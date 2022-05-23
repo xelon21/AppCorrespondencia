@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
+import { Usuario } from '../../login/interface/login.interface';
 
 
 @Pipe({
@@ -6,10 +7,15 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 export class FiltroUsuarioPipe implements PipeTransform {
 
-    transform( lista: any[], texto: string ): any[] {
-      if(!texto) return lista;
-      return lista.filter(user => user.nombreUsuaio.toUpperCase().includes(texto.toUpperCase())                     ///indexOf(texto) >- 1
-      )
+    transform( lista: Usuario[], page: number = 0, search: string = ''  ): any[] {
+     
+      if( search.length === 0 )
+      return lista.slice( page, page + 5 );
+
+      const nombreUsuarioFiltrado = lista.filter( nombre => nombre.nombreUsuario.toUpperCase().includes( search.toUpperCase() ));
+
+      return nombreUsuarioFiltrado.slice(page, page += 5);
+     
     }
   
 }

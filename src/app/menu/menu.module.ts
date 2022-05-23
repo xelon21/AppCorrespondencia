@@ -9,8 +9,7 @@ import { inicioComponent } from './inicio/inicio.component';
 import { MaterialModule } from '../material/material.module';
 import { FiltrarComponent } from './pages/filtrar/filtrar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { FiltroFechasComponent } from './filtro-fechas/filtro-fechas.component';
+//import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { TablaCorrespondenciaComponent } from './tablaCorrespondencia/tablaCorrespondencia.component';
 import { AdministracionComponent } from './pages/administracion/administracion.component';
 import { estadoUsuarioPipe } from './pipe/estadoUsuario.pipe';
@@ -23,6 +22,7 @@ import { FiltroBusquedaComponent } from './pages/filtro-busqueda/filtro-busqueda
 import { FiltroCorrelativoPipe } from './pipe/filtroCorrelativo.pipe';
 import { FiltroNombreComponent } from './pages/filtro-nombre/filtro-nombre.component';
 import { FiltroNombrePipe } from './pipe/filtroNombre.pipe';
+import { FiltrofechasComponent } from './pages/filtrofechas/filtrofechas.component';
 
 
 
@@ -35,7 +35,6 @@ import { FiltroNombrePipe } from './pipe/filtroNombre.pipe';
     MostrarComponent,    
     inicioComponent,
     FiltrarComponent,
-    FiltroFechasComponent,    
     AdministracionComponent,
     estadoUsuarioPipe,
     FiltroCorrelativoPipe,
@@ -46,6 +45,7 @@ import { FiltroNombrePipe } from './pipe/filtroNombre.pipe';
     ModificarEstadoComponent,
     FiltroBusquedaComponent,
     FiltroNombreComponent,
+    FiltrofechasComponent,
             
   ],
   imports: [
@@ -59,7 +59,7 @@ import { FiltroNombrePipe } from './pipe/filtroNombre.pipe';
   ],  
   providers: [
     AgregarComponent,
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+   // {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
     {provide: NgbDateAdapter, useClass: NgbDateNativeUTCAdapter},    
   ]  
 })

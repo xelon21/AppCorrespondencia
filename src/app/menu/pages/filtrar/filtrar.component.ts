@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { FiltroFechasComponent } from '../../filtro-fechas/filtro-fechas.component';
 import { Correspondencia } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 
@@ -16,6 +14,17 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
 .filtroFecha {
   margin-left: 35px;
 }
+
+.busqueda {
+      margin-left: 1%;
+      width: 25%;
+    }
+
+  .textoFiltro {
+    margin-left: 30px;
+  }
+
+  
 
 .separacionIconos {
   margin-right: 5px;
@@ -54,9 +63,11 @@ export class FiltrarComponent implements OnInit {
   correos: Correspondencia[] = [];  
   filtro: string = '';
   hayError: boolean = false;  
+  pagina: number = 0;
+  search: string = '';
 
   constructor( private correosService: CorrespondenciaService,
-               private dialog: MatDialog) { 
+   ) { 
     
   }
 
@@ -64,20 +75,6 @@ export class FiltrarComponent implements OnInit {
     this.traeCorrespondencia();
   }  
 
-  /** Metodo que despliega el cuadro de dialogo el cual filtra por rango de fechas */
-  openDialog() {  
-    this.dialog.open(FiltroFechasComponent,
-       {
-      width:'1250px',
-      disableClose: true     
-    });
-    /** Al dia de hoy 13/05/2022, Todavia no logro desifrar como hacer
-     * que el dialogo de angular material se cierre cuando se hace click
-     * fuera de el. De momento solo se cierra si el usuario hace click en
-     * el boton VOLVER.
-     */
-  }
-  
   /** Metodo que trae todas las correspondencias */
   async traeCorrespondencia(){
     
@@ -86,23 +83,18 @@ export class FiltrarComponent implements OnInit {
         this.correos = correos     
       });  
   }
-
-  filtroValor = ''
-  handleSearch(value: string) {
-    this.filtroValor = value;
+  nextPage() {
+    this.pagina += 10;
   }
+
+  prevPage() {
+    if ( this.pagina > 0){
+      this.pagina -= 10;
+    }
+  }
+
+  onSearchNombreUsuario( search: string) {
+    this.pagina = 0;
+    this.search = search;
+  }   
 }
-
-
-  /** Metodo que filtra por correlativo  */
-  // async filtrarPorCorrelativo() {  
-  //   await this.correosService.filtroCorrelativo(this.filtro)
-  //       .subscribe( correos => {
-  //         if(!correos){                        
-  //           this.hayError = false;
-  //         }else {
-  //           this.hayError = true
-  //           this.correos = correos   
-  //         }  
-  //       })
-  // }

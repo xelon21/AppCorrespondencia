@@ -8,10 +8,10 @@
   <div class="ancho">
     <mat-toolbar>
       <span>Filtrar Correspondencia</span>
-        <span class="filtroFecha"></span>
+              <span class="filtroFecha"></span>      
               <button mat-raised-button color="primary"
-                   (click)="openDialog()"                     
-              ><mat-icon>event</mat-icon><span class="separacionIconos"></span>Por rango de fechas </button> 
+              [routerLink]="['/correspondencia/filtroFechas']"                    
+              ><mat-icon>event</mat-icon ><span class="separacionIconos"></span>Por Rango de Fechas </button>      
               <span class="filtroFecha"></span>      
               <button mat-raised-button color="primary"
               [routerLink]="['/correspondencia/filtroNombre']"                    
@@ -19,11 +19,19 @@
               <span class="filtroFecha"></span>      
               <button mat-raised-button color="primary"
               [routerLink]="['/correspondencia/filtrar']"                    
-              ><mat-icon>search</mat-icon><span class="separacionIconos"></span>Por Correlativo </button> 
-              </mat-toolbar>            
-              <div  class="fil">             
-               <span>Filtrar por Usuario: </span><app-filtro-busqueda (search)="handleSearch( $event )" ></app-filtro-busqueda>
-              </div>              
+              ><mat-icon>search</mat-icon><span class="separacionIconos"></span>Por Correlativo </button>               
+            </mat-toolbar> 
+            <span class="textoFiltro">Filtro por Nombre:</span>
+            <mat-form-field autocomplete="off" class="busqueda">
+                  <input  matInput 
+                          spellcheck="false"                        
+                          placeholder=""
+                          #txtSearch
+                          (keyup)="onSearchNombreUsuario( txtSearch.value )">
+  
+                          <!-- <app-filtro-busqueda (search)="handleSearch( $event )" class="busqueda" ></app-filtro-busqueda> -->
+            </mat-form-field>               
+                    
             </div>
             <div class="ancho">
               <div >
@@ -45,7 +53,7 @@
                               <th class="centrarTexto">Editar</th>
                             </tr>
                           </thead>                     
-                            <tbody *ngFor="let correo of correos | searchNombre: filtroValor ">                         
+                            <tbody *ngFor="let correo of correos | searchNombre:pagina:search ">                         
                               <tr id="miTablaPersonalizada2">
                                   <td> {{ correo.usuario }} </td>
                                   <td class="centrarTexto"> {{ correo.correlativo }} </td>
@@ -60,14 +68,25 @@
                                   <mat-icon>edit</mat-icon>
                               </a></td> 
                               </tr>
-                            </tbody>
-                        
+                            </tbody>                        
                         </table>
                       </div>
                     </div>         
                   </div>        
                 </div>
               </div>
+              <button mat-raised-button color="primary"
+              class="paginacion"
+              (click)="prevPage()">
+              Anterior
+              </button>
+              &nbsp;
+              <button mat-raised-button color="primary"
+              class="paginacion"
+              (click)="nextPage()"
+              [disabled]="(correos | searchNombre:pagina:search).length === 0">
+              Siguiente
+              </button>
         </div>
     </div>
   </div>

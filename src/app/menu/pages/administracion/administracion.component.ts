@@ -7,9 +7,8 @@ import Swal from 'sweetalert2';
 
 import { NgbCalendar, NgbDate, NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FormatoFecha } from '../../interface/correspondencia.interface';
-import { CorrespondenciaService } from '../../services/correspondencia.service';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+
 
 
 
@@ -64,6 +63,10 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   selector: 'app-administracion',
   templateUrl: './administracion.component.html',
   styles:[`
+
+  .paginacion{
+    width: 80px;
+  }
 
   .fondoEncabezados {
     background-color: #4D66F9;
@@ -206,18 +209,18 @@ tr.example-element-row:not(.example-expanded-row):active {
 })
 export class AdministracionComponent implements OnInit {
 
-  usuarioActivo!: string;
-  strin!: NgbDate;
+  usuarioActivo!: string; 
   usuarioNoActivo!: string;
+  pagina: number = 0;
+  search: string = '';
 
   fecha1!: FormatoFecha;
 
   formato!: string;
   anio!: string;
   mes!: string;
-  dia!: string;
- 
-  //existe!: boolean;
+  dia!: string; 
+
   userActivo!: string;
   userNoActivo!: string;
   usuario: Usuario[] = [];
@@ -225,7 +228,6 @@ export class AdministracionComponent implements OnInit {
   roles: Roles[] = [];
   users: Usuario[] = [];
   hayError: boolean = false;
-  //filtroUsuarios: Usuario[] = [];
   filtroNombre: string = '';
   suscription!: Subscription;
  
@@ -244,8 +246,7 @@ export class AdministracionComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private loginService: SesionesService,
               private ngbCalendar: NgbCalendar,
-              private dateAdapter: NgbDateAdapter<string>,
-              private router: Router) { }
+              private dateAdapter: NgbDateAdapter<string>) { }
 
   ngOnInit(): void {
    
@@ -274,12 +275,21 @@ export class AdministracionComponent implements OnInit {
     this.suscription.unsubscribe();
   }
 
-  filtroValor = ''
-  handleSearch(value: string) {
-    this.filtroValor = value;
+  nextPage() {
+    this.pagina += 5;
   }
 
-  
+  prevPage() {
+    if ( this.pagina > 0){
+      this.pagina -= 5;
+    }
+  }
+
+  onSearchNombreUsuario( search: string) {
+    this.pagina = 0;
+    this.search = search;
+  }
+ 
   
   /** Este get trae la fecha actual para poder ingresarla
    * al registrar un usuario.

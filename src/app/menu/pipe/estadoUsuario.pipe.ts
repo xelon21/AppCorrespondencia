@@ -14,14 +14,14 @@ export class estadoUsuarioPipe implements PipeTransform {
 
     }
 
-    transform2( valor: boolean): string {
+    // transform2( valor: boolean): string {
 
-        if(valor){
-            return 'ACTIVO';
-        }else {
-            return 'INACTIVO';
-        }
-    }
+    //     if(valor){
+    //         return 'ACTIVO';
+    //     }else {
+    //         return 'INACTIVO';
+    //     }
+    // }
 
     
 
