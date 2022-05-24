@@ -7,22 +7,107 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   selector: 'app-filtrofechas',
   templateUrl: './filtrofechas.component.html',
   styles: [`
+
+.fil {
+    margin-left: 35px;
+    width: 40%;
+  }
+
+  .busqueda {
+      margin-left: 1%;
+      width: 25%;
+    }
+
+  .textoFiltro {
+    margin-left: 30px;
+  }
+
+  
+  .filtroFecha {
+    margin-left: 35px;
+  }
+  
+  .separacionIconos {
+    margin-right: 5px;
+  }
+  
+  .fondoEncabezados {
+      background-color: #4D66F9;
+      font-family: Roboto;
+      
+    }
+  
+   #miTablaPersonalizada th {
+      width: 50px;
+      font-weight: normal;
+    }
+  
+    .centrarTexto {
+      text-align: center;
+    }
+   
+    #miTablaPersonalizada2 td {
+      width: 50px;
+      overflow: auto;
+      border: 0.1px solid;
+      border-bottom: 0.1px solid;
+    }
+
+    .ancho3 {
+      width: 90%;
+    }
+   
+    .paginacion {
+      margin-bottom: 25px;
+   
+    }
+    .paginacion2 {
+      margin-bottom: 20px; 
+      margin-left: 10px;       
+    }
+   
+    .ancho4 {
+      width: 1400px;
+      margin-left: 550px;
+      background-color: #efefef;
+      height: 550px;
+    }
+
+    .espacio {
+     margin-left: 30%;   
+
+    }
+    
+    .ancho{
+      width: 1400px;
+    } 
+ 
    .example-form-field {
     margin-right: 20px;
   }
 
   .ancho {
-    width: 220px;    
+    width: 250px;
   }
 
+  .ancho3 {
+    width: 1400px;
+  }
+
+ 
   .ancho2 {
     width: 220px;    
   }
 
   .tablaEspacio {
-    margin-left: 300px;
-    width: 100%;
+    margin-left: 10px;
+    width: 150%;
   }
+
+  .filtroFecha {
+  margin-left: 35px;
+}
+
   
   `]
 })
@@ -40,12 +125,24 @@ export class FiltrofechasComponent implements OnInit {
 
   hayError: boolean = false;
   correos: Correspondencia[] = [];
+  pagina: number = 0;
   
   constructor(private correoService: CorrespondenciaService) {               
                } 
         
   ngOnInit(): void {
   }
+
+  nextPage() {   
+      this.pagina += 10;   
+  }
+
+  prevPage() {
+    if ( this.pagina > 0){      
+      this.pagina -= 10;
+    }
+  }
+
     /* Metodo que permite filtrar un rango de fechas */
   async filtraFechas(){
     // se verifica que los campos no vengan vacios    

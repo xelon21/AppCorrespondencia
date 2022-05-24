@@ -64,7 +64,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   templateUrl: './administracion.component.html',
   styles:[`
 
-  .paginacion{
+   .paginacion{
     width: 80px;
   }
 
@@ -113,35 +113,40 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
     body{
         background-color: lightgray;
     }
-  .spacer2 {
-    flex: 2 2 auto;
-   }
+    .espacio {
+     padding-left: 160%;
+    }
+
+    .spacer2 {
+     padding-left: 78% 
+    }
+
 
    .input {
      margin-right: 50px;
    }
 
     .ancho {
-      width: 80%;
+      width: 850px;     
     }
     .ancho2 {
-      width: 175%;
+      width: 1400px;
+      margin-left: 550px;
     }
     .ancho3 {
       width: 150%;
-      margin-left: 230px;
+      margin-left: 200px;
     }
     .ancho4 {
-      width: 175%;
+      width: 1400px;
+      margin-left: 550px;
       background-color: #efefef;
+      height: 400px;
     }
 
     .busqueda {
       margin-left: 1%;
     }
-
-    
-    
     .salto {
       margin-top: 10px;
     }

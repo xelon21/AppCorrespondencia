@@ -18,11 +18,11 @@ import { ModificarUsuarioComponent } from './pages/modificar-usuario/modificar-u
 import { CambioPasswordComponent } from './pages/cambio-password/cambio-password.component';
 import { ModificarEstadoComponent } from './pages/modificar-estado/modificar-estado.component';
 import { FiltroUsuarioPipe } from './pipe/filtroUsuario.pipe';
-import { FiltroBusquedaComponent } from './pages/filtro-busqueda/filtro-busqueda.component';
 import { FiltroCorrelativoPipe } from './pipe/filtroCorrelativo.pipe';
 import { FiltroNombreComponent } from './pages/filtro-nombre/filtro-nombre.component';
 import { FiltroNombrePipe } from './pipe/filtroNombre.pipe';
 import { FiltrofechasComponent } from './pages/filtrofechas/filtrofechas.component';
+import { PaginacionPipe } from './pipe/paginacion.pipe';
 
 
 
@@ -43,9 +43,9 @@ import { FiltrofechasComponent } from './pages/filtrofechas/filtrofechas.compone
     ModificarUsuarioComponent,
     CambioPasswordComponent,
     ModificarEstadoComponent,
-    FiltroBusquedaComponent,
     FiltroNombreComponent,
     FiltrofechasComponent,
+    PaginacionPipe
             
   ],
   imports: [

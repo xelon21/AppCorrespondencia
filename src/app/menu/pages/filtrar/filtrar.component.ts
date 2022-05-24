@@ -51,11 +51,21 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
     border: 0.1px solid;
     border-bottom: 0.1px solid;
   }
+  .ancho4 {
+      width: 1400px;
+      margin-left: 550px;
+      background-color: #efefef;
+      height: 700px;
+    }
+
+    .espacio {
+     padding-left: 47%;
+    }
+    
+    .ancho{
+      width: 1400px;
+    } 
   
-  .ancho{
-    width: 140%;
-  } 
- 
   `]
 })
 export class FiltrarComponent implements OnInit {

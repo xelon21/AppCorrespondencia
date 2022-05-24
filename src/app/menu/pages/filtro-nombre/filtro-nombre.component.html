@@ -5,7 +5,7 @@
     [ngStyle.sm]="{'font-size.px': 20, color: 'lightblue'}"
     [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
     
-  <div class="ancho">
+  <div class="ancho4">
     <mat-toolbar>
       <span>Filtrar Correspondencia</span>
               <span class="filtroFecha"></span>      
@@ -14,7 +14,8 @@
               ><mat-icon>event</mat-icon ><span class="separacionIconos"></span>Por Rango de Fechas </button>      
               <span class="filtroFecha"></span>      
               <button mat-raised-button color="primary"
-              [routerLink]="['/correspondencia/filtroNombre']"                    
+              [routerLink]="['/correspondencia/filtroNombre']" 
+              [disabled]="true"                   
               ><mat-icon>badge</mat-icon ><span class="separacionIconos"></span>Por Usuario </button> 
               <span class="filtroFecha"></span>      
               <button mat-raised-button color="primary"
@@ -27,12 +28,21 @@
                           spellcheck="false"                        
                           placeholder=""
                           #txtSearch
-                          (keyup)="onSearchNombreUsuario( txtSearch.value )">
-  
-                          <!-- <app-filtro-busqueda (search)="handleSearch( $event )" class="busqueda" ></app-filtro-busqueda> -->
-            </mat-form-field>               
-                    
-            </div>
+                          (keyup)="onSearchNombreUsuario( txtSearch.value )"> 
+            </mat-form-field>          
+            <span class="espacio"></span>              
+            <button mat-raised-button color="primary"
+            class="paginacion"
+            (click)="prevPage()">
+            Anterior
+            </button>
+            &nbsp;
+            <button mat-raised-button color="primary"
+            class="paginacion"
+            (click)="nextPage()"
+            [disabled]="(correos | searchNombre:pagina:search).length === 0">
+            Siguiente
+            </button>       
             <div class="ancho">
               <div >
                 <div class="container-fluid ancho2" *ngIf="!hayError">
@@ -74,20 +84,9 @@
                     </div>         
                   </div>        
                 </div>
-              </div>
-              <button mat-raised-button color="primary"
-              class="paginacion"
-              (click)="prevPage()">
-              Anterior
-              </button>
-              &nbsp;
-              <button mat-raised-button color="primary"
-              class="paginacion"
-              (click)="nextPage()"
-              [disabled]="(correos | searchNombre:pagina:search).length === 0">
-              Siguiente
-              </button>
+              </div>          
         </div>
+            </div>
     </div>
   </div>
   

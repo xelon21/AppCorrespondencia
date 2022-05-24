@@ -7,8 +7,8 @@
     [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
     <div class="ancho2">
         <mat-toolbar>
-            <span>Ingresar Usuario</span>
-            <div class="spacer"></div>
+            <span >Ingresar Usuario</span>
+            <span class="spacer2"></span>
             <button mat-raised-button color="primary"
                 routerLink="/correspondencia/mostrar" 
                 fxFlex="10"                    
@@ -111,7 +111,7 @@
 
     
     <br>
-    <div >
+    <div>
       <div class="ancho2">
         <mat-toolbar>          
             <span>Filtrar Usuarios Por Nombre: </span>                        
@@ -123,8 +123,21 @@
                         #txtSearch
                         (keyup)="onSearchNombreUsuario( txtSearch.value )">
 
-            </mat-form-field>               
-              <!-- <app-filtro-busqueda (search)="handleSearch( $event )" class="busqueda" ></app-filtro-busqueda> -->
+            </mat-form-field>             
+            <span class="espacio"></span>
+            <button mat-raised-button color="primary"
+              class="paginacion"
+              (click)="prevPage()">
+         Anterior
+          </button>
+           &nbsp;
+          <button mat-raised-button color="primary"
+              class="paginacion"
+              (click)="nextPage()"
+              [disabled]="(users | search:pagina:search).length === 0">
+            Siguiente
+           </button>              
+                <!-- <app-filtro-busqueda (search)="handleSearch( $event )" class="busqueda" ></app-filtro-busqueda> -->
             </div>
         </mat-toolbar>        
     </div>
@@ -132,17 +145,17 @@
         <div class="row">
           <div class="col-lg-12 col-md-6 col-12">                     
             <div class="card-body">
-              <table class="table table-hover table-responsive">
+              <table class="table table-hover table-responsive table-fixed">
                 <thead>
                   <tr class="fondoEncabezados text-white" id="miTablaPersonalizada">
-                    <th>Id Usuario</th>
-                    <th>Nombre</th>
-                    <th>Rol</th>
-                    <th>Email</th>
-                    <th class="centrarTexto">Estado</th>
-                    <th class="centrarTexto">Fecha Activacion</th>
-                    <th class="centrarTexto">Fecha Desactivacion</th>
-                    <th class="centrarTexto">Editar</th>
+                    <th scope="col">Id Usuario</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Email</th>
+                    <th scope="col" class="centrarTexto">Estado</th>
+                    <th scope="col" class="centrarTexto">Fecha Activacion</th>
+                    <th scope="col" class="centrarTexto">Fecha Desactivacion</th>
+                    <th scope="col" class="centrarTexto">Editar</th>
                   </tr>
                 </thead>
                 <tbody *ngFor="let usuario of users | search:pagina:search">
@@ -164,19 +177,7 @@
             </div>
           </div>         
         </div>
-      </div>
-      <button mat-raised-button color="primary"
-              class="paginacion"
-              (click)="prevPage()">
-        Anterior
-      </button>
-      &nbsp;
-      <button mat-raised-button color="primary"
-              class="paginacion"
-              (click)="nextPage()"
-              [disabled]="(users | search:pagina:search).length === 0">
-        Siguiente
-      </button>
+      </div>      
     </div>
   </div>
 
