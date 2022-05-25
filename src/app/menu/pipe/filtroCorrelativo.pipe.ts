@@ -11,7 +11,7 @@ export class FiltroCorrelativoPipe implements PipeTransform {
     if( search.length === 0 )
     return lista.slice( page, page + 10 );
 
-    const correlativoFiltrado = lista.filter( nombre => nombre.correlativo.toUpperCase().includes( search.toUpperCase() ));
+    const correlativoFiltrado = lista.filter( nombre => nombre.nombreDocumento.toUpperCase().includes( search.toUpperCase() ));
 
     return correlativoFiltrado.slice(page, page += 10);
   }

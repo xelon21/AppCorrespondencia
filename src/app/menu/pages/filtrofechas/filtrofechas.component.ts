@@ -74,7 +74,7 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
     }
 
     .espacio {
-     margin-left: 30%;   
+     margin-left: 24%;   
 
     }
     
