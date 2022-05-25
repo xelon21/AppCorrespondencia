@@ -9,8 +9,6 @@ import { inicioComponent } from './inicio/inicio.component';
 import { MaterialModule } from '../material/material.module';
 import { FiltrarComponent } from './pages/filtrar/filtrar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-//import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { TablaCorrespondenciaComponent } from './tablaCorrespondencia/tablaCorrespondencia.component';
 import { AdministracionComponent } from './pages/administracion/administracion.component';
 import { estadoUsuarioPipe } from './pipe/estadoUsuario.pipe';
 import { NgbDateAdapter, NgbDateNativeUTCAdapter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -29,7 +27,7 @@ import { PaginacionPipe } from './pipe/paginacion.pipe';
 
 @NgModule({
   declarations: [
-    TablaCorrespondenciaComponent,
+  
     AgregarComponent,
     ModificarComponent,
     MostrarComponent,    

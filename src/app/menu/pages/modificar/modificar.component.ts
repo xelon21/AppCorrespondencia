@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CorrespondenciaB, CorrespondenciaModificar, TipoEnvio } from '../../interface/correspondencia.interface';
+import { CorrespondenciaModificar, TipoEnvio } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
-import { switchMap, tap, catchError, map } from 'rxjs/operators';
+
+import { switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { SesionesService } from '../../../login/services/sesiones.service';
 
