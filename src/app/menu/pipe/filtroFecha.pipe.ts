@@ -3,14 +3,17 @@ import { Correspondencia } from '../interface/correspondencia.interface';
 
 
 @Pipe({
-    name: 'paginar'
+    name: 'fechaFil'
 })
-export class PaginacionPipe implements PipeTransform {
+export class FiltroFechaPipe implements PipeTransform {
 
     transform( lista: Correspondencia[], page: number = 0): any[] {     
      
-      return lista.slice( page, page + 15 );
+      return lista.slice( page, page + 8 );
      
     }
   
 }
+    
+
+

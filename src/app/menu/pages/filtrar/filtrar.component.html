@@ -45,7 +45,7 @@
                 <button mat-raised-button color="primary"
                 class="paginacion"
                 (click)="nextPage()"
-                [disabled]="(correos | searchNombre:pagina:search).length === 0">
+                [disabled]="(correos | searchNombre:pagina:search).length < 10">
                 Siguiente
                 </button>             
               <div class="ancho">

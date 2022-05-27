@@ -23,7 +23,7 @@
                 <button mat-raised-button color="primary"
                 class="paginacion2"
                 (click)="nextPage()"
-                [disabled]="(correos | paginar:pagina).length === 0">
+                [disabled]="(correos | paginar:pagina).length < 15 ">
                 Siguiente
                 </button>
                 </mat-toolbar>                

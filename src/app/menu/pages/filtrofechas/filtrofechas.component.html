@@ -18,7 +18,7 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
               </mat-form-field>
-              <span class="separacionIconos"></span> <button mat-raised-button color="primary" (click)="filtraFechas()">Aceptar</button>         
+            <span class="separacionIconos"></span> <button mat-raised-button color="primary" (click)="filtraFechas()">Aceptar</button>         
             <span class="filtroFecha"></span>      
             <button mat-raised-button color="primary"
             [routerLink]="['/correspondencia/filtroNombre']"
@@ -37,6 +37,7 @@
             <button mat-raised-button color="primary"
             class="paginacion"
             (click)="nextPage()"
+            [disabled]="(correos | fechaFil:pagina).length < 8 "
             >
             Siguiente
             </button>       
@@ -62,7 +63,7 @@
                             <th class="centrarTexto">Editar</th>
                           </tr>
                         </thead>                     
-                          <tbody *ngFor="let correo of correos | paginar:pagina ">                         
+                          <tbody *ngFor="let correo of correos | fechaFil:pagina ">                         
                             <tr id="miTablaPersonalizada2">
                               <td class="centrarTexto"> {{ correo.fecha | date: 'dd/MM/yyyy'}} </td>
                                 <td> {{ correo.usuario }} </td>

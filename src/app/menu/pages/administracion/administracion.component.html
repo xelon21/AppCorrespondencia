@@ -134,7 +134,7 @@
           <button mat-raised-button color="primary"
               class="paginacion"
               (click)="nextPage()"
-              [disabled]="(users | search:pagina:search).length === 0">
+              [disabled]="(users | search:pagina:search).length < 5">
             Siguiente
            </button>              
                 <!-- <app-filtro-busqueda (search)="handleSearch( $event )" class="busqueda" ></app-filtro-busqueda> -->

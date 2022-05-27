@@ -21,6 +21,7 @@ import { FiltroNombreComponent } from './pages/filtro-nombre/filtro-nombre.compo
 import { FiltroNombrePipe } from './pipe/filtroNombre.pipe';
 import { FiltrofechasComponent } from './pages/filtrofechas/filtrofechas.component';
 import { PaginacionPipe } from './pipe/paginacion.pipe';
+import { FiltroFechaPipe } from './pipe/filtroFecha.pipe';
 
 
 
@@ -43,7 +44,8 @@ import { PaginacionPipe } from './pipe/paginacion.pipe';
     ModificarEstadoComponent,
     FiltroNombreComponent,
     FiltrofechasComponent,
-    PaginacionPipe
+    PaginacionPipe,
+    FiltroFechaPipe
             
   ],
   imports: [

@@ -110,7 +110,6 @@ export class MostrarComponent implements OnInit, OnDestroy {
   correos: Correspondencia[] = [];
   suscription!: Subscription;
   pagina: number = 0;
-  
 
   
   constructor( private correosService: CorrespondenciaService, 
@@ -133,8 +132,8 @@ export class MostrarComponent implements OnInit, OnDestroy {
       })
   }
 
-  nextPage() {
-    this.pagina += 10;
+  nextPage() {    
+    this.pagina += 10;    
   }
 
   prevPage() {
@@ -146,10 +145,8 @@ export class MostrarComponent implements OnInit, OnDestroy {
   /** Revisar el AdministrarComponente, Ahi se explica que hace 
    * este metodo xD 
    */
-  ngOnDestroy(): void {
-    
+  ngOnDestroy(): void {    
     this.suscription.unsubscribe();
-
   }
 
   /** Metodo que envia el correlativo de la correspondencia seleccionada 

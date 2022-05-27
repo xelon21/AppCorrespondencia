@@ -56,7 +56,7 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
       width: 1400px;
       margin-left: 550px;
       background-color: #efefef;
-      height: 700px;
+      height: 860px;
     }
 
     .espacio {

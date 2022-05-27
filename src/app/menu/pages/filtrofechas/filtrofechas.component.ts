@@ -70,7 +70,7 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
       width: 1400px;
       margin-left: 550px;
       background-color: #efefef;
-      height: 550px;
+      height: 700px;
     }
 
     .espacio {
@@ -88,8 +88,9 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
 
   .ancho {
     width: 250px;
+    margin-top: 25px;
   }
-
+ 
   .ancho3 {
     width: 1400px;
   }
@@ -133,8 +134,9 @@ export class FiltrofechasComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  nextPage() {   
-      this.pagina += 10;   
+  nextPage() {    
+    this.pagina += 10;   
+       
   }
 
   prevPage() {
