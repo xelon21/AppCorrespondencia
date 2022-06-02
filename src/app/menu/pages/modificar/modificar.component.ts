@@ -33,12 +33,11 @@ export class ModificarComponent implements OnInit {
   // los parametros
   correos: CorrespondenciaModificar = {
     idTipoEnvio: 0,
-    usuario: '',
+    idUsuario: 0,
     estadoCorreo: '',
     destinatario: '',
     referencia: '',
     correlativo: '',
-    us: ''
   }
   us: string = '';
   
@@ -71,15 +70,21 @@ export class ModificarComponent implements OnInit {
   async modificar( ){
 
     /** Se corrobora el estado de la correspondencia  */
+
     if(!this.estadoCorrespondencia(this.correos.estadoCorreo)){
       /** Si el checkBox del estado esta activado, Se anula la correspondencia y hace la modificacion */
-         if(this.estado){            
-            this.correos.estadoCorreo = 'ANULADO'        
+
+         if(this.estado){
+           console.log('tercer if')            
+            this.correos.estadoCorreo = 'ANULADO'   
+            console.log(this.correos.estadoCorreo);     
             await this.correoService.filtroCorrelativo(this.correos.correlativo)
-            .subscribe( result => {              
-              if(this.loginService.usuario.nombreUsuario === result[0].usuario){
+            .subscribe( result => {   
+              console.log(result)
+              console.log(this.loginService.usuario.nombreUsuario)           
+              if(this.loginService.usuario.nombreUsuario === result[0].nombreUsuario){               
                 this.correoService.modificarPorCorrelativo( this.correos )
-                .subscribe( correo => this.correos = correo)                
+                .subscribe( correo => this.correos = correo)                                
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
@@ -89,7 +94,8 @@ export class ModificarComponent implements OnInit {
                 }) 
                 this.router.navigate(['/correspondencia/mostrar']) 
 
-              }else {                
+              }else { 
+                console.log('tercer else ')               
                 Swal.fire({
                   icon: 'error',
                   title: 'ERROR',
@@ -99,11 +105,13 @@ export class ModificarComponent implements OnInit {
               }  
             });  
             
-          }else{   
+          }else{ 
+            console.log('segundo else')  
             /** Si el checkBox del estado no esta seleccionado, Modifica la correspondencia  */        
             await this.correoService.filtroCorrelativo(this.correos.correlativo)
-            .subscribe( result => {              
-              if(this.loginService.usuario.nombreUsuario === result[0].usuario){
+            .subscribe( result => {
+              if(this.loginService.usuario.nombreUsuario === result[0].nombreUsuario){
+                console.log('cuarto if')
                 this.correoService.modificarPorCorrelativo( this.correos )
                 .subscribe( correo => this.correos = correo)                 
                 Swal.fire({
@@ -115,7 +123,8 @@ export class ModificarComponent implements OnInit {
                 }) 
                 this.router.navigate(['/correspondencia/mostrar']) 
 
-              }else {                
+              }else {            
+                console.log('cuarto else')    
                 Swal.fire({
                   icon: 'error',
                   title: 'ERROR',
@@ -126,6 +135,7 @@ export class ModificarComponent implements OnInit {
             }); 
           } 
     }else {      
+      console.log('segundo else')
       Swal.fire({
             icon: 'error',
             title: 'ERROR',

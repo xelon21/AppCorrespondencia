@@ -1,61 +1,57 @@
 export interface Correspondencia {
     nombreDocumento:   string;
     nombreEnvio:       string;
-    usuario:           string;
+    nombreUsuario:     string;
     destinatario:      string;
     referencia:        string;
     fecha:             string;
     correlativo:       string;
     estadoCorreo:      string;
-}
+} 
 
 export interface CorrespondenciaB {
-    idTipoDocumento:   number;
+    idTipoDocumento?:  number;
     idTipoEnvio:       number;
-    usuario:           string;
+    idUsuario:         number;
     destinatario:      string;
     referencia:        string;
-    fecha:             string;
+    fecha?:            string;
     correlativo:       string;
     estadoCorreo:      string;
-    us: string;
+
+}
+export interface CorrespondenciaModificar {
+    correlativo:       string;
+    idTipoEnvio:       number;
+    idUsuario:         number;
+    destinatario:      string;
+    referencia:        string;   
+    estadoCorreo:      string;
+    
 }
 
 export interface AgregarCorrespondencia {
     idTipoDocumento: number;
     idTipoEnvio: number;
-    usuario: string;
+    idUsuario: number;
     destinatario: string;
     referencia: string;
     correlativo?: string;
 }
 
 export interface TipoEnvio {
-    idTipoEnvio: number;
+    idtipoEnvio: number;
     nombreEnvio: string;
     descripcion: string;
 }
 
 export interface TipoDocumento {
-    idTipoDocumento: number;
+    idtipoDocumento: number;
     nombreDocumento: string;
     abreviacion:     string;
     descripcion:     string;
 }
 
-export interface CorrespondenciaModificar {
-    correlativo:       string;
-    idTipoEnvio:       number;
-    usuario:           string;
-    destinatario:      string;
-    referencia:        string;   
-    estadoCorreo:      string;
-    us: string;
-}
-
-export interface Correlativo {
-    correlativo: string; 
-}
 
 
 export interface FormatoFecha {

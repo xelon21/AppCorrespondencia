@@ -9,20 +9,78 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   selector: 'app-mostrar',
   templateUrl: './mostrar.component.html',
   styles: [`
-  .fil {
+
+/*Resolucion para dispositivos moviles muy pequeños*/
+/* @media(max-width: 575px){
+#div1{
+  width: 50vw;
+ background-color: red;
+}
+#div2{
+  width: 50vw;
+ background: blue;
+}
+#div3{
+  width: 50vw;
+ background: green;
+}
+}
+/*Resolucion para dispositivos moviles pequeños*/
+/* @media(max-width: 576px) and (max-width: 767px){
+  #div1{
+    width: 10vw;
+ background-color: red;
+}
+#div2{
+  width: 10vw;
+ background: blue;
+}
+#div3{
+  width: 10vw;
+ background: green;
+}
+} */
+/*Resolucion para tablets*/
+/* @media(max-width: 768px) and (max-width: 991px){
+  #div1{
+    width: 10vw;
+ background-color: red;
+}
+#div2{
+  width: 10vw;
+ background: blue;
+}
+#div3{
+  width: 10vw;
+ background: green;
+}
+} */
+/*Resolucion para pc de escritorio*/
+/* @media(max-width: 1980px){
+  #div1{
+    width: 40vw;
+ background-color: red;
+}
+#div2{
+  width: 40vw;
+ background: blue;
+}
+#div3{
+  width: 40vw;
+ background: green;
+}
+} */
+.fil {
     margin-left: 35px;
     width: 40%;
   }
-
   .busqueda {
       margin-left: 1%;
       width: 25%;
     }
-
   .textoFiltro {
     margin-left: 30px;
   }
-
   
   .filtroFecha {
     margin-left: 35px;
@@ -53,11 +111,9 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
       border: 0.1px solid;
       border-bottom: 0.1px solid;
     }
-
     .boto{
       width: 300px;
     }
-
     .ancho3{
       width: 800px;
     }
@@ -92,16 +148,15 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
     background-color: #f5f5f5;
   }
   
-
 .mat-row .mat-cell {
   border-bottom: 2px solid transparent;
   border-top: 2px solid transparent;
   cursor: pointer;
 }
-
 .mat-row:hover .mat-cell {
   border-color: currentColor;
 }
+  
 `]
 })
 

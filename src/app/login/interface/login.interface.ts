@@ -32,6 +32,7 @@ export interface Usuario2 {
     apiKey: string;
 }
 
+
 export interface Usuario {
     idUsuario: number;
     idRol: number;

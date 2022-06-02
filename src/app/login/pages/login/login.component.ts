@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { LoginUsuario } from '../../interface/login.interface';
+import { LoginUsuario, LoginResponse } from '../../interface/login.interface';
 import { SesionesService } from '../../services/sesiones.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   estadoEmail: boolean = false;
   estadoPassword: boolean = false;
   esAdmin: boolean = false;
-  coneccion!: boolean;
+  coneccion!: boolean; 
 
   constructor(private loginService: SesionesService,
               private router: Router,
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
                    */
             this.loginService.loginUsuario(email, password)
                 .subscribe( resp => {                  
-                  if(resp) {
+                  if(resp) {                    
                     Swal.fire({
                       position: 'top-end',
                       icon: 'success',

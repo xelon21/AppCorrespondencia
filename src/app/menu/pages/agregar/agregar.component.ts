@@ -2,25 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Correspondencia, TipoDocumento, TipoEnvio, Correlativo } from '../../interface/correspondencia.interface';
+import { Correspondencia, TipoDocumento, TipoEnvio } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 import { SesionesService } from '../../../login/services/sesiones.service';
+import { Usuario } from 'src/app/login/interface/login.interface';
+import { map } from 'rxjs/operators';
 
 
 @Component({
   selector: 'app-agregar',
   templateUrl: './agregar.component.html',
   styles: [`
+    .cuadro {
+      width: 40%;
+      margin-left: 25%;
+      margin-right: 25%;
+    }
+
     .ancho {
       width: 80%;
     }
     .ancho2 {
-      width: 260%;
+      width: 230%;
     }
     .ancho3 {
       width: 50%;
     }
-
     .salto {
       margin-top: 10px;
     }
@@ -34,18 +41,20 @@ export class AgregarComponent implements OnInit  {
   tipoEnvio: TipoEnvio[] = [];
   tipoDocumento: TipoDocumento[] = [];
   correos: Correspondencia[] = [];
-  ultimoCorrelativo!: Correlativo;
+
+
   estadoCampos = false;
   estadoDestinatario = false;
   estadoReferencia = false;
+
 
   // se establece el formulario
   miFormulario: FormGroup = this.fb.group({
     idTipoDocumento: [0, [Validators.required, Validators.min(1)]],  
     idTipoEnvio: [0, [Validators.required, Validators.min(1)]],   
+    idUsuario: this.loginService.usuario.idUsuario,
     destinatario: ['', [Validators.required, Validators.minLength(6)]],
     referencia: ['', [Validators.required, Validators.minLength(6)]],
-    usuario: this.loginService.usuario.nombreUsuario
   }) 
 
   constructor( private fb: FormBuilder,
@@ -56,8 +65,9 @@ export class AgregarComponent implements OnInit  {
   
     
   ngOnInit(): void {
-  
-    this.traeTipos();
+
+   this.traeTipos();
+   
 
   }  
 
@@ -65,20 +75,22 @@ export class AgregarComponent implements OnInit  {
   traeTipos() {
     this.correosService.getTipoEnvio() 
        .subscribe( tipo => this.tipoEnvio = tipo );
-    
+      
     this.correosService.getTipoDocumento()
-       .subscribe( tipo => this.tipoDocumento = tipo );
+       .subscribe( tipo => this.tipoDocumento = tipo );  
   }
 
   /* Metodo que permite ingresar una correspondencia */
   async ingresar() {    
     try {
       
-      if(!this.estadoCampos){
+      if(!this.estadoCampos){        
         /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
          * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
         await this.correosService.ingresaCorrespondencia( this.miFormulario.value)
-        .subscribe( resp => {
+        .subscribe( resp => {   
+          
+          console.log('entro')
             Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -91,6 +103,7 @@ export class AgregarComponent implements OnInit  {
             console.log(resp)        
           }); 
           }else {
+            console.log('entreo en el else ')
           Swal.fire({
               icon: 'error',
               title: 'Error',
@@ -98,6 +111,7 @@ export class AgregarComponent implements OnInit  {
          })
       }
     } catch (error) {
+      console.log('entro en el catch')
       console.log(error)
       Swal.fire({
         icon: 'error',

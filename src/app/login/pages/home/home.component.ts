@@ -12,7 +12,8 @@ import { Component, OnInit } from '@angular/core';
     background-color: #f5f5f5;
   }
   .margin {
-    padding: 270px;    
+   margin-top: 15%;
+   
   }
 
   .bobi2{

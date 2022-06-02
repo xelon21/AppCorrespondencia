@@ -135,13 +135,13 @@ export class FiltrofechasComponent implements OnInit {
   }
 
   nextPage() {    
-    this.pagina += 10;   
+    this.pagina += 8;   
        
   }
 
   prevPage() {
     if ( this.pagina > 0){      
-      this.pagina -= 10;
+      this.pagina -= 8;
     }
   }
 
@@ -161,7 +161,8 @@ export class FiltrofechasComponent implements OnInit {
    
           await this.correoService.filtroFechas( fechaInicio, fechaFinal )
             .subscribe( datos => {              
-              this.correos = datos;              
+              this.correos = datos;   
+              console.log(datos)           
             })
         }   
   }

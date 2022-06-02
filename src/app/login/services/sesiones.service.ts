@@ -18,7 +18,7 @@ export class SesionesService {
   private baseUrl: string = environment.baseUrl;
   private _usuario!: Usuario;
   private refresh = new Subject<void>();
-  
+
 
   get usuario() {
     return { ...this._usuario };
@@ -87,7 +87,7 @@ export class SesionesService {
             if( resp.estado ) {
               localStorage.setItem('apiKey', resp.apiKey!)                          
               this._usuario = {
-                idUsuario: resp.idUsuario!,
+                idUsuario: resp.idUsuario!,                
                 idRol: resp.idRol!,
                 correoUsuario: resp.email!,
                 nombreUsuario: resp.nombre!,
@@ -95,11 +95,11 @@ export class SesionesService {
                 activacionUsuario: resp.usuarioActivo!,
                 desactivacionUsuario: resp.usuarioNoActivo!,    
                 apiKey: resp.apiKey!                
-              }                               
+              }                                                 
             }
           } ),
-            map( resp => {
-              return resp.estado;
+            map( resp => {                                          
+              return resp;
             }),
             catchError( err => of(false) )
         )
@@ -125,7 +125,7 @@ export class SesionesService {
                 activacionUsuario: resp.usuarioActivo!,
                 desactivacionUsuario: resp.usuarioNoActivo!,      
                 apiKey: resp.apiKey!
-              }                
+              }                  
           return resp.estadoMsg;
         }),
         catchError( err => of(false))
@@ -161,7 +161,7 @@ export class SesionesService {
                   activacionUsuario: resp.usuarioActivo!,
                   desactivacionUsuario: resp.usuarioNoActivo!,      
                   apiKey: resp.apiKey!
-                }                  
+                }                         
             return resp.estadoMsg;
           } else {
             return false;

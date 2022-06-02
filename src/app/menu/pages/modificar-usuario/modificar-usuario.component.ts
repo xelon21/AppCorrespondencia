@@ -90,7 +90,8 @@ export class ModificarUsuarioComponent implements OnInit {
          switchMap( ({ idUsuario }) => this.loginService.buscarPorIdUsuario(idUsuario) )
        )
        .subscribe( usuario => {       
-         this.usuario = usuario          
+         this.usuario = usuario   
+         console.log(this.usuario)       
        })
        this.loginService.traeRoles()
        .subscribe( datos => {

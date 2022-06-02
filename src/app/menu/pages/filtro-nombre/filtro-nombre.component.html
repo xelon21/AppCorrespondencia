@@ -65,7 +65,7 @@
                           </thead>                     
                             <tbody *ngFor="let correo of correos | searchNombre:pagina:search ">                         
                               <tr id="miTablaPersonalizada2">
-                                  <td> {{ correo.usuario }} </td>
+                                  <td> {{ correo.nombreUsuario }} </td>
                                   <td class="centrarTexto"> {{ correo.correlativo }} </td>
                                 <td> {{ correo.nombreEnvio }} </td>
                                 <td> {{ correo.nombreDocumento }} </td>

@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Correspondencia, CorrespondenciaB, CorrespondenciaModificar, TipoDocumento, TipoEnvio, Correlativo, AgregarCorrespondencia } from '../interface/correspondencia.interface';
-
+import { Correspondencia, CorrespondenciaModificar, TipoDocumento, TipoEnvio, CorrespondenciaB, AgregarCorrespondencia } from '../interface/correspondencia.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -43,6 +42,7 @@ export class CorrespondenciaService {
 
      const url = `${this.baseUrl}/ingresar`;
     // const body = { idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia };    
+    console.log(correo)
     return this.http.post<AgregarCorrespondencia>(url , correo )
           .pipe(
             tap(resp => {
