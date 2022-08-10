@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { registerLocaleData } from "@angular/common";
 import localeDe from "@angular/common/locales/es-CL";
 import localeDeExtra from "@angular/common/locales/extra/es-CL";
+import { inicioComponent } from './menu/inicio/inicio.component';
 
 
 registerLocaleData(localeDe, "es-CL", localeDeExtra);
@@ -23,8 +24,7 @@ registerLocaleData(localeDe, "es-CL", localeDeExtra);
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorPageComponent,
-    
+    ErrorPageComponent,    
   ],
   imports: [
     BrowserModule,
