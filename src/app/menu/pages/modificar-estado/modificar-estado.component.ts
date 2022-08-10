@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { SesionesService } from '../../../login/services/sesiones.service';
 import { ModificarActivacion, UsuarioModificar } from '../../../login/interface/login.interface';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { FormatoFecha } from '../../interface/correspondencia.interface';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -55,24 +55,24 @@ export class ModificarEstadoComponent implements OnInit {
   fecha1!: FormatoFecha;
 
   estado: ModificarActivacion = {
-    idUsuario: 0,
-    estado: false,
-    desactivacionUsuario: ''    
+    IdUsuario: 0,
+    Estado: false,
+    DesactivacionUsuario: ''    
   }
 
   usuario: UsuarioModificar = {
-    idUsuario: 0,
-    idRol: 0,
-    correoUsuario: '',
-    password: '',
-    password2: '',   
-    nombreUsuario: '',
-    desactivacionUsuario: '',
-    estado: false
+    IdUsuario: 0,
+    IdRol: 0,
+    CorreoUsuario: '',
+    Password: '',
+    Password2: '',   
+    NombreUsuario: '',
+    DesactivacionUsuario: '',
+    Estado: false
   }
 
-  fecha = new FormGroup({
-    desactivacionUsuario: new FormControl()    
+  fecha = new UntypedFormGroup({
+    desactivacionUsuario: new UntypedFormControl()    
   });
 
   constructor( private loginService: SesionesService,
@@ -88,11 +88,11 @@ export class ModificarEstadoComponent implements OnInit {
 
     /** Se valida que los campos no vengan vacios */
     if(this.fecha.controls['desactivacionUsuario'].valid && this.fecha.value.desactivacionUsuario != null){
-      this.estado.estado = false;
+      this.estado.Estado = false;
       this.fecha1 = this.fecha.controls['desactivacionUsuario'].value._i
       let fechaFinal: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;
 
-      this.loginService.modificarEstado(this.data.idUsuario, this.estado.estado, fechaFinal)
+      this.loginService.modificarEstado(this.data.IdUsuario, this.estado.Estado, fechaFinal)
           .subscribe(resp => {
             if(resp){
               Swal.fire({
@@ -112,9 +112,9 @@ export class ModificarEstadoComponent implements OnInit {
             }
           })
     }else {
-      if(this.estado.estado){
+      if(this.estado.Estado){
         let fecha = null;
-        this.loginService.modificarEstado(this.data.idUsuario, this.estado.estado, fecha)
+        this.loginService.modificarEstado(this.data.IdUsuario, this.estado.Estado, fecha)
               .subscribe( resp => {
                 if(resp){
                   Swal.fire({

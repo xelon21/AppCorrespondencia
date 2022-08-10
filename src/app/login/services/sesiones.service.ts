@@ -49,7 +49,7 @@ export class SesionesService {
         return this.http.post<RegistrarUsuario>(url , body )
         .pipe(
             map( resp => {
-             return resp.estadoMsg;
+             return resp.EstadoMsg;
           } ),     
           tap(() => {            
             this.refresh.next();
@@ -76,25 +76,25 @@ export class SesionesService {
   
 
   /** Metodo que permite que un usuario pueda ingresar a la aplicacion */
- loginUsuario(email: string, password: string) {
+loginUsuario(email: string, password: string) {
 
     const url = `${this.baseUrl}/login`;
     const body = { email, password, };
 
     return this.http.post<LoginResponse>(url , body )
         .pipe(
-            tap( resp => {           
-            if( resp.estado ) {
-              localStorage.setItem('apiKey', resp.apiKey!)                          
+            tap( resp => {   
+            if( resp.Estado ) {
+              localStorage.setItem('ApiKey', resp.ApiKey!)                          
               this._usuario = {
-                idUsuario: resp.idUsuario!,                
-                idRol: resp.idRol!,
-                correoUsuario: resp.email!,
-                nombreUsuario: resp.nombre!,
-                estado: resp.estado!,
-                activacionUsuario: resp.usuarioActivo!,
-                desactivacionUsuario: resp.usuarioNoActivo!,    
-                apiKey: resp.apiKey!                
+                IdUsuario: resp.IdUsuario!,                
+                IdRol: resp.IdRol!,
+                CorreoUsuario: resp.Email!,
+                NombreUsuario: resp.Nombre!,
+                Estado: resp.Estado!,
+                ActivacionUsuario: resp.UsuarioActivo!,
+                DesactivacionUsuario: resp.UsuarioNoActivo!,    
+                ApiKey: resp.ApiKey!                
               }                                                 
             }
           } ),
@@ -106,27 +106,28 @@ export class SesionesService {
   }
 
   /**Metodo que permite validar el token del usuario que se inicia sesion */
-  validaApiKey(): Observable<boolean> {
+validaApiKey(): Observable<boolean> {
 
     const url = `${this.baseUrl}/login/validaKey`;
     const headers = new HttpHeaders()
-      .set('x-api-key', localStorage.getItem('apiKey') || '')
-
+      .set('x-api-key', localStorage.getItem('ApiKey') || '')
+      // console.log(localStorage.getItem('ApiKey'))
+      // console.log(headers)
     return this.http.get<LoginResponse>( url, { headers } )
       .pipe(
         map( resp => {          
-          localStorage.setItem('apiKey', resp.apiKey!)
+          localStorage.setItem('ApiKey', resp.ApiKey!)
               this._usuario = {
-                idUsuario: resp.idUsuario!,
-                idRol: resp.idRol,
-                nombreUsuario: resp.nombre!,
-                correoUsuario: resp.email!,
-                estado: resp.estado!,
-                activacionUsuario: resp.usuarioActivo!,
-                desactivacionUsuario: resp.usuarioNoActivo!,      
-                apiKey: resp.apiKey!
+                IdUsuario: resp.IdUsuario!,
+                IdRol: resp.IdRol,
+                NombreUsuario: resp.Nombre!,
+                CorreoUsuario: resp.Email!,
+                Estado: resp.Estado!,
+                ActivacionUsuario: resp.UsuarioActivo!,
+                DesactivacionUsuario: resp.UsuarioNoActivo!,      
+                ApiKey: resp.ApiKey!
               }                  
-          return resp.estadoMsg;
+          return resp.EstadoMsg;
         }),
         catchError( err => of(false))
       );
@@ -145,24 +146,24 @@ export class SesionesService {
 
     const url = `${this.baseUrl}/login/validaAdmin`;
     const headers = new HttpHeaders()
-      .set('x-api-key', localStorage.getItem('apiKey') || '')
+      .set('x-api-key', localStorage.getItem('ApiKey') || '')
 
     return this.http.get<LoginResponse>( url, { headers } )
       .pipe(
         map( resp => { 
-          if(resp.idRol === 1) {
-            localStorage.setItem('apiKey', resp.apiKey!)            
+          if(resp.IdRol === 1) {
+            localStorage.setItem('ApiKey', resp.ApiKey!)            
                 this._usuario = {
-                  idUsuario: resp.idUsuario!,
-                  idRol: resp.idRol!,
-                  nombreUsuario: resp.nombre! ,
-                  correoUsuario: resp.email!,
-                  estado: resp.estado!,
-                  activacionUsuario: resp.usuarioActivo!,
-                  desactivacionUsuario: resp.usuarioNoActivo!,      
-                  apiKey: resp.apiKey!
+                  IdUsuario: resp.IdUsuario!,
+                  IdRol: resp.IdRol!,
+                  NombreUsuario: resp.Nombre! ,
+                  CorreoUsuario: resp.Email!,
+                  Estado: resp.Estado!,
+                  ActivacionUsuario: resp.UsuarioActivo!,
+                  DesactivacionUsuario: resp.UsuarioNoActivo!,      
+                  ApiKey: resp.ApiKey!
                 }                         
-            return resp.estadoMsg;
+            return resp.EstadoMsg;
           } else {
             return false;
           }
@@ -185,7 +186,7 @@ export class SesionesService {
 /** Metodo que permite modificar al usuario mediante su id. */
   modificarPorIdUsuario(usuario: UsuarioModificar ): Observable<UsuarioModificar> {
 
-    return this.http.put<UsuarioModificar>(`${this.baseUrl}/login/modificar/${ usuario.idUsuario }`, usuario);   
+    return this.http.put<UsuarioModificar>(`${this.baseUrl}/login/modificar/${ usuario.IdUsuario }`, usuario);   
 
   }
 /** Metodo que permite modificar la contraseña de un usuario

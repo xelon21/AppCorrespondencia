@@ -12,7 +12,7 @@ export class FiltroUsuarioPipe implements PipeTransform {
       if( search.length === 0 )
       return lista.slice( page, page + 5 );
 
-      const nombreUsuarioFiltrado = lista.filter( nombre => nombre.nombreUsuario.toUpperCase().includes( search.toUpperCase() ));
+      const nombreUsuarioFiltrado = lista.filter( nombre => nombre.NombreUsuario.toUpperCase().includes( search.toUpperCase() ));
 
       return nombreUsuarioFiltrado.slice(page, page += 5);
      

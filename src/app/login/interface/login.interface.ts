@@ -2,86 +2,86 @@
 
 
 export interface LoginUsuario {
-    email: string;
-    password: string;
+    Email: string;
+    Password: string;
 }
 
 export interface LoginResponse {
-    estadoMsg: boolean;
-    msg: string;    
-    idUsuario: number;
-    idRol: number;    
-    nombre: string;
-    email: string;
-    password?: string;
-    usuarioActivo?: string;
-    usuarioNoActivo?: string;    
-    apiKey: string;
-    estado?: boolean;    
+    EstadoMsg: boolean;
+    Msg: string;    
+    IdUsuario: number;
+    IdRol: number;    
+    Nombre: string;
+    Email: string;
+    Password?: string;
+    UsuarioActivo?: string;
+    UsuarioNoActivo?: string;    
+    ApiKey: string;
+    Estado?: boolean;    
 }
 
 export interface Usuario2 {
-    idUsuario: number;
-    idRol: number;
-    correoUsuario: string;
-    password?: string;
-    nombreUsuario: string;
-    activacionUsuario: string;
-    desactivacionUsuario: string; 
-    estado?: boolean;
-    apiKey: string;
+    IdUsuario: number;
+    IdRol: number;
+    CorreoUsuario: string;
+    Password?: string;
+    NombreUsuario: string;
+    ActivacionUsuario: string;
+    DesactivacionUsuario: string; 
+    Estado?: boolean;
+    ApiKey: string;
 }
 
 
 export interface Usuario {
-    idUsuario: number;
-    idRol: number;
-    rol?: string;
-    correoUsuario: string;
-    password?: string;
-    nombreUsuario: string;
-    activacionUsuario: string;
-    desactivacionUsuario: string; 
-    estado?: boolean;
-    apiKey: string;
+    IdUsuario: number;
+    IdRol: number;
+    Rol?: string;
+    CorreoUsuario: string;
+    Password?: string;
+    NombreUsuario: string;
+    ActivacionUsuario: string;
+    DesactivacionUsuario: string; 
+    Estado?: boolean;
+    ApiKey: string;
 }
 
 export interface RegistrarUsuario {    
-    idRol: number;
-    correoUsuario: string;
-    password: string; 
-    nombreUsuario: string;
-    estado: boolean;
-    activacionUsuario?: string;
-    desactivacionUsuario?: string;
-    estadoMsg: boolean;
+    IdRol: number;
+    CorreoUsuario: string;
+    Password: string; 
+    NombreUsuario: string;
+    Estado: boolean;
+    ActivacionUsuario?: string;
+    DesactivacionUsuario?: string;
+    EstadoMsg: boolean;
 }
 
 export interface Roles {
-    idRol: number;
-    rol: string;
-    descripcion: string; 
+    IdRol: number;
+    Rol: string;
+    Descripcion: string; 
 }
 
 export interface UsuarioModificar {
-    idUsuario: number;
-    idRol: number;
-    correoUsuario: string;
-    password: string; 
-    password2: string;
-    nombreUsuario: string;
-    desactivacionUsuario: string; 
-    estado: boolean;     
+    IdUsuario: number;
+    IdRol: number;
+    CorreoUsuario: string;
+    Password: string; 
+    Password2: string;
+    NombreUsuario: string;
+    DesactivacionUsuario: string; 
+    Estado: boolean;     
 }
 
 export interface ModificarActivacion {
-    idUsuario: number;
-    desactivacionUsuario: string; 
-    estado: boolean;   
+    IdUsuario: number;
+    DesactivacionUsuario: string; 
+    Estado: boolean;   
 }
 
 export interface ModificarPassword {
-    idUsuario: number;
-    password: string; 
-    password2: string;
+    IdUsuario: number;
+    Password: string; 
+    Password2: string;
 }

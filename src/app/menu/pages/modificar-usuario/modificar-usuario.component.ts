@@ -69,14 +69,14 @@ export class ModificarUsuarioComponent implements OnInit {
   respuesta!: boolean;
 
   usuario: UsuarioModificar = {
-    idUsuario: 0,
-    idRol: 0,
-    correoUsuario: '',
-    password: '',
-    password2: '',   
-    nombreUsuario: '',
-    desactivacionUsuario: '',
-    estado: false
+    IdUsuario: 0,
+    IdRol: 0,
+    CorreoUsuario: '',
+    Password: '',
+    Password2: '',   
+    NombreUsuario: '',
+    DesactivacionUsuario: '',
+    Estado: false
   }
   constructor( private loginService: SesionesService,
                private activatedRouter: ActivatedRoute,
@@ -90,11 +90,12 @@ export class ModificarUsuarioComponent implements OnInit {
          switchMap( ({ idUsuario }) => this.loginService.buscarPorIdUsuario(idUsuario) )
        )
        .subscribe( usuario => {       
-         this.usuario = usuario   
+         this.usuario = usuario         
          console.log(this.usuario)       
        })
        this.loginService.traeRoles()
        .subscribe( datos => {
+        console.log(datos)
         this.roles = datos;
       })
  
@@ -106,7 +107,7 @@ export class ModificarUsuarioComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(CambioPasswordComponent, {
       data: {
-        idUsuario: this.usuario.idUsuario
+        idUsuario: this.usuario.IdUsuario
       }
     });
 
@@ -118,7 +119,7 @@ export class ModificarUsuarioComponent implements OnInit {
   openDialog2() {
     const dialogRef = this.dialog.open(ModificarEstadoComponent, {
       data: {
-        idUsuario: this.usuario.idUsuario
+        idUsuario: this.usuario.IdUsuario
       }
     });
 
@@ -142,7 +143,7 @@ export class ModificarUsuarioComponent implements OnInit {
                     denyButtonText: `No Guardar`,
                   }).then((result) => {                   
                     if (result.isConfirmed) {
-                      if(this.usuario.idRol === 2){
+                      if(this.usuario.IdRol === 2){
                         this.rolUsuario = 'Usuario';
                       }else {
                         this.rolUsuario = 'Administrador'

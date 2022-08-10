@@ -43,19 +43,19 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class CambioPasswordComponent implements OnInit {
   
   mod: ModificarPassword = {
-    idUsuario: 0,
-    password: '',
-    password2: ''
+    IdUsuario: 0,
+    Password: '',
+    Password2: ''
   }
   usuario: UsuarioModificar = {
-    idUsuario: 0,
-    idRol: 0,
-    correoUsuario: '',
-    password: '',
-    password2: '',   
-    nombreUsuario: '',
-    desactivacionUsuario: '',
-    estado: false
+    IdUsuario: 0,
+    IdRol: 0,
+    CorreoUsuario: '',
+    Password: '',
+    Password2: '',   
+    NombreUsuario: '',
+    DesactivacionUsuario: '',
+    Estado: false
   }
 
   constructor( private loginService: SesionesService,               
@@ -73,21 +73,21 @@ export class CambioPasswordComponent implements OnInit {
    */
   modificarPassword() {
     try {
-      if( !this.mod.password || !this.mod.password2){
+      if( !this.mod.Password || !this.mod.Password2){
         Swal.fire({
           icon: 'error',
           title: 'Error',
           text: 'Error Los campos estan vacios',                
         })
       }else{
-        if( this.mod.password != this.mod.password2 ){
+        if( this.mod.Password != this.mod.Password2 ){
           Swal.fire({
             icon: 'error',
             title: 'Error',
             text: 'Las contraseñas no coinciden',                
           })
         }else {       
-          this.loginService.modificarPassword(this.mod.password, this.mod.password2, this.data.idUsuario )
+          this.loginService.modificarPassword(this.mod.Password, this.mod.Password2, this.data.IdUsuario )
               .subscribe( resp => {               
                 if(resp){
                   Swal.fire({

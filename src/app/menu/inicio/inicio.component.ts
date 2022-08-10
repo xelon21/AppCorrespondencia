@@ -44,8 +44,9 @@ export class inicioComponent implements OnInit {
 
   ngOnInit(): void {
 
+    console.log(this.usuarioService.usuario)
     /** Se verifica si el usuario es administrador */
-    if(this.usuarioService.usuario.idRol === 1 ){
+    if(this.usuarioService.usuario.IdRol === 1 ){
       this.esAdmin = true;
     }   
   }
@@ -54,7 +55,7 @@ export class inicioComponent implements OnInit {
   /** Metodo que permite al usuario 
    * salir de la sesion en la que se encuentra*/
   logout() {
-    localStorage.removeItem('apiKey');
+    localStorage.removeItem('ApiKey');
     this.router.navigateByUrl('/login')
   }
 

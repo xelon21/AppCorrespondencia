@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Correspondencia, TipoDocumento, TipoEnvio } from '../../interface/correspondencia.interface';
@@ -49,15 +49,15 @@ export class AgregarComponent implements OnInit  {
 
 
   // se establece el formulario
-  miFormulario: FormGroup = this.fb.group({
+  miFormulario: UntypedFormGroup = this.fb.group({
     idTipoDocumento: [0, [Validators.required, Validators.min(1)]],  
     idTipoEnvio: [0, [Validators.required, Validators.min(1)]],   
-    idUsuario: this.loginService.usuario.idUsuario,
+    idUsuario: this.loginService.usuario.IdUsuario,
     destinatario: ['', [Validators.required, Validators.minLength(6)]],
     referencia: ['', [Validators.required, Validators.minLength(6)]],
   }) 
 
-  constructor( private fb: FormBuilder,
+  constructor( private fb: UntypedFormBuilder,
                private correosService: CorrespondenciaService,
                //private activatedRoute: ActivatedRoute,
                private router: Router,

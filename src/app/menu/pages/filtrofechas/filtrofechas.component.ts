@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Correspondencia, FormatoFecha } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 
@@ -119,9 +119,9 @@ export class FiltrofechasComponent implements OnInit {
   final!: FormatoFecha;
 
   // Se establecen las variables para ocupar en el html
-  range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
+  range = new UntypedFormGroup({
+    start: new UntypedFormControl(),
+    end: new UntypedFormControl(),
   });
 
   hayError: boolean = false;

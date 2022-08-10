@@ -81,8 +81,8 @@ export class ModificarComponent implements OnInit {
             await this.correoService.filtroCorrelativo(this.correos.correlativo)
             .subscribe( result => {   
               console.log(result)
-              console.log(this.loginService.usuario.nombreUsuario)           
-              if(this.loginService.usuario.nombreUsuario === result[0].nombreUsuario){               
+              console.log(this.loginService.usuario.NombreUsuario)           
+              if(this.loginService.usuario.NombreUsuario === result[0].nombreUsuario){               
                 this.correoService.modificarPorCorrelativo( this.correos )
                 .subscribe( correo => this.correos = correo)                                
                 Swal.fire({
@@ -110,7 +110,7 @@ export class ModificarComponent implements OnInit {
             /** Si el checkBox del estado no esta seleccionado, Modifica la correspondencia  */        
             await this.correoService.filtroCorrelativo(this.correos.correlativo)
             .subscribe( result => {
-              if(this.loginService.usuario.nombreUsuario === result[0].nombreUsuario){
+              if(this.loginService.usuario.NombreUsuario === result[0].nombreUsuario){
                 console.log('cuarto if')
                 this.correoService.modificarPorCorrelativo( this.correos )
                 .subscribe( correo => this.correos = correo)                 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SesionesService } from '../../../login/services/sesiones.service';
 import { Roles, Usuario } from '../../../login/interface/login.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -237,7 +237,7 @@ export class AdministracionComponent implements OnInit {
   suscription!: Subscription;
  
 
-  registroUsuario: FormGroup = this.fb.group({
+  registroUsuario: UntypedFormGroup = this.fb.group({
     idRol: [0 ,[Validators.required]],
     email: ['', [Validators.required, Validators.email, Validators.minLength(3) ]],
     password: ['', [Validators.required, Validators.minLength(3) ]],
@@ -248,7 +248,7 @@ export class AdministracionComponent implements OnInit {
     usuarioNoActivo: [''],
   })
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private loginService: SesionesService,
               private ngbCalendar: NgbCalendar,
               private dateAdapter: NgbDateAdapter<string>) { }
@@ -304,8 +304,8 @@ export class AdministracionComponent implements OnInit {
   }
 
   /** Se le da formato a la fecha para poder extraerla del formulario */
-  fecha = new FormGroup({
-    activacionUsuario: new FormControl()    
+  fecha = new UntypedFormGroup({
+    activacionUsuario: new UntypedFormControl()    
   });
   
   cargarLista() {

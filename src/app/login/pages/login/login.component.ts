@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { LoginUsuario, LoginResponse } from '../../interface/login.interface';
 import { SesionesService } from '../../services/sesiones.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit {
 
   
   usuario: LoginUsuario = {
-    email: '',
-    password: ''
+    Email: '',
+    Password: ''
   }  
   estadoEmail: boolean = false;
   estadoPassword: boolean = false;
@@ -43,17 +43,18 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginService: SesionesService,
               private router: Router,
-              private fb: FormBuilder) {
+              private fb: UntypedFormBuilder) {
 
    } 
 
    /** se crea el formulario para poder validar el usuario  */
- loginForm: FormGroup = this.fb.group({
+ loginForm: UntypedFormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email, Validators.minLength(3) ]],
     password: ['', [Validators.required, Validators.minLength(3)] ]
   });
   
   ngOnInit(): void {
+
   }
 
   /** Metodo que permite el login de un usuario */
@@ -77,7 +78,7 @@ export class LoginComponent implements OnInit {
                    *  se autentica primero.
                    */
             this.loginService.loginUsuario(email, password)
-                .subscribe( resp => {                  
+                .subscribe( resp => {                       
                   if(resp) {                    
                     Swal.fire({
                       position: 'top-end',
