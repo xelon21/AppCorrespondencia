@@ -32,12 +32,12 @@ export class ModificarComponent implements OnInit {
   // Se establecen los campos a modificar vacios para luego rellenarlos con los datos traidos mediante
   // los parametros
   correos: CorrespondenciaModificar = {
-    idTipoEnvio: 0,
-    idUsuario: 0,
-    estadoCorreo: '',
-    destinatario: '',
-    referencia: '',
-    correlativo: '',
+    IdTipoEnvio: 0,
+    IdUsuario: 0,
+    EstadoCorreo: '',
+    Destinatario: '',
+    Referencia: '',
+    Correlativo: '',
   }
   us: string = '';
   
@@ -71,18 +71,18 @@ export class ModificarComponent implements OnInit {
 
     /** Se corrobora el estado de la correspondencia  */
 
-    if(!this.estadoCorrespondencia(this.correos.estadoCorreo)){
+    if(!this.estadoCorrespondencia(this.correos.EstadoCorreo)){
       /** Si el checkBox del estado esta activado, Se anula la correspondencia y hace la modificacion */
 
          if(this.estado){
            console.log('tercer if')            
-            this.correos.estadoCorreo = 'ANULADO'   
-            console.log(this.correos.estadoCorreo);     
-            await this.correoService.filtroCorrelativo(this.correos.correlativo)
+            this.correos.EstadoCorreo = 'ANULADO'   
+            console.log(this.correos.EstadoCorreo);     
+            await this.correoService.filtroCorrelativo(this.correos.Correlativo)
             .subscribe( result => {   
               console.log(result)
               console.log(this.loginService.usuario.NombreUsuario)           
-              if(this.loginService.usuario.NombreUsuario === result[0].nombreUsuario){               
+              if(this.loginService.usuario.NombreUsuario === result[0].NombreUsuario){               
                 this.correoService.modificarPorCorrelativo( this.correos )
                 .subscribe( correo => this.correos = correo)                                
                 Swal.fire({
@@ -108,9 +108,9 @@ export class ModificarComponent implements OnInit {
           }else{ 
             console.log('segundo else')  
             /** Si el checkBox del estado no esta seleccionado, Modifica la correspondencia  */        
-            await this.correoService.filtroCorrelativo(this.correos.correlativo)
+            await this.correoService.filtroCorrelativo(this.correos.Correlativo)
             .subscribe( result => {
-              if(this.loginService.usuario.NombreUsuario === result[0].nombreUsuario){
+              if(this.loginService.usuario.NombreUsuario === result[0].NombreUsuario){
                 console.log('cuarto if')
                 this.correoService.modificarPorCorrelativo( this.correos )
                 .subscribe( correo => this.correos = correo)                 

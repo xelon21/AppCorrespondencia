@@ -38,12 +38,12 @@ export class CorrespondenciaService {
    }
 
    /** Metodo que ingresa una correspondencia  */
-  ingresaCorrespondencia( correo: AgregarCorrespondencia ): Observable<AgregarCorrespondencia>{
+  ingresaCorrespondencia( IdTIpoDocumento: number, IdTipoEnvio: number, IdUsuario: number, Destinatario: string, Referencia: string ): Observable<AgregarCorrespondencia>{
 
      const url = `${this.baseUrl}/ingresar`;
-    // const body = { idTipoDocumento, idTipoEnvio, usuario, destinatario, referencia };    
-    console.log(correo)
-    return this.http.post<AgregarCorrespondencia>(url , correo )
+    const body = { IdTIpoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia };    
+    console.log(body)
+    return this.http.post<AgregarCorrespondencia>(url , body )
           .pipe(
             tap(resp => {
               //console.log(resp.correlativo)
@@ -54,7 +54,7 @@ export class CorrespondenciaService {
 
   /** Metodo que permite modificar una correspondencia por el correlativo */
   modificarPorCorrelativo(correo: CorrespondenciaModificar ): Observable<CorrespondenciaModificar> {
-    return this.http.put<CorrespondenciaModificar>(`${this.baseUrl}/modificar/${ correo.correlativo }`, correo)
+    return this.http.put<CorrespondenciaModificar>(`${this.baseUrl}/modificar/${ correo.Correlativo }`, correo)
           .pipe(
             tap( resp => {
               this.refresh.next()

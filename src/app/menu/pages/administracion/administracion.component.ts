@@ -238,14 +238,12 @@ export class AdministracionComponent implements OnInit {
  
 
   registroUsuario: UntypedFormGroup = this.fb.group({
-    idRol: [0 ,[Validators.required]],
-    email: ['', [Validators.required, Validators.email, Validators.minLength(3) ]],
-    password: ['', [Validators.required, Validators.minLength(3) ]],
-    password2: ['', [Validators.required, Validators.minLength(3) ]],
-    nombreUsuario: ['', [Validators.required, Validators.minLength(3) ]],
-    estado: [ false ],
-    usuarioActivo: [],
-    usuarioNoActivo: [''],
+    IdRol: [0 ,[Validators.required]],
+    Email: ['', [Validators.required, Validators.email, Validators.minLength(3) ]],
+    Password: ['', [Validators.required, Validators.minLength(3) ]],
+    Password2: ['', [Validators.required, Validators.minLength(3) ]],
+    NombreUsuario: ['', [Validators.required, Validators.minLength(3) ]],
+    Estado: [ 0 ],
   })
 
   constructor(private fb: UntypedFormBuilder,
@@ -254,13 +252,14 @@ export class AdministracionComponent implements OnInit {
               private dateAdapter: NgbDateAdapter<string>) { }
 
   ngOnInit(): void {
-   
+
+      
     /**Metodo que trae los roles  */
     this.loginService.traeRoles()
         .subscribe( datos => { this.roles = datos })
     /**Metodo que trae a los usuarios */
     this.loginService.obtenerUsuarios()
-        .subscribe( datos => {          
+        .subscribe( datos => { 
            this.users = datos 
           })
     /** Metodo que permite hacer Refresh 
@@ -305,13 +304,14 @@ export class AdministracionComponent implements OnInit {
 
   /** Se le da formato a la fecha para poder extraerla del formulario */
   fecha = new UntypedFormGroup({
-    activacionUsuario: new UntypedFormControl()    
+    ActivacionUsuario: new UntypedFormControl()    
   });
   
   cargarLista() {
     this.hayError = false;
     this.suscription = this.loginService.obtenerUsuarios()  
     .subscribe( datos => {
+     
       this.users = datos
     }) 
   }
@@ -319,19 +319,18 @@ export class AdministracionComponent implements OnInit {
   /** Metodo que registra un usuario */
   async ingresar(){    
     // Se extraen los datos del formulario
-    const { idRol, email, password, nombreUsuario , estado, password2 } = this.registroUsuario.value;
-    try {  
-        
+    const { IdRol, Email, Password, NombreUsuario , Estado, Password2 } = this.registroUsuario.value;
+    try { 
+   
       /** Se corrobora que las 2 contraseñas sean identicas */
-         if( password === password2){
-           
+         if( Password === Password2){           
           /** Se extrae la fecha del formulario y se le da formato para poder trabajarla
            * Cabe decir que en este caso Mysql recive la fecha de la forma [YYYY-MM-DD]
            * y el formulario la entra de otra forma, por lo que se trabaja la fecha para 
            * poder hacer la insercion mas tarde.
            */
-          this.fecha1 = this.fecha.controls['activacionUsuario'].value._i
-          let fechaActivacion: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;    
+          this.fecha1 = this.fecha.controls['ActivacionUsuario'].value._i          
+          let ActivacionUsuario: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;    
           let diaActual = new Date().getDate().toString()
           let mesActual = new Date().getMonth()
           let anioActual = new Date().getFullYear().toString()          
@@ -340,12 +339,12 @@ export class AdministracionComponent implements OnInit {
           /** En el caso de que la fecha seleccionada de activacion sea igual a la de ahora, el usuario
            *  quedara ingresado como ACTIVO.
            */
-          if(fechaActivacion === fechaActual){
+          if(ActivacionUsuario === fechaActual){
             let activo = 1;
             /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
              * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
-            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, activo, fechaActivacion )
-            .subscribe( resp => {              
+            this.loginService.registrarUsuario( IdRol, Email, Password, NombreUsuario, activo, ActivacionUsuario )
+            .subscribe( resp => {  
               if(resp){
                 Swal.fire({
                   position: 'top-end',
@@ -367,7 +366,7 @@ export class AdministracionComponent implements OnInit {
              * El usuario ingresado quedara INACTIVO hasta el dia de la fecha seleccionada
              * en el formulario de ingreso
              */
-            this.loginService.registrarUsuario( idRol, email, password, nombreUsuario, estado, fechaActivacion )
+            this.loginService.registrarUsuario( IdRol, Email, Password, NombreUsuario, Estado, ActivacionUsuario )
             .subscribe( resp => {             
               if(resp){
                 Swal.fire({

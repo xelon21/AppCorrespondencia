@@ -10,66 +10,6 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   templateUrl: './mostrar.component.html',
   styles: [`
 
-/*Resolucion para dispositivos moviles muy pequeños*/
-/* @media(max-width: 575px){
-#div1{
-  width: 50vw;
- background-color: red;
-}
-#div2{
-  width: 50vw;
- background: blue;
-}
-#div3{
-  width: 50vw;
- background: green;
-}
-}
-/*Resolucion para dispositivos moviles pequeños*/
-/* @media(max-width: 576px) and (max-width: 767px){
-  #div1{
-    width: 10vw;
- background-color: red;
-}
-#div2{
-  width: 10vw;
- background: blue;
-}
-#div3{
-  width: 10vw;
- background: green;
-}
-} */
-/*Resolucion para tablets*/
-/* @media(max-width: 768px) and (max-width: 991px){
-  #div1{
-    width: 10vw;
- background-color: red;
-}
-#div2{
-  width: 10vw;
- background: blue;
-}
-#div3{
-  width: 10vw;
- background: green;
-}
-} */
-/*Resolucion para pc de escritorio*/
-/* @media(max-width: 1980px){
-  #div1{
-    width: 40vw;
- background-color: red;
-}
-#div2{
-  width: 40vw;
- background: blue;
-}
-#div3{
-  width: 40vw;
- background: green;
-}
-} */
 .fil {
     margin-left: 35px;
     width: 40%;
@@ -182,9 +122,10 @@ export class MostrarComponent implements OnInit, OnDestroy {
       .subscribe( () => {
         this.correosService.getCorrespondencia()
             .subscribe( correos =>{
-        this.correos = correos        
-      });
-      })
+              this.correos = correos        
+              console.log(this.correos)
+            });
+          })
   }
 
   nextPage() {    

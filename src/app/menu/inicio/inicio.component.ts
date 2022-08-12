@@ -27,8 +27,8 @@ import { Usuario } from '../../login/interface/login.interface';
 export class inicioComponent implements OnInit {
 
   /**Este get trae la informacion del usuario almacenada en el servicio SessionesServices. */
-  get usuario() {     
-    return  this.usuarioService.usuario;
+  get respuestaLogin() {  
+    return  this.usuarioService.respuestaLogin;
   }
   /**Se declaran variables */
   esAdmin: boolean = false;
@@ -44,9 +44,10 @@ export class inicioComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.usuarioService.usuario)
+    
     /** Se verifica si el usuario es administrador */
-    if(this.usuarioService.usuario.IdRol === 1 ){
+   
+    if(this.usuarioService.respuestaLogin.IdRol === 1 ){
       this.esAdmin = true;
     }   
   }

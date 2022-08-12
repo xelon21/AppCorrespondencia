@@ -53,7 +53,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatSlideToggleModule 
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'es-mx'},
+    { provide: MAT_DATE_LOCALE, useValue: 'es-cl'},
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,

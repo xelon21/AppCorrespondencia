@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { Roles, UsuarioModificar } from '../../../login/interface/login.interface';
+import { Roles, UsuarioModificar, ModUsuario } from '../../../login/interface/login.interface';
 import { SesionesService } from '../../../login/services/sesiones.service';
 import { CambioPasswordComponent } from '../cambio-password/cambio-password.component';
 import { ModificarEstadoComponent } from '../modificar-estado/modificar-estado.component';
@@ -67,8 +67,14 @@ export class ModificarUsuarioComponent implements OnInit {
   roles!: Roles[];
   rolUsuario!: string;
   respuesta!: boolean;
+  modUsuario: ModUsuario ={
+    IdUsuario: 0,
+    IdRol: 0,
+    CorreoUsuario: '',
+    NombreUsuario: '',
+  }
 
-  usuario: UsuarioModificar = {
+  usuarioMod: UsuarioModificar = {
     IdUsuario: 0,
     IdRol: 0,
     CorreoUsuario: '',
@@ -84,30 +90,26 @@ export class ModificarUsuarioComponent implements OnInit {
                public dialog: MatDialog) { }
 
   ngOnInit(): void {
-
+  
     this.activatedRouter.params
        .pipe(
-         switchMap( ({ idUsuario }) => this.loginService.buscarPorIdUsuario(idUsuario) )
+         switchMap( ({ idUsuario }) => this.loginService.filtrarIdUsuario(idUsuario))
        )
-       .subscribe( usuario => {       
-         this.usuario = usuario         
-         console.log(this.usuario)       
-       })
+       .subscribe( usuario => {
+        this.modUsuario = usuario
+        this.usuarioMod = this.modUsuario;
+    })
        this.loginService.traeRoles()
        .subscribe( datos => {
-        console.log(datos)
         this.roles = datos;
-      })
- 
-      
-
+      }) 
   }
 
   /**Metodo que permite abrir el dialog de cambio de contraseña */
   openDialog() {
     const dialogRef = this.dialog.open(CambioPasswordComponent, {
       data: {
-        idUsuario: this.usuario.IdUsuario
+        IdUsuario: this.usuarioMod.IdUsuario
       }
     });
 
@@ -119,7 +121,7 @@ export class ModificarUsuarioComponent implements OnInit {
   openDialog2() {
     const dialogRef = this.dialog.open(ModificarEstadoComponent, {
       data: {
-        idUsuario: this.usuario.IdUsuario
+        IdUsuario: this.usuarioMod.IdUsuario
       }
     });
 
@@ -129,12 +131,14 @@ export class ModificarUsuarioComponent implements OnInit {
   }
 
 /** Metodo que Permite modificar a usuario por su id */
-  async modificar() {   
+async modificar() {   
+
+  const { IdRol, IdUsuario, NombreUsuario, CorreoUsuario } = this.modUsuario
     try {      
-      await this.loginService.modificarPorIdUsuario(this.usuario)
+      await this.loginService.modificarPorIdUsuario(IdRol, NombreUsuario, CorreoUsuario, IdUsuario)
           .subscribe( datos => {
             console.log(datos)
-            this.usuario = datos                                 
+            this.usuarioMod = datos                                 
                   Swal.fire({
                     title: 'Estas seguro de guardar los datos?',                  
                     showDenyButton: true,
@@ -143,7 +147,7 @@ export class ModificarUsuarioComponent implements OnInit {
                     denyButtonText: `No Guardar`,
                   }).then((result) => {                   
                     if (result.isConfirmed) {
-                      if(this.usuario.IdRol === 2){
+                      if(this.usuarioMod.IdRol === 2){
                         this.rolUsuario = 'Usuario';
                       }else {
                         this.rolUsuario = 'Administrador'

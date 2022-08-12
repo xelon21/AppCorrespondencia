@@ -50,16 +50,15 @@ export class AgregarComponent implements OnInit  {
 
   // se establece el formulario
   miFormulario: UntypedFormGroup = this.fb.group({
-    idTipoDocumento: [0, [Validators.required, Validators.min(1)]],  
-    idTipoEnvio: [0, [Validators.required, Validators.min(1)]],   
-    idUsuario: this.loginService.usuario.IdUsuario,
-    destinatario: ['', [Validators.required, Validators.minLength(6)]],
-    referencia: ['', [Validators.required, Validators.minLength(6)]],
+    IdTIpoDocumento: [0, [Validators.required, Validators.min(1)]],  
+    IdTipoEnvio: [0, [Validators.required, Validators.min(1)]],   
+    IdUsuario: this.loginService.respuestaLogin.IdUsuario,
+    Destinatario: ['', [Validators.required, Validators.minLength(6)]],
+    Referencia: ['', [Validators.required, Validators.minLength(6)]],
   }) 
 
   constructor( private fb: UntypedFormBuilder,
-               private correosService: CorrespondenciaService,
-               //private activatedRoute: ActivatedRoute,
+               private correosService: CorrespondenciaService,          
                private router: Router,
                private loginService: SesionesService ) { }
   
@@ -67,7 +66,6 @@ export class AgregarComponent implements OnInit  {
   ngOnInit(): void {
 
    this.traeTipos();
-   
 
   }  
 
@@ -83,25 +81,25 @@ export class AgregarComponent implements OnInit  {
   /* Metodo que permite ingresar una correspondencia */
   async ingresar() {    
     try {
+      const { IdTIpoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia } = this.miFormulario.value
       
       if(!this.estadoCampos){        
         /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
          * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
-        await this.correosService.ingresaCorrespondencia( this.miFormulario.value)
-        .subscribe( resp => {   
-          
-          console.log('entro')
-            Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: `Correspondencia Guardada Con Exito \n
-                    El correlativo es: ${resp.correlativo}`, 
-            showConfirmButton: true 
-            })
-            //se redirecciona a la pagina que muestra correspondencia 
-            this.router.navigate(['/correspondencia/mostrar'])
-            console.log(resp)        
-          }); 
+        await this.correosService.ingresaCorrespondencia( IdTIpoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia )
+        .subscribe( resp => {             
+          console.log(resp)
+          Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `Correspondencia Guardada Con Exito \n
+                  El correlativo es: ${resp.Correlativo}`, 
+          showConfirmButton: true 
+          })
+          //se redirecciona a la pagina que muestra correspondencia 
+          this.router.navigate(['/correspondencia/mostrar'])
+                
+        }); 
           }else {
             console.log('entreo en el else ')
           Swal.fire({

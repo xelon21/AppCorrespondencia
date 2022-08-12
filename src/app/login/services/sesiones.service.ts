@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion } from '../interface/login.interface';
+import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion, ModUsuario } from '../interface/login.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SesionesService {
 
-  
+
+export class SesionesService {
+ 
 
   constructor(private http: HttpClient) {    
   }
@@ -18,10 +19,14 @@ export class SesionesService {
   private baseUrl: string = environment.baseUrl;
   private _usuario!: Usuario;
   private refresh = new Subject<void>();
-
+  private _respuestaLogin!: LoginResponse;
 
   get usuario() {
     return { ...this._usuario };
+  }
+
+  get respuestaLogin() {
+    return { ...this._respuestaLogin }
   }
 
   get refrescar(){
@@ -40,11 +45,11 @@ export class SesionesService {
 
 
   /** Metodo que permite Registrar a un usuario  */
-  registrarUsuario(idRol: number, email: string, 
-    password: string, nombreUsuario: string , estado: number, fech1: string ){
+  registrarUsuario(IdRol: number, Email: string, 
+    Password: string, NombreUsuario: string , Estado: number, ActivacionUsuario: string ){
 
       const url = `${this.baseUrl}/login/register`;
-      const body = { idRol, email, password, nombreUsuario , estado, fech1 };
+      const body = { IdRol, Email, Password, NombreUsuario , Estado, ActivacionUsuario };
   
         return this.http.post<RegistrarUsuario>(url , body )
         .pipe(
@@ -84,18 +89,10 @@ loginUsuario(email: string, password: string) {
     return this.http.post<LoginResponse>(url , body )
         .pipe(
             tap( resp => {   
+              console.log(resp)                                         
             if( resp.Estado ) {
-              localStorage.setItem('ApiKey', resp.ApiKey!)                          
-              this._usuario = {
-                IdUsuario: resp.IdUsuario!,                
-                IdRol: resp.IdRol!,
-                CorreoUsuario: resp.Email!,
-                NombreUsuario: resp.Nombre!,
-                Estado: resp.Estado!,
-                ActivacionUsuario: resp.UsuarioActivo!,
-                DesactivacionUsuario: resp.UsuarioNoActivo!,    
-                ApiKey: resp.ApiKey!                
-              }                                                 
+              localStorage.setItem('ApiKey', resp.ApiKey!)                         
+              this._respuestaLogin = resp          
             }
           } ),
             map( resp => {                                          
@@ -111,21 +108,18 @@ validaApiKey(): Observable<boolean> {
     const url = `${this.baseUrl}/login/validaKey`;
     const headers = new HttpHeaders()
       .set('x-api-key', localStorage.getItem('ApiKey') || '')
-      // console.log(localStorage.getItem('ApiKey'))
-      // console.log(headers)
+  
     return this.http.get<LoginResponse>( url, { headers } )
       .pipe(
         map( resp => {          
-          localStorage.setItem('ApiKey', resp.ApiKey!)
-              this._usuario = {
-                IdUsuario: resp.IdUsuario!,
+          localStorage.setItem('ApiKey', resp.ApiKey!)         
+              this._respuestaLogin = {            
+                IdUsuario: resp.IdUsuario,
                 IdRol: resp.IdRol,
-                NombreUsuario: resp.Nombre!,
-                CorreoUsuario: resp.Email!,
-                Estado: resp.Estado!,
-                ActivacionUsuario: resp.UsuarioActivo!,
-                DesactivacionUsuario: resp.UsuarioNoActivo!,      
-                ApiKey: resp.ApiKey!
+                NombreUsuario: resp.NombreUsuario!,        
+                Estado: resp.Estado!,                 
+                ApiKey: resp.ApiKey!,
+                EstadoMsg: resp.EstadoMsg!
               }                  
           return resp.EstadoMsg;
         }),
@@ -153,15 +147,13 @@ validaApiKey(): Observable<boolean> {
         map( resp => { 
           if(resp.IdRol === 1) {
             localStorage.setItem('ApiKey', resp.ApiKey!)            
-                this._usuario = {
-                  IdUsuario: resp.IdUsuario!,
+                this._respuestaLogin = {                 
+                  IdUsuario: resp.IdUsuario,
                   IdRol: resp.IdRol!,
-                  NombreUsuario: resp.Nombre! ,
-                  CorreoUsuario: resp.Email!,
-                  Estado: resp.Estado!,
-                  ActivacionUsuario: resp.UsuarioActivo!,
-                  DesactivacionUsuario: resp.UsuarioNoActivo!,      
-                  ApiKey: resp.ApiKey!
+                  NombreUsuario: resp.NombreUsuario!,              
+                  Estado: resp.Estado!,                      
+                  ApiKey: resp.ApiKey!,
+                  EstadoMsg: resp.EstadoMsg!
                 }                         
             return resp.EstadoMsg;
           } else {
@@ -179,23 +171,34 @@ validaApiKey(): Observable<boolean> {
   }
 
   /** Metodo que permite filtrar a un usuario mediante su Correlativo */
-  buscarPorIdUsuario(filtro: number) : Observable<UsuarioModificar>{
-    return this.http.get<UsuarioModificar>(`${this.baseUrl}/login/filtrarUsuariosModificar/${ filtro}`);
+  // buscarPorIdUsuario(IdUsuario: number) : Observable<UsuarioModificar>{
+  //   return this.http.get<UsuarioModificar>(`${this.baseUrl}/login/filtrarUsuariosModificar/${ IdUsuario}`);
+
+  // }
+  filtrarIdUsuario(IdUsuario: number) : Observable<ModUsuario>{
+
+    const url = `${this.baseUrl}/login/filtrarUsuariosModificar/${ IdUsuario}`;
+    return this.http.get<ModUsuario>(url);
 
   }
 /** Metodo que permite modificar al usuario mediante su id. */
-  modificarPorIdUsuario(usuario: UsuarioModificar ): Observable<UsuarioModificar> {
-
-    return this.http.put<UsuarioModificar>(`${this.baseUrl}/login/modificar/${ usuario.IdUsuario }`, usuario);   
+  modificarPorIdUsuario(IdRol: number, NombreUsuario: string, CorreoUsuario: string, IdUsuario: number ): Observable<UsuarioModificar> {
+    const url = `${this.baseUrl}/login/modificar/${ IdUsuario }`;
+    let IUsuario = IdUsuario
+    const body = { IdRol, NombreUsuario, CorreoUsuario, IdUsuario, IUsuario};
+    console.log(IdUsuario)
+    console.log(url)
+    return this.http.put<UsuarioModificar>(url, body);   
 
   }
 /** Metodo que permite modificar la contraseña de un usuario
  * [Cabe recalcar que es soplo una opcion dentro de la ventana de administracion]
  */
-  modificarPassword( password: string, password2: string, idUsuario: number) {
-
+  modificarPassword( Password: string, Password2: string, idUsuario: number) {
+    
     const url = `${this.baseUrl}/login/modificarPassword/${ idUsuario }`;
-    const body = {  password, password2 };
+    let IUsuario = idUsuario
+    const body = {  Password, Password2, IUsuario };
   
         return this.http.put<ModificarPassword>(url , body )
         .pipe(
@@ -210,10 +213,12 @@ validaApiKey(): Observable<boolean> {
   /** Metodo que permite modificar el estado de un usuario ya sea inmediatamente o en una fecha especifica
  * [Cabe recalcar que es soplo una opcion dentro de la ventana de administracion]
  */
-  modificarEstado(idUsuario: number, estado: boolean, desactivacionUsuario: string | null) {
+  modificarEstado(IdUsuario: number, Estado: boolean, DesactivacionUsuario: string | null) {
 
-    const url = `${this.baseUrl}/login/modificarEstado/${ idUsuario }`;
-    const body = { estado, desactivacionUsuario };
+    const url = `${this.baseUrl}/login/modificarEstado/${ IdUsuario }`;
+    const body = { Estado, DesactivacionUsuario };
+
+    console.log(body, url)
 
         return this.http.put<ModificarActivacion>(url, body)
           .pipe(

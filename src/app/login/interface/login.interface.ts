@@ -7,18 +7,27 @@ export interface LoginUsuario {
 }
 
 export interface LoginResponse {
-    EstadoMsg: boolean;
-    Msg: string;    
     IdUsuario: number;
-    IdRol: number;    
-    Nombre: string;
-    Email: string;
-    Password?: string;
-    UsuarioActivo?: string;
-    UsuarioNoActivo?: string;    
-    ApiKey: string;
-    Estado?: boolean;    
+    NombreUsuario: string;
+    IdRol:         number;
+    Estado:        boolean;
+    ApiKey:        string;
+    EstadoMsg:     boolean;
 }
+
+// export interface LoginResponse {
+//     EstadoMsg: boolean;
+//     Msg: string;    
+//     IdUsuario?: number;
+//     IdRol: number;    
+//     NombreUsuario: string;
+//     Email?: string;
+//     Password?: string;
+//     UsuarioActivo?: string;
+//     UsuarioNoActivo?: string;    
+//     ApiKey: string;
+//     Estado?: boolean;    
+// }
 
 export interface Usuario2 {
     IdUsuario: number;
@@ -31,6 +40,16 @@ export interface Usuario2 {
     Estado?: boolean;
     ApiKey: string;
 }
+
+// export interface Usuario {
+//     IdUsuario:            number;
+//     NombreUsuario:        string;
+//     Rol:                  string;
+//     CorreoUsuario:        string;
+//     Estado:               number;
+//     ActivacionUsuario:    Date;
+//     DesactivacionUsuario: Date;
+// }
 
 
 export interface Usuario {
@@ -67,11 +86,11 @@ export interface UsuarioModificar {
     IdUsuario: number;
     IdRol: number;
     CorreoUsuario: string;
-    Password: string; 
-    Password2: string;
+    Password?: string;
+    Password2?: string;
     NombreUsuario: string;
-    DesactivacionUsuario: string; 
-    Estado: boolean;     
+    DesactivacionUsuario?: string; 
+    Estado?: boolean;     
 }
 
 export interface ModificarActivacion {
@@ -84,4 +103,11 @@ export interface ModificarPassword {
     IdUsuario: number;
     Password: string; 
     Password2: string;
+}
+
+export interface ModUsuario {
+    IdRol: number;
+    CorreoUsuario: string;
+    NombreUsuario: string;
+    IdUsuario: number;
 }

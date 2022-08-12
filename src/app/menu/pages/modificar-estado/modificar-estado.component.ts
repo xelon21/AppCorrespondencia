@@ -88,10 +88,10 @@ export class ModificarEstadoComponent implements OnInit {
 
     /** Se valida que los campos no vengan vacios */
     if(this.fecha.controls['desactivacionUsuario'].valid && this.fecha.value.desactivacionUsuario != null){
-      this.estado.Estado = false;
+      this.estado.Estado = true;
       this.fecha1 = this.fecha.controls['desactivacionUsuario'].value._i
       let fechaFinal: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;
-
+      console.log(this.data.IdUsuario, this.estado.Estado, fechaFinal)
       this.loginService.modificarEstado(this.data.IdUsuario, this.estado.Estado, fechaFinal)
           .subscribe(resp => {
             if(resp){
@@ -114,6 +114,7 @@ export class ModificarEstadoComponent implements OnInit {
     }else {
       if(this.estado.Estado){
         let fecha = null;
+        console.log(this.data.IdUsuario, this.estado.Estado, fecha)
         this.loginService.modificarEstado(this.data.IdUsuario, this.estado.Estado, fecha)
               .subscribe( resp => {
                 if(resp){

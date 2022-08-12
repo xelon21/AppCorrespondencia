@@ -30,7 +30,7 @@
                               <input matInput                                      
                                      type="text"                                     
                                      autocomplete="off"
-                                     formControlName="email"
+                                     formControlName="Email"
                                      placeholder="Email">
                             </mat-form-field>
                           </div> 
@@ -40,7 +40,7 @@
                               <input matInput 
                                      type="password"                                     
                                      autocomplete="off"
-                                     formControlName="password"
+                                     formControlName="Password"
                                      placeholder="Contraseña">
                             </mat-form-field>
                           </div>    
@@ -50,7 +50,7 @@
                               <input matInput 
                                      type="password"                                     
                                      autocomplete="off"
-                                     formControlName="password2"
+                                     formControlName="Password2"
                                      placeholder="Confirmar contraseña">
                             </mat-form-field>
                           </div> 
@@ -61,7 +61,7 @@
                             <input matInput 
                                    type="text"                                     
                                    autocomplete="off"
-                                   formControlName="nombreUsuario"
+                                   formControlName="NombreUsuario"
                                    placeholder="Nombre de usuario">
                           </mat-form-field>                          
                         </div>
@@ -69,7 +69,7 @@
                         <div class="col-md-10">
                           <mat-form-field>
                             <mat-label>Rol del usuario</mat-label>
-                            <mat-select formControlName="idRol"
+                            <mat-select formControlName="IdRol"
                                         type="number">
                                 <mat-option *ngFor="let rol of roles" [value]="rol.IdRol">
                                 {{ rol.Rol}}                            
@@ -82,7 +82,7 @@
                           <div>  
                             <mat-form-field appearance="fill" [formGroup]="fecha">
                                 <mat-label> Ingrese fecha de activacion </mat-label>                                                
-                                <input formControlName="activacionUsuario" matInput  [matDatepicker]="datepicker">                                               
+                                <input formControlName="ActivacionUsuario" matInput  [matDatepicker]="datepicker">                                               
                                 <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
                                 <mat-datepicker #datepicker>
                                   <mat-datepicker-actions>
@@ -160,15 +160,15 @@
                 </thead>
                 <tbody *ngFor="let usuario of users | search:pagina:search">
                   <tr id="miTablaPersonalizada2">
-                    <td class="centrarTexto"> {{ usuario.idUsuario }} </td>
-                    <td> {{ usuario.nombreUsuario }} </td>
-                    <td> {{ usuario.rol }} </td>
-                    <td> {{ usuario.correoUsuario }} </td>
-                    <td class="centrarTexto"> {{ usuario.estado! | estado }} </td>
-                    <td class="centrarTexto"> {{ usuario.activacionUsuario | date: 'dd/MM/yyy' }} </td>
-                    <td class="centrarTexto"> {{ usuario.desactivacionUsuario | date: 'dd/MM/yyy' }} </td>
+                    <td class="centrarTexto"> {{ usuario.IdUsuario }} </td>
+                    <td> {{ usuario.NombreUsuario }} </td>
+                    <td> {{ usuario.Rol }} </td>
+                    <td> {{ usuario.CorreoUsuario }} </td>
+                    <td class="centrarTexto"> {{ usuario.Estado! | estado }} </td>
+                    <td class="centrarTexto"> {{ usuario.ActivacionUsuario | fecha }} </td>
+                    <td class="centrarTexto"> {{ usuario.DesactivacionUsuario | fecha}} </td>
                     <td class="centrarTexto"> <a class="pointer" style="color: #e15639" matTooltip="Editar Usuario"
-                      [routerLink]="['/correspondencia/modificarUsuario/', usuario.idUsuario]">           
+                      [routerLink]="['/correspondencia/modificarUsuario/', usuario.IdUsuario]">           
                       <mat-icon>edit</mat-icon>
                   </a></td>               
                   </tr>

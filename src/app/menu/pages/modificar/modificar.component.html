@@ -21,16 +21,16 @@
                         <mat-label>Destinatario</mat-label>                      
                         <input matInput                 
                                type="text"
-                               [(ngModel)]="correos.destinatario"   
+                               [(ngModel)]="correos.Destinatario"   
                                required>                           
                       </mat-form-field>
                 </mat-grid-tile>
                 <mat-grid-tile [colspan]="1" [rowspan]="1">
                     <mat-form-field class="ancho2">
                         <mat-label>Tipo de Envio</mat-label>
-                        <mat-select type="number" required [(ngModel)]="correos.idTipoEnvio">
-                            <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.idtipoEnvio">
-                            {{ tipo.nombreEnvio }}                            
+                        <mat-select type="number" required [(ngModel)]="correos.IdTipoEnvio">
+                            <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.IdTipoEnvio">
+                            {{ tipo.TipoEnvio }}                            
                             </mat-option>
                         </mat-select>
                         </mat-form-field>
@@ -40,7 +40,7 @@
                         <mat-label>Referencia</mat-label>
                         <input matInput                                
                                type="text"
-                               [(ngModel)]="correos.referencia"
+                               [(ngModel)]="correos.Referencia"
                                required>
                       </mat-form-field>     
                 </mat-grid-tile>

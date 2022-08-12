@@ -20,17 +20,17 @@
                                    type="text"
                                    class="input100"
                                    autocomplete="off"
-                                   formControlName="destinatario"
+                                   formControlName="Destinatario"
                                    placeholder="Destinatario">
                           </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="ancho">
                             <mat-label>Tipo de Documento</mat-label>
-                            <mat-select formControlName="idTipoDocumento"
+                            <mat-select formControlName="IdTIpoDocumento"
                                         type="number">
-                                <mat-option *ngFor="let tipo of tipoDocumento" [value]="tipo.idtipoDocumento">
-                                {{ tipo.nombreDocumento }}                            
+                                <mat-option *ngFor="let tipo of tipoDocumento" [value]="tipo.IdTIpoDocumento">
+                                {{ tipo.NombreDocumento }}                            
                                 </mat-option>
                             </mat-select>
                             </mat-form-field>    
@@ -42,17 +42,17 @@
                                    class="form-control"
                                    autocomplete="off"
                                    type="text"
-                                   formControlName="referencia"
+                                   formControlName="Referencia"
                                    placeholder="Referencia">
                           </mat-form-field>     
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1">                   
                         <mat-form-field class="ancho">
                             <mat-label>Tipo de Envio</mat-label>
-                            <mat-select formControlName="idTipoEnvio"
+                            <mat-select formControlName="IdTipoEnvio"
                                         type="number">
-                                <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.idtipoEnvio">
-                                {{ tipo.nombreEnvio }}                            
+                                <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.IdTipoEnvio">
+                                {{ tipo.TipoEnvio }}                            
                                 </mat-option>
                             </mat-select>
                             </mat-form-field>

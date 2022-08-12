@@ -175,7 +175,8 @@ export class FiltrofechasComponent implements OnInit {
   /** El codigo del demonio que siempre que pienso que voy a poder ocuparlo
    * resulta que al final ni lo necesito :c
    * 
-   * formato(fecha: string) :string {
+   * 
+    formato(fecha: string) :string {
     let formato: string;
     let anio: string;
     let mes: string;

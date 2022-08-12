@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ModificarPassword, UsuarioModificar } from '../../../login/interface/login.interface';
 import { SesionesService } from '../../../login/services/sesiones.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -59,10 +59,11 @@ export class CambioPasswordComponent implements OnInit {
   }
 
   constructor( private loginService: SesionesService,               
-               private router: Router,
+               private router: Router,              
                @Inject(MAT_DIALOG_DATA) public data: UsuarioModificar ) { }
 
   ngOnInit(): void {
+   
    
   }
 
@@ -86,7 +87,9 @@ export class CambioPasswordComponent implements OnInit {
             title: 'Error',
             text: 'Las contraseñas no coinciden',                
           })
-        }else {       
+        }else {      
+          console.log(this.data)
+         
           this.loginService.modificarPassword(this.mod.Password, this.mod.Password2, this.data.IdUsuario )
               .subscribe( resp => {               
                 if(resp){

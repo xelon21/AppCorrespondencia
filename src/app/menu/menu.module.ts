@@ -22,6 +22,7 @@ import { FiltroNombrePipe } from './pipe/filtroNombre.pipe';
 import { FiltrofechasComponent } from './pages/filtrofechas/filtrofechas.component';
 import { PaginacionPipe } from './pipe/paginacion.pipe';
 import { FiltroFechaPipe } from './pipe/filtroFecha.pipe';
+import { FechaPipe } from './pipe/fecha.pipe';
 
 
 
@@ -45,7 +46,8 @@ import { FiltroFechaPipe } from './pipe/filtroFecha.pipe';
     FiltroNombreComponent,
     FiltrofechasComponent,
     PaginacionPipe,
-    FiltroFechaPipe
+    FiltroFechaPipe,
+    FechaPipe
             
   ],
   imports: [
