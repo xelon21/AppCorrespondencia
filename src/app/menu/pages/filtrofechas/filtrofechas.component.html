@@ -64,9 +64,9 @@
                         </thead>                     
                           <tbody *ngFor="let correo of correos | fechaFil:pagina ">                         
                             <tr id="miTablaPersonalizada2">
-                              <td class="centrarTexto"> {{ correo.fecha | fecha}} </td>
+                              <td class="centrarTexto"> {{ correo.Fecha | fecha}} </td>
                                 <td> {{ correo.NombreUsuario }} </td>
-                                <td class="centrarTexto"> {{ correo.cCorrelativo }} </td>
+                                <td class="centrarTexto"> {{ correo.Correlativo }} </td>
                               <td> {{ correo.TipoEnvio }} </td>
                               <td> {{ correo.NombreDocumento }} </td>
                               <td> {{ correo.Destinatario }} </td>

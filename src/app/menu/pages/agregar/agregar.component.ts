@@ -87,8 +87,7 @@ export class AgregarComponent implements OnInit  {
         /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
          * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
         await this.correosService.ingresaCorrespondencia( IdTIpoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia )
-        .subscribe( resp => {             
-          console.log(resp)
+        .subscribe( resp => {        
           Swal.fire({
           position: 'top-end',
           icon: 'success',

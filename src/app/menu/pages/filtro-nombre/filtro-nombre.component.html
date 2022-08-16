@@ -65,16 +65,16 @@
                           </thead>                     
                             <tbody *ngFor="let correo of correos | searchNombre:pagina:search ">                         
                               <tr id="miTablaPersonalizada2">
-                                  <td> {{ correo.nombreUsuario }} </td>
-                                  <td class="centrarTexto"> {{ correo.correlativo }} </td>
-                                <td> {{ correo.nombreEnvio }} </td>
-                                <td> {{ correo.nombreDocumento }} </td>
-                                <td> {{ correo.destinatario }} </td>
-                                <td> {{ correo.referencia }} </td>
-                                <td class="centrarTexto"> {{ correo.fecha | date: 'dd/MM/yyyy'}} </td>
-                                <td class="centrarTexto"> {{ correo.estadoCorreo }} </td>
+                                  <td> {{ correo.NombreUsuario }} </td>
+                                  <td class="centrarTexto"> {{ correo.Correlativo }} </td>
+                                <td> {{ correo.TipoEnvio }} </td>
+                                <td> {{ correo.NombreDocumento }} </td>
+                                <td> {{ correo.Destinatario }} </td>
+                                <td> {{ correo.Referencia }} </td>
+                                <td class="centrarTexto"> {{ correo.Fecha | fecha }} </td>
+                                <td class="centrarTexto"> {{ correo.EstadoCorreo }} </td>
                                 <td class="centrarTexto"> <a class="pointer" style="color: #e15639" matTooltip="Editar correspondencia"
-                                  [routerLink]="['/correspondencia/modificar/', correo.correlativo]">           
+                                  [routerLink]="['/correspondencia/modificar/', correo.Correlativo]">           
                                   <mat-icon>edit</mat-icon>
                               </a></td> 
                               </tr>

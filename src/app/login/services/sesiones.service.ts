@@ -20,6 +20,7 @@ export class SesionesService {
   private _usuario!: Usuario;
   private refresh = new Subject<void>();
   private _respuestaLogin!: LoginResponse;
+  public _idu!: number; 
 
   get usuario() {
     return { ...this._usuario };
@@ -27,6 +28,10 @@ export class SesionesService {
 
   get respuestaLogin() {
     return { ...this._respuestaLogin }
+  }
+
+  get idu() {
+    return this._idu
   }
 
   get refrescar(){
@@ -92,7 +97,8 @@ loginUsuario(email: string, password: string) {
               console.log(resp)                                         
             if( resp.Estado ) {
               localStorage.setItem('ApiKey', resp.ApiKey!)                         
-              this._respuestaLogin = resp          
+              this._respuestaLogin = resp   
+              this._idu = this._respuestaLogin.IdUsuario;       
             }
           } ),
             map( resp => {                                          
@@ -185,9 +191,7 @@ validaApiKey(): Observable<boolean> {
   modificarPorIdUsuario(IdRol: number, NombreUsuario: string, CorreoUsuario: string, IdUsuario: number ): Observable<UsuarioModificar> {
     const url = `${this.baseUrl}/login/modificar/${ IdUsuario }`;
     let IUsuario = IdUsuario
-    const body = { IdRol, NombreUsuario, CorreoUsuario, IdUsuario, IUsuario};
-    console.log(IdUsuario)
-    console.log(url)
+    const body = { IdRol, NombreUsuario, CorreoUsuario, IdUsuario, IUsuario}; 
     return this.http.put<UsuarioModificar>(url, body);   
 
   }

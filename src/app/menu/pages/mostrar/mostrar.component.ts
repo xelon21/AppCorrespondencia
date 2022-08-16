@@ -123,7 +123,7 @@ export class MostrarComponent implements OnInit, OnDestroy {
         this.correosService.getCorrespondencia()
             .subscribe( correos =>{
               this.correos = correos        
-              console.log(this.correos)
+              // console.log(this.correos)
             });
           })
   }

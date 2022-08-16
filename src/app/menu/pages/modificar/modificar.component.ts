@@ -60,30 +60,29 @@ export class ModificarComponent implements OnInit {
        )
        .subscribe( correo => {                  
         this.correos = correo 
-        console.log(this.correos)        
+        // console.log(this.correos)        
        })
        this.correoService.getTipoEnvio() 
        .subscribe( tipo => this.tipoEnvio = tipo );
+
+       console.log(this.loginService.respuestaLogin.NombreUsuario)
   }
 
   /** metodo que permite modifiar una correspondencia mediante correlativo */
   async modificar( ){
 
+    
     /** Se corrobora el estado de la correspondencia  */
-
     if(!this.estadoCorrespondencia(this.correos.EstadoCorreo)){
       /** Si el checkBox del estado esta activado, Se anula la correspondencia y hace la modificacion */
+      const { IdTipoEnvio, Destinatario, Referencia, EstadoCorreo, Correlativo } = this.correos
 
-         if(this.estado){
-           console.log('tercer if')            
-            this.correos.EstadoCorreo = 'ANULADO'   
-            console.log(this.correos.EstadoCorreo);     
-            await this.correoService.filtroCorrelativo(this.correos.Correlativo)
-            .subscribe( result => {   
-              console.log(result)
-              console.log(this.loginService.usuario.NombreUsuario)           
-              if(this.loginService.usuario.NombreUsuario === result[0].NombreUsuario){               
-                this.correoService.modificarPorCorrelativo( this.correos )
+      
+      if(this.estado){ 
+        await this.correoService.buscaCorrelativo(this.correos.Correlativo)
+        .subscribe( result => {             
+              if(this.loginService.respuestaLogin.IdUsuario === result.IdUsuario){                        
+                this.correoService.modificarPorCorrelativo( IdTipoEnvio, Destinatario, Referencia, 'ANULADO', Correlativo )
                 .subscribe( correo => this.correos = correo)                                
                 Swal.fire({
                   position: 'top-end',
@@ -94,8 +93,7 @@ export class ModificarComponent implements OnInit {
                 }) 
                 this.router.navigate(['/correspondencia/mostrar']) 
 
-              }else { 
-                console.log('tercer else ')               
+              }else {                      
                 Swal.fire({
                   icon: 'error',
                   title: 'ERROR',
@@ -105,15 +103,16 @@ export class ModificarComponent implements OnInit {
               }  
             });  
             
-          }else{ 
-            console.log('segundo else')  
+          }else{  
             /** Si el checkBox del estado no esta seleccionado, Modifica la correspondencia  */        
-            await this.correoService.filtroCorrelativo(this.correos.Correlativo)
-            .subscribe( result => {
-              if(this.loginService.usuario.NombreUsuario === result[0].NombreUsuario){
-                console.log('cuarto if')
-                this.correoService.modificarPorCorrelativo( this.correos )
-                .subscribe( correo => this.correos = correo)                 
+            await this.correoService.buscaCorrelativo(this.correos.Correlativo)
+            .subscribe( result => {    
+              if(this.loginService.respuestaLogin.IdUsuario === result.IdUsuario){
+                this.correoService.modificarPorCorrelativo( IdTipoEnvio, Destinatario, Referencia, EstadoCorreo, Correlativo)
+                .subscribe( correo =>{ 
+                  console.log(correo)
+                  this.correos = correo
+                })                 
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
@@ -122,9 +121,7 @@ export class ModificarComponent implements OnInit {
                   timer: 1500
                 }) 
                 this.router.navigate(['/correspondencia/mostrar']) 
-
-              }else {            
-                console.log('cuarto else')    
+              }else {     
                 Swal.fire({
                   icon: 'error',
                   title: 'ERROR',
@@ -134,8 +131,7 @@ export class ModificarComponent implements OnInit {
               }  
             }); 
           } 
-    }else {      
-      console.log('segundo else')
+    }else {  
       Swal.fire({
             icon: 'error',
             title: 'ERROR',

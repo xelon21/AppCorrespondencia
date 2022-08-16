@@ -1,92 +1,326 @@
-<!-- <div class="row">
 
-  <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4" >
-   <div id="div1">a</div>
-  </div>
-  <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4" >
-    <div id="div2">a</div>
-  </div>
-  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" >
-    <div id="div3">a</div>
-  </div>
-</div> -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <mat-toolbar>
+        <h1>Consulta de Cheques</h1>
+      </mat-toolbar>
+      <mat-card>
+      
+            <br>
+              <div class="row">
+                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-5 " >
+                  <label for="inputObservacion">Observacion</label>
+                  <input type="text" class="form-control form-control-sm"  autocomplete="off" id="inputObservacion" placeholder="Este cheque esta sin fondos" required>
+                  <span class="form-text text-danger">Debe ingresar una observacion</span>
+                 
+                </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-2">
+                  <label style="padding-left: 2%">Estado Clave</label>
+                  <div>
+                    <h3 class="border border-2 rounded-2" style="padding-left: 4%; height: 2%; margin-top: 1.6vw; background-color: white;" >Estado Clave:  <span style="color: green;"></span> </h3>
+                    <ng-template #noActivo>
+                      <h3 class="border border-2 rounded-2" style="padding-left: 4%; height: 2%; background-color: white;"><span style="color: red"></span></h3>
+                    </ng-template>
+                  </div>
+                  
+                </div>
+              </div>
 
+             <br>
+              <div class="row">
+                <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3 " >
+                  <label style="padding-left: 2%">Numero Consulta</label>
+                  <h3  class="border border-2 rounded-1" style=" padding-left: 2%; height: 45%; background-color: white;"><span></span> </h3>
+                </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                  <label for="inputclaveCliente">Clave Cliente</label>
+                  <input type="text" class="form-control form-control-sm" autocomplete="off"   id="inputclaveCliente" placeholder="274585" required>
+                  <span class="form-text text-danger" >Debe ingresar una claveCLiente</span>
+                </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-2 col-xl-2 " >
+                  <label for="inputBanco">Banco</label>
+                  <input type="number" class="form-control form-control-sm" autocomplete="off"   id="inputBanco" placeholder="76" required>
+                  <span class="form-text text-danger" >Debe ingresar un banco</span>
+                </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                  <label for="inputCuentaCorriente">Cnta Corriente</label>
+                  <input type="number" class="form-control form-control-sm" autocomplete="off"   id="inputCuentaCorriente" placeholder="000-5483845" required>
+                  <span class="form-text text-danger" >Debe ingresar una cuenta corriente</span>
+                </div>                            
+              </div>
+             <br>
+              <div class="row">
+                <div class="form-group col-sm-6 col-md-6 col-lg-4 col-xl-4 " >
+                  <label for="inputTitular">Titular</label>
+                  <input type="text" class="form-control form-control-sm" autocomplete="off"   id="inputTitular" placeholder="SalmonStack" required>
+                  <span class="form-text text-danger" >Debe ingresar un titular</span>
+                </div>  
+                  <div class="form-group col-sm-2 col-md-2 col-lg-2 col-xl-2" >
+                    <!-- <input type="text" formControlName="rut" id="esconder">
+                    <form id="validacion-live"> -->
+                      <div class="control-group">                    
+                        <div class="controls">                        
+                          <label for="rut">Rut Girador</label>
+                          <!-- Tener en cuenta que si esta presionado el BloqDespl no podra escribir la k  -->
+                          <input  class="form-control form-control-sm"
+                                  id="rut" type="text" placeholder="14.569.484-1" autocomplete="off" required
+                                  onkeypress="return (event.charCode >= 48 && event.charCode <= 57 || event.charCode == 107)"
+                                  />
+                                  <!-- <span class="form-text text-danger" *ngIf="consultaCheque.controls['rutGirador'].errors" >Ingrese un rut valido || {{ this.consultaCheque.controls['estadoClave'].valid }}</span>   -->
+                          <div class="form-text text-danger" >Debe ingresar un rut valido</div>
+                          <div class="form-text text-success" >Rut Valido</div>            
+                        </div>
+                      </div>
 
+                    </div>                   
+                  <div class="form-group col-sm-6 col-md-4 col-lg-3 col-xl-3 " >
+                    <label for="inputMontoCompra">Monto de Compra</label>
+                    <input type="number" class="form-control form-control-sm" autocomplete="off"   id="inputMontoCompra" placeholder="10000" required>
+                    <span class="form-text text-danger" >Debe ingresar un monto de compra</span>
+                  </div> 
+                  
+                  <div class="form-group col-sm-6 col-md-6 col-lg-4 col-xl-3 ">
+                          
+                  </div>
+                </div>
+                  <br>
+              <div class="row">
+                <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-4 " >
+                  <label for="inputConsutla">Telefono 1
+                  </label>
+                  <input type="number" class="form-control form-control-sm" autocomplete="off"  id="inputTelefono" placeholder="N° 5468543" required>
+                  <span class="form-text text-danger">Debe ingresar un telefono </span>
+                </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-4 " >
+                  <label for="inputConsutla">telefono 2</label>
+                  <input type="number" class="form-control form-control-sm" autocomplete="off"  id="inputTelefono2" placeholder="N° 5468543" required>
+                  <span class="form-text text-danger">Debe ingresar un telefono 2</span>
+                </div>                
+               
+                <div class="form-group col-sm-6 col-md-6 col-lg-4 col-xl-4 bordes " > 
+                      
+                    <mat-list rol="list">
+                      <mat-list-item rol="list-item">
+                        <button mat-button class="colorTabla btn btn-primary" style="width: 13vw; margin-left: -3%;">Ver detalle
+                          <span class="badge badge-dark" style="background-color: green;"><mat-icon>done</mat-icon></span>
+                          <span class="badge badge-dark" style="background-color: #F70C00;"><mat-icon>close</mat-icon></span>
+                          <span class="badge badge-dark" style="background-color: #FAE00D;"><mat-icon style="color: gray">warning_amber</mat-icon></span>
+                        </button> 
+                        <button mat-button class="colorTabla btn btn-primary" style="width: 15vw; margin-left: 4%;">Detalle Cliente
+                          <span class="badge badge-dark" style="background-color: green;"  ><mat-icon>done</mat-icon></span>
+                          <span class="badge badge-dark" style="background-color: #F70C00;" ><mat-icon>close</mat-icon></span>
+                          <span class="badge badge-dark" style="background-color: #FAE00D;" ><mat-icon style="color: gray">warning_amber</mat-icon></span>
+                        </button>
+                      </mat-list-item>          
+                    </mat-list>
+                </div>               
+              </div>
+              
+              <br>
+              <div class="row ">
+               <div class="form-group col-sm-6 col-md-6 col-lg-4 col-xl-4 ">
+                  <label for="inputNumeroCheque">N°Cheque</label>
+                  <input type="number" class="form-control form-control-sm" autocomplete="off"   id="inputNumeroCheque" placeholder="325216584" required>
+                  <span class="form-text text-danger" >Debe ingresar un n° de cheque</span>
+                </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-3 col-xl-3 " >
+                  <label for="inputNumeroCheque">Monto</label>                  
+                  <input type="number" class="form-control form-control-sm" autocomplete="off"  id="inputMonto" placeholder="325216584" required>
+                  <span class="form-text text-danger" >Debe ingresar un monto</span>
+                </div>                
+                <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-4 "> 
+                  <div>
+                    <mat-form-field class="tamanio">
+                      <mat-label>Fecha Cheque</mat-label>
+                      <input matInput [matDatepicker]="fechaCheque" class="col-sm-6 col-md-6 col-lg-6 col-xl-3">                   
+                      <mat-datepicker-toggle matSuffix [for]="fechaCheque"></mat-datepicker-toggle>
+                      <mat-datepicker #fechaCheque></mat-datepicker>
+                    </mat-form-field>         
+                  </div>
+                  <div class="alert alert-danger" style="width: 15vw; height: 3.5vw; margin-left: 5%;" role="alert" >
+                    Debe ingresar una fecha
+                  </div>           
+                  </div>          
+              </div>
+              <br>
+              <div class="row bordes"  role="alert">
+                <div class="form-group col-sm-6 col-md-3 col-lg-4 col-xl-4" >
+                    <br>   
+                   <button mat-button  class="btn colorTabla btn-primary altito botoncito"  >Agregar Cheque</button>
+                  <ng-template #agregar>
+                    <button mat-button class="btn colorTabla btn-primary altito botoncito" style="background-color: green;"><mat-icon style="padding-right: 1%;">add</mat-icon>Agregar Cheque</button>
+                  </ng-template>
+                  </div>
+                  <div class="form-group col-sm-6 col-md-3 col-lg-4 col-xl-4 ">                  
+                    <br>
+                    <button mat-button  style="background-color: #FFE866; color: grey" class="btn btn-primary botonBordeIzquierda2 botoncito"><mat-icon>question_mark</mat-icon> Respuesta RUT </button>
+                  </div>  
+                  <div class="form-group col-sm-6 col-md-3 col-lg-4 col-xl-4 ">
+                  <br>
+                  <ng-template #obsValido>
+                    <button mat-button   class="btn btn-primary colorTabla botonBordeIzquierda4 botoncito">Ingresar observacion 
+                      <span class="badge badge-dark" style="background-color: green;" ><mat-icon>done</mat-icon></span>
+                    </button>
+                  </ng-template>                  
+                  <button mat-button style="background-color: #F9534B; color: whitesmoke" class="btn btn-primary colorTabla botonBordeIzquierda4 botoncito"><mat-icon style="margin-right: 2%;">add_box</mat-icon>Ingresar observacion 
+                  </button>
+                  </div>               
+                </div>
+                <br>
+                <div class="row">
+                <div class="alert alert-danger" role="alert">
+              Debe ingresar una obserbacion
+            </div>
+              </div>
+              <hr>              
+              <div class="row bordes">
+                <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6 " >
+                  <br>              
+                    <table class="table table-bordered table-hover " style="background-color: white;">
+                      <thead class="colorTabla ">
+                        <tr>
+                          <th class="text-light" scope="col">N° cheque</th>
+                          <th class="text-light" scope="col">Fecha</th>
+                          <th class="text-light" scope="col">Monto</th>
+                          <th class="text-light" scope="col">Protesto</th>
+                          <th class="text-light" scope="col">Cantidad Protesto</th>   
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>              
+                          <td> 2161261 </td>
+                          <td> 20/10/2022</td>
+                          <td> 60000</td>
+                          <td> No</td>
+                          <td> 0</td>
+                        </tr>     
+                        <tr >              
+                          <td> 21651212 </td>
+                          <td> 25/10/2022</td>
+                          <td> 40000</td>
+                          <td> Si</td>
+                          <td> 50</td>
+                        </tr>     
+                        <tr >              
+                          <td> 21651212 </td>
+                          <td> 25/10/2022</td>
+                          <td> 40000</td>
+                          <td> Si</td>
+                          <td> 50</td>
+                        </tr>           
+                        <tr >              
+                          <td> 21651212 </td>
+                          <td> 25/10/2022</td>
+                          <td> 40000</td>
+                          <td> Si</td>
+                          <td> 50</td>
+                        </tr>    
+                      </tbody>
+                    </table> 
+               </div>                
+                <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6 " > 
+                </div>
+              </div>
+              <hr>
+              <div class="row bordes"  role="alert">          
+                <div class="col-sm-6 col-md-3 col-lg-4 col-xl-4 " >
+                    <br>  
+                    <button  mat-raised-button  style="background-color: green;" class="colorTabla btn btn-primary altito botoncito"><mat-icon>done_all</mat-icon> Garantizar</button>
+                  </div>
+                  <div class="col-sm-6 col-md-3 col-lg-4 col-xl-4 ">
+                    <br>    
+                    <button mat-button style="background-color: #F9534B;" class="btn btn-primary colorTabla botonBordeIzquierda2 altito botoncito" ><mat-icon>delete_forever</mat-icon> Eliminar</button>
+                  </div> 
+                  <div class="col-sm-6 col-md-3 col-lg-4 col-xl-4" >
+                    <br>
+                    <button mat-button   class="colorTabla btn btn-primary botonBordeIzquierda4 altito botoncito"><mat-icon style="margin-right: 2%;">library_add</mat-icon>Nueva Consulta 
+                    </button>
+                  </div>           
+              </div>
+              <hr>
+              <br>        
+       
+      </mat-card>    
+    </div>
 
-
-
-<div fxLayout="row" fxLayoutAlign="center center" >
-  <div
-  style="font-style: italic"
-  [ngStyle.xs]="{'font-size.px': 10, color: 'blue'}"
-  [ngStyle.sm]="{'font-size.px': 20, color: 'lightblue'}"
-  [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
-
-      <div class="mat-elevation-z3 ancho">
-          
-          <mat-toolbar >
-              <h3>Correspondencia </h3>   
-              <span class="volver"></span>
-              <button mat-raised-button color="primary"
-              class="boto"
-              routerLink="/correspondencia/agregar"                     
-              ><mat-icon>add</mat-icon >Agregar Correspondencia</button>                                    
-              <button mat-raised-button color="primary"
-              class="paginacion"
-              (click)="prevPage()">
-              Anterior
-              </button>                  
-              <button mat-raised-button color="primary"
-              class="paginacion2"
-              (click)="nextPage()"
-              [disabled]="(correos | paginar:pagina).length < 15 ">
-              Siguiente
-              </button>
-              </mat-toolbar>                
-              <div class="ancho3">
-                  <div  >
-                    <div class="container-fluid ancho2">
-                      <div class="row">
-                        <div class="col-lg-12 col-md-6 col-12">                  
-                          <div class="card-body">
-                            <table class="table table-hover table-responsive">
-                              <thead>
-                                <tr class="fondoEncabezados text-white" id="miTablaPersonalizada">
-                                    <th>Usuario</th>
-                                    <th>Tipo Envio</th>
-                                    <th>Tipo Documento</th>
-                                    <th>Destinatario</th>
-                                    <th>Referencia</th>
-                                    <th class="centrarTexto">Correlativo</th>
-                                  <th class="centrarTexto">Fecha</th>
-                                  <th class="centrarTexto">Estado</th>
-                                  <th class="centrarTexto">Editar</th>
-                                </tr>
-                              </thead>                     
-                                <tbody *ngFor="let correo of correos | paginar:pagina ">                         
-                                  <tr id="miTablaPersonalizada2">
-                                      <td> {{ correo.NombreUsuario }} </td>
-                                      <td> {{ correo.TipoEnvio }} </td>
-                                      <td> {{ correo.NombreDocumento }} </td>
-                                      <td> {{ correo.Destinatario }} </td>
-                                      <td> {{ correo.Referencia }} </td>
-                                      <td class="centrarTexto"> {{ correo.Correlativo }} </td>
-                                    <td class="centrarTexto"> {{ correo.Fecha | fecha }} </td>
-                                    <td class="centrarTexto"> {{ correo.EstadoCorreo }} </td>
-                                    <td class="centrarTexto"> <a class="pointer" style="color: #e15639" matTooltip="Editar correspondencia"
-                                      [routerLink]="['/correspondencia/modificar/', correo.Correlativo]">           
-                                      <mat-icon>edit</mat-icon>
-                                  </a></td> 
-                                  </tr>
-                                </tbody>                        
-                            </table>
-                          </div>
-                        </div>         
-                      </div>        
-                    </div>
-                  </div>                    
-            </div>      
-          </div>
-  </div>
   
-  </div>
+
+   
+<!-- 
+
+<div class="container-fluid">
+  <div class="row" >
+    <div class=" form-group col-sm-12 col-md-12 col-lg-12 col-xl-4">    
+    </div>
+    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-4">
+    <div class="row">
+      <mat-toolbar >
+        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <h3>Correspondencia </h3> 
+        </div>
+          <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">                 
+              <button mat-raised-button color="primary"
+            class="boto"
+            routerLink="/correspondencia/agregar"                     
+            ><mat-icon>add</mat-icon >Agregar Correspondencia</button> 
+          </div>
+          <div style="padding-left: 5%;" class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12"> 
+            <button mat-raised-button color="primary"
+            class="paginacion"
+            (click)="prevPage()">
+            Anterior
+            </button>                  
+            <button mat-raised-button color="primary"
+            class="paginacion2"
+            (click)="nextPage()"
+            [disabled]="(correos | paginar:pagina).length < 15 ">
+            Siguiente
+            </button>
+          </div>                 
+      </mat-toolbar> 
+    </div>              
+    
+    
+      <div class="row bordes">
+        <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6"> 
+                      <table class="table table-bordered table-hover">
+                        <thead class="fondoEncabezados text-white">
+                          <tr>
+                              <th class="text-light"  scope="col">Usuario</th>
+                              <th class="text-light"  scope="col">Tipo Envio</th>
+                              <th class="text-light"  scope="col">Tipo Documento</th>
+                              <th class="text-light"  scope="col">Destinatario</th>
+                              <th class="text-light"  scope="col">Referencia</th>
+                              <th class="centrarTexto">Correlativo</th>
+                            <th class="centrarTexto">Fecha</th>
+                            <th class="centrarTexto">Estado</th>
+                            <th class="centrarTexto">Editar</th>
+                          </tr>
+                        </thead>                     
+                          <tbody *ngFor="let correo of correos | paginar:pagina ">                         
+                            <tr>
+                                <td> {{ correo.NombreUsuario }} </td>
+                                <td> {{ correo.TipoEnvio }} </td>
+                                <td> {{ correo.NombreDocumento }} </td>
+                                <td> {{ correo.Destinatario }} </td>
+                                <td> {{ correo.Referencia }} </td>
+                                <td class="centrarTexto"> {{ correo.Correlativo }} </td>
+                              <td class="centrarTexto"> {{ correo.Fecha | fecha }} </td>
+                              <td class="centrarTexto"> {{ correo.EstadoCorreo }} </td>
+                              <td class="centrarTexto"> <a class="pointer" style="color: #e15639" matTooltip="Editar correspondencia"
+                                [routerLink]="['/correspondencia/modificar/', correo.Correlativo]">           
+                                <mat-icon>edit</mat-icon>
+                            </a></td> 
+                            </tr>
+                          </tbody>                        
+                      </table>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4">
+    </div>
+  </div>   -->
+
+ 
