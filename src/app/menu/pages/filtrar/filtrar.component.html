@@ -1,98 +1,102 @@
-<div fxLayout="columns wrap" fxLayoutAlign="center" >
-  <div fxFlex="150"
-  style="font-style: italic"
-  [ngStyle.xs]="{'font-size.px': 10, color: 'blue'}"
-  [ngStyle.sm]="{'font-size.px': 20, color: 'lightblue'}"
-  [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
-  
-  <div class="ancho4">
-    <mat-toolbar>
-      <span>Filtrar Correspondencia</span>    
-              <span class="filtroFecha"></span>      
-              <button mat-raised-button color="primary"
-              [routerLink]="['/correspondencia/filtroFechas']"                    
-              ><mat-icon>event</mat-icon ><span class="separacionIconos"></span>Por Rango de Fechas </button>         
-  
-              <span class="filtroFecha"></span>      
-              <button mat-raised-button color="primary"
-              [routerLink]="['/correspondencia/filtroNombre']"                    
-              ><mat-icon>badge</mat-icon ><span class="separacionIconos"></span>Por Usuario </button> 
-  
-              <span class="filtroFecha"></span>      
-              <button mat-raised-button color="primary"
-              [routerLink]="['/correspondencia/filtrar']"
-              [disabled]="true"                    
-              ><mat-icon>search</mat-icon><span class="separacionIconos"></span>Por Tipo Documento </button> 
-  
-              </mat-toolbar>            
-              <span class="textoFiltro">Filtro por tipo Documento</span>
-              <mat-form-field autocomplete="off" class="busqueda">
-                    <input  matInput 
-                            spellcheck="false"                        
-                            placeholder=""
-                            #txtSearch
-                            (keyup)="onSearchNombreUsuario( txtSearch.value )">
-    
-                            <!-- <app-filtro-busqueda (search)="handleSearch( $event )" class="busqueda" ></app-filtro-busqueda> -->
-              </mat-form-field> 
-              <span class="espacio"></span>
-              <button mat-raised-button color="primary"
-                class="paginacion"
+<div class="container-fluid">
+  <div class="row" >
+    <div class=" form-group col-sm-12 col-md-12 col-lg-1 col-xl-1">    
+    </div>
+    <div class=" form-group col-sm-12 col-md-12 col-lg-10 col-xl-10">    
+      <div class="row">
+        <mat-toolbar>
+          <div class=" form-group col-sm-12 col-md-3 col-lg-3 col-xl-3"> 
+            <span style="margin-left: -3%;">Filtrar Correspondencia</span>    
+          </div>
+          <div class=" form-group col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex justify-content-center">
+            <button mat-raised-button color="primary"
+                    [routerLink]="['/correspondencia/filtroFechas']">
+            <mat-icon>event</mat-icon ><span class="separacionIconos"></span>Por Rango de Fechas </button>         
+          </div>
+          <div class=" form-group col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex justify-content-center">
+            <button style="width: 93%;" mat-raised-button color="primary"
+                  [routerLink]="['/correspondencia/filtroNombre']">
+            <mat-icon>badge</mat-icon ><span class="separacionIconos"></span>Por Usuario </button>
+          </div>
+          <div class=" form-group col-sm-12 col-md-3 col-lg-3 col-xl-3 d-flex justify-content-center">
+            <button mat-raised-button color="primary"
+                  [routerLink]="['/correspondencia/filtrar']"
+                  [disabled]="true">
+            <mat-icon>search</mat-icon><span class="separacionIconos"></span>Por Tipo Documento </button>       
+          </div>
+        </mat-toolbar>        
+      </div>
+      <br>
+      <div class="row">
+          <div class=" form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">  
+              <label for="FiltroDocumento">Filtro por tipo Documento</label>     
+              <input  type="text"
+                      class="form-control form-control-sm"                                    
+                      id="FiltroDocumento"
+                      #txtSearch
+                      (keyup)="onSearchNombreUsuario( txtSearch.value )">
+          </div>
+          <div class=" form-group col-sm-12 col-md-12 col-lg-3 col-xl-2">
+
+          </div>
+            <div class=" form-group col-sm-12 col-md-12 col-lg-3 col-xl-2 d-flex justify-content-center"> 
+              <button style="height: 70%; margin-top: 10%; width: 100%;" mat-raised-button color="primary"
+                class=""
                 (click)="prevPage()">
                 Anterior
                 </button>
-                &nbsp;
-                <button mat-raised-button color="primary"
-                class="paginacion"
+            </div>  
+              <div class=" form-group col-sm-12 col-md-12 col-lg-3 col-xl-2 d-flex justify-content-center" > 
+                <button style="height: 70%; margin-top: 10%; width: 100%;" mat-raised-button color="primary"
+                class=""
                 (click)="nextPage()"
                 [disabled]="(correos | searchNombre:pagina:search).length < 10">
                 Siguiente
-                </button>             
-              <div class="ancho">
-                <div >
-                  <div class="container-fluid ancho2" *ngIf="!hayError">
-                    <div class="row">
-                      <div class="col-lg-12 col-md-6 col-12">                  
-                        <div class="card-body">
-                          <table class="table table-hover table-responsive">
-                            <thead>
-                              <tr class="fondoEncabezados text-white" id="miTablaPersonalizada">
-                                <th>Tipo Documento</th>
-                                <th>Usuario</th>
-                                <th>Tipo Envio</th>
-                                <th>Destinatario</th>
-                                <th>Referencia</th>
-                                <th class="centrarTexto">Correlativo</th>
-                                <th class="centrarTexto">Fecha</th>
-                                <th class="centrarTexto">Estado</th>
-                                <th class="centrarTexto">Editar</th>
-                              </tr>
-                            </thead>                     
-                              <tbody *ngFor="let correo of correos | filtroCorrelativo:pagina:search ">                         
-                                <tr id="miTablaPersonalizada2">
-                                  <td> {{ correo.NombreDocumento }} </td>
-                                  <td> {{ correo.NombreUsuario }} </td>
-                                  <td> {{ correo.TipoEnvio }} </td>
-                                  <td> {{ correo.Destinatario }} </td>
-                                  <td> {{ correo.Referencia }} </td>
-                                  <td class="centrarTexto"> {{ correo.Correlativo }} </td>
-                                  <td class="centrarTexto"> {{ correo.Fecha | fecha}} </td>
-                                  <td class="centrarTexto"> {{ correo.EstadoCorreo }} </td>
-                                  <td class="centrarTexto"> <a class="pointer" style="color: #e15639" matTooltip="Editar correspondencia"
-                                    [routerLink]="['/correspondencia/modificar/', correo.Correlativo]">           
-                                    <mat-icon>edit</mat-icon>
-                                </a></td> 
-                                </tr>
-                              </tbody>                      
-                          </table>
-                        </div>
-                      </div>         
-                    </div>        
-                  </div>
-                </div>
-              </div>
-   </div>
-                
+                </button>  
+              </div> 
+      </div>
+      <br>
+      <div class="row">
+        <div class=" form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="card-body">
+            <table class="table table-hover table-bordered border">
+              <thead>
+                <tr class="fondoEncabezados text-white" id="miTablaPersonalizada">
+                  <th>Tipo Documento</th>
+                  <th>Usuario</th>
+                  <th>Tipo Envio</th>
+                  <th>Destinatario</th>
+                  <th>Referencia</th>
+                  <th class="centrarTexto">Correlativo</th>
+                  <th class="centrarTexto">Fecha</th>
+                  <th class="centrarTexto">Estado</th>
+                  <th class="centrarTexto">Editar</th>
+                </tr>
+              </thead>                     
+                <tbody *ngFor="let correo of correos | filtroCorrelativo:pagina:search ">                         
+                  <tr id="miTablaPersonalizada2">
+                    <td> {{ correo.NombreDocumento }} </td>
+                    <td> {{ correo.NombreUsuario }} </td>
+                    <td> {{ correo.TipoEnvio }} </td>
+                    <td> {{ correo.Destinatario }} </td>
+                    <td> {{ correo.Referencia }} </td>
+                    <td> {{ correo.Correlativo }} </td>
+                    <td> {{ correo.Fecha | fecha}} </td>
+                    <td> {{ correo.EstadoCorreo }} </td>
+                    <td> <a class="pointer" style="margin-left: 30%;  color: #e15639" matTooltip="Editar correspondencia"
+                      [routerLink]="['/correspondencia/modificar/', correo.Correlativo]">           
+                      <mat-icon>edit</mat-icon>
+                  </a></td> 
+                  </tr>
+                </tbody>                      
+            </table>
+          </div>
+        </div>           
+      </div>
+    </div>
+    <div class=" form-group col-sm-12 col-md-12 col-lg-1 col-xl-1"> 
     </div>
   </div>
-  
+</div>
+
+

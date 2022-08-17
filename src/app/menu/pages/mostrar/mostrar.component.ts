@@ -14,6 +14,14 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
     margin-left: 35px;
     width: 40%;
   }
+ 
+
+#miTablaPersonalizada2 td {
+    overflow: auto;
+    border: 0.1px solid;
+    border-bottom: 0.1px solid;
+  }
+
   .busqueda {
       margin-left: 1%;
       width: 25%;
@@ -32,8 +40,7 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   
   .fondoEncabezados {
       background-color: #4D66F9;
-      font-family: Roboto;
-      
+        
     }
   
    #miTablaPersonalizada th {
@@ -45,12 +52,7 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
       text-align: center;
     }
    
-    #miTablaPersonalizada2 td {
-      width: 50px;
-      overflow: auto;
-      border: 0.1px solid;
-      border-bottom: 0.1px solid;
-    }
+    
     .boto{
       width: 300px;
     }

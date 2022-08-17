@@ -1,80 +1,92 @@
 <div class="container-fluid">
-    <div class="cuadro">
-    
-    <div class="ancho2">
-        <mat-toolbar>
-            <span>Ingresar Correspondencia</span>
-            <div class="spacer"></div>
-            <button mat-raised-button color="primary"
-                routerLink="/correspondencia/mostrar"                     
-                ><mat-icon>reply</mat-icon > Volver</button>
-        </mat-toolbar>
+    <div class="row" >
+      <div class=" form-group col-sm-12 col-md-12 col-lg-2 col-xl-2">    
+      </div>
+      <div class=" form-group col-sm-12 col-md-12 col-lg-8 col-xl-8">    
+        <div class="row">
+            <div class=" form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <mat-toolbar>
+                    <div class=" form-group col-sm-12 col-md-12 col-lg-8 col-xl-10">
+                        <span>Ingresar Correspondencia</span>
+                    </div>
+                    <div class=" form-group col-sm-12 col-md-12 col-lg-8 col-xl-6">
+                        <button style="width: 30%;" mat-raised-button color="primary"
+                            routerLink="/correspondencia/mostrar"                     
+                            ><mat-icon>reply</mat-icon > Volver</button>
+                    </div>                   
+                </mat-toolbar>
+            </div>
+        </div>
+        <div class="row">
+            <div class=" form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <mat-card style="margin-top: 10px;" fxLayoutGap>
+                    <form [formGroup]="miFormulario" (ngSubmit)="ingresar()">
+                        <mat-grid-list cols="2" rowHeight="70px">
+                            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                                <mat-form-field class="ancho" >                        
+                                    <input matInput 
+                                           type="text"
+                                           class="input100"
+                                           autocomplete="off"
+                                           formControlName="Destinatario"
+                                           placeholder="Destinatario">
+                                  </mat-form-field>
+                            </mat-grid-tile>
+                            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                                <mat-form-field class="ancho">
+                                    <mat-label>Tipo de Documento</mat-label>
+                                    <mat-select formControlName="IdTIpoDocumento"
+                                                type="number">
+                                        <mat-option *ngFor="let tipo of tipoDocumento" [value]="tipo.IdTIpoDocumento">
+                                        {{ tipo.NombreDocumento }}                            
+                                        </mat-option>
+                                    </mat-select>
+                                    </mat-form-field>    
+                            </mat-grid-tile>
+                            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                                <mat-form-field class="ancho" >
+                                    <mat-label>Referencia</mat-label>
+                                    <input matInput 
+                                           class="form-control"
+                                           autocomplete="off"
+                                           type="text"
+                                           formControlName="Referencia"
+                                           placeholder="Referencia">
+                                  </mat-form-field>     
+                            </mat-grid-tile>
+                            <mat-grid-tile [colspan]="1" [rowspan]="1">                   
+                                <mat-form-field class="ancho">
+                                    <mat-label>Tipo de Envio</mat-label>
+                                    <mat-select formControlName="IdTipoEnvio"
+                                                type="number">
+                                        <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.IdTipoEnvio">
+                                        {{ tipo.TipoEnvio }}                            
+                                        </mat-option>
+                                    </mat-select>
+                                    </mat-form-field>
+                            </mat-grid-tile>                    
+                           
+                        </mat-grid-list>   
+                        <div fxLayout="columns wrap" fxLayoutAlign="center" >
+                            <button mat-raised-button color="primary" class="ancho3"                                                 
+                                type="submit" [disabled]="miFormulario.invalid">
+                            <mat-icon mat-list-icon >send</mat-icon> Ingresar 
+                        </button>  
+                        </div>               
+                    </form>
+                </mat-card>
+                <div *ngIf="estadoCampos">
+                    <div class="alert alert-danger" role="alert" *ngIf="estadoDestinatario">
+                        El campo Destinatario no puede estar vacio
+                      </div>
+                      <div class="alert alert-danger" role="alert" *ngIf="estadoReferencia">
+                        El campo Referencia no puede estar vacio
+                      </div>
+                </div>        
+            </div>
+        </div>
+      </div>
+      <div class=" form-group col-sm-12 col-md-12 col-lg-2 col-xl-2">    
+      </div>
     </div>
-    <div class="ancho2">
-        <mat-card style="margin-top: 10px;" fxLayoutGap>
-            <form [formGroup]="miFormulario" (ngSubmit)="ingresar()">
-                <mat-grid-list cols="2" rowHeight="70px">
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="ancho" >                        
-                            <input matInput 
-                                   type="text"
-                                   class="input100"
-                                   autocomplete="off"
-                                   formControlName="Destinatario"
-                                   placeholder="Destinatario">
-                          </mat-form-field>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="ancho">
-                            <mat-label>Tipo de Documento</mat-label>
-                            <mat-select formControlName="IdTIpoDocumento"
-                                        type="number">
-                                <mat-option *ngFor="let tipo of tipoDocumento" [value]="tipo.IdTIpoDocumento">
-                                {{ tipo.NombreDocumento }}                            
-                                </mat-option>
-                            </mat-select>
-                            </mat-form-field>    
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="ancho" >
-                            <mat-label>Referencia</mat-label>
-                            <input matInput 
-                                   class="form-control"
-                                   autocomplete="off"
-                                   type="text"
-                                   formControlName="Referencia"
-                                   placeholder="Referencia">
-                          </mat-form-field>     
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">                   
-                        <mat-form-field class="ancho">
-                            <mat-label>Tipo de Envio</mat-label>
-                            <mat-select formControlName="IdTipoEnvio"
-                                        type="number">
-                                <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.IdTipoEnvio">
-                                {{ tipo.TipoEnvio }}                            
-                                </mat-option>
-                            </mat-select>
-                            </mat-form-field>
-                    </mat-grid-tile>                    
-                   
-                </mat-grid-list>   
-                <div fxLayout="columns wrap" fxLayoutAlign="center" >
-                    <button mat-raised-button color="primary" class="ancho3"                                                 
-                        type="submit" [disabled]="miFormulario.invalid">
-                    <mat-icon mat-list-icon >send</mat-icon> Ingresar 
-                </button>  
-                </div>               
-            </form>
-        </mat-card>
-        <div *ngIf="estadoCampos">
-            <div class="alert alert-danger" role="alert" *ngIf="estadoDestinatario">
-                El campo Destinatario no puede estar vacio
-              </div>
-              <div class="alert alert-danger" role="alert" *ngIf="estadoReferencia">
-                El campo Referencia no puede estar vacio
-              </div>
-        </div>        
-    </div>
-</div>
 </div>

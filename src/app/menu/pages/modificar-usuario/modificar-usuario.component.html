@@ -1,21 +1,20 @@
-<div fxLayout="columns wrap" fxLayoutAlign="center center">
-    <div
-    style="font-style: italic"
-    [ngStyle.xs]="{'font-size.px': 10, color: 'blue'}"
-    [ngStyle.sm]="{'font-size.px': 20, color: 'lightblue'}"
-    [ngStyle.md]="{'font-size.px': 30, color: 'orange'}">
-    <div class="ancho2">
-        <mat-toolbar>
-            <span>Modificar Usuario</span>
-            <div class="spacer"></div>
-            <button mat-raised-button color="primary"
-                routerLink="/correspondencia/administrador" 
-                fxFlex="10"                    
-                ><mat-icon>reply</mat-icon > Volver</button>             
-        </mat-toolbar>
+<div class="container-fluid">
+  <div class="row" >
+    <div class=" form-group col-sm-12 col-md-12 col-lg-2 col-xl-2">    
     </div>
-    <div class="ancho4">
-      <section class="d-flex justify-content-center align-items-center">
+    <div class=" form-group col-sm-12 col-md-12 col-lg-8 col-xl-8">
+      <div class="row">
+        <mat-toolbar>
+          <span>Modificar Usuario</span>
+          <div class="spacer"></div>
+          <button mat-raised-button color="primary"
+              routerLink="/correspondencia/administrador" 
+              fxFlex="10"                    
+              ><mat-icon>reply</mat-icon > Volver</button>             
+      </mat-toolbar>
+      </div>
+      <div class="row" style=" background-color: #efefef;">
+        <section class="d-flex justify-content-center align-items-center">
           <div class="card shadow col-md-4 col-sm-4 col-md-4 col-lg-4 p-4 ancho"> 
               <div class="row">              
                   <h2>  <i class="bi bi-chat-left-quote"></i> &nbsp; Ingrese Datos a Modificar</h2>
@@ -79,6 +78,12 @@
               </div>
           </div>
       </section>
+      </div>    
     </div>
+    <div class=" form-group col-sm-12 col-md-12 col-lg-2 col-xl-2">    
+    </div>
+  </div>
+</div>
+
 
     
