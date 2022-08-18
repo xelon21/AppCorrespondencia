@@ -9,7 +9,7 @@ export class PaginacionPipe implements PipeTransform {
 
     transform( lista: Correspondencia[], page: number = 0): any[] {     
      
-      return lista.slice( page, page + 15 );
+      return lista.slice( page, page + 10 );
      
     }
   

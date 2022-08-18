@@ -45,7 +45,7 @@ export class CorrespondenciaService {
     return this.http.post<AgregarCorrespondencia>(url , body )
           .pipe(
             tap(resp => {
-              //console.log(resp.correlativo)
+              // console.log(resp)
               this.refresh.next()
             })           
           )
