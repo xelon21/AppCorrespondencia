@@ -31,7 +31,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
 })
 export class LoginComponent implements OnInit {
 
-  
+  //Declaracion de variables a utilizar
   usuario: LoginUsuario = {
     Email: '',
     Password: ''
@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
   esAdmin: boolean = false;
   coneccion!: boolean; 
 
+  //Declaracion de clases que se ocuparan
   constructor(private loginService: SesionesService,
               private router: Router,
               private fb: UntypedFormBuilder) {

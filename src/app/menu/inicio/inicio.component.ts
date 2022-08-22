@@ -45,8 +45,7 @@ export class inicioComponent implements OnInit {
   ngOnInit(): void {
 
     
-    /** Se verifica si el usuario es administrador */
-   
+    /** Se verifica si el usuario es administrador */   
     if(this.usuarioService.respuestaLogin.IdRol === 1 ){
       this.esAdmin = true;
     }   

@@ -42,6 +42,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class CambioPasswordComponent implements OnInit {
   
+  /**Se declaran las variales a utilizar  */
   mod: ModificarPassword = {
     IdUsuario: 0,
     Password: '',
@@ -58,6 +59,7 @@ export class CambioPasswordComponent implements OnInit {
     Estado: false
   }
 
+  /**Se declaran las clases a utilizar  */
   constructor( private loginService: SesionesService,               
                private router: Router,              
                @Inject(MAT_DIALOG_DATA) public data: UsuarioModificar ) { }
@@ -74,6 +76,7 @@ export class CambioPasswordComponent implements OnInit {
    */
   modificarPassword() {
     try {
+      //Se Corrobora que las contraseñas no vengan vacias.
       if( !this.mod.Password || !this.mod.Password2){
         Swal.fire({
           icon: 'error',
@@ -81,18 +84,18 @@ export class CambioPasswordComponent implements OnInit {
           text: 'Error Los campos estan vacios',                
         })
       }else{
+        /**Se Verifica que las contraseñas sean Iguales*/
         if( this.mod.Password != this.mod.Password2 ){
           Swal.fire({
             icon: 'error',
             title: 'Error',
             text: 'Las contraseñas no coinciden',                
           })
-        }else {      
-          console.log(this.data)
-         
+        }else {               
+         /**¨Si se valida que las contraseñas son iguales y no se encuentran vacias, Entonces se genera el cambio de la contraseña */
           this.loginService.modificarPassword(this.mod.Password, this.mod.Password2, this.data.IdUsuario )
               .subscribe( resp => {               
-                if(resp){
+                if(resp){                  
                   Swal.fire({
                     position: 'top-end',
                     icon: 'success',

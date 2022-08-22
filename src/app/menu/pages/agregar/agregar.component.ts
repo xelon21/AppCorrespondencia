@@ -57,12 +57,13 @@ export class AgregarComponent implements OnInit  {
     Referencia: ['', [Validators.required, Validators.minLength(6)]],
   }) 
 
+  //Declaracion de variables a utilizar
   constructor( private fb: UntypedFormBuilder,
                private correosService: CorrespondenciaService,          
                private router: Router,
                private loginService: SesionesService ) { }
   
-    
+  //Se inicializan los metodos
   ngOnInit(): void {
 
    this.traeTipos();
@@ -81,8 +82,10 @@ export class AgregarComponent implements OnInit  {
   /* Metodo que permite ingresar una correspondencia */
   async ingresar() {    
     try {
+      //Se extraen los datos del formulario
       const { IdTIpoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia } = this.miFormulario.value
       
+      //Se corrobora el formulario sea valido
       if(!this.estadoCampos){        
         /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
          * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/

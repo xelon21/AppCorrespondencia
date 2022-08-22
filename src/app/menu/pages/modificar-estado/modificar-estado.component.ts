@@ -88,6 +88,13 @@ export class ModificarEstadoComponent implements OnInit {
 
     /** Se valida que los campos no vengan vacios */
     if(this.fecha.controls['desactivacionUsuario'].valid && this.fecha.value.desactivacionUsuario != null){
+      /**Si se establece una fecha de Desactivacion para el usuario, entonces Se registra la fecha ingresada 
+       * y el usuario se mantiene activo, por lo que si llega esa fecha, el usuario se desactivara mediante
+       * una tarea o trabajo dentro de la base de datos.
+       * 
+       * [TENER EN CUENTA QUE SI EL USUARIO ESTABA DESACTIVADO, ESTE SE VOLVERA A ACTIVAR Y UNA VEZ LLEGADA
+       * LA FECHA, ESTE SE DESACTIVARA.]
+       */
       this.estado.Estado = true;
       this.fecha1 = this.fecha.controls['desactivacionUsuario'].value._i
       let fechaFinal: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;
@@ -113,6 +120,9 @@ export class ModificarEstadoComponent implements OnInit {
           })
     }else {
       if(this.estado.Estado){
+        /**Si el checkBox del estado del usuario esta marcado, entonces se Desactivara al usuario, quedando
+       * Registro de la fecha actual al momento de la desactivacion.
+       */
         let fecha = null;
         console.log(this.data.IdUsuario, this.estado.Estado, fecha)
         this.loginService.modificarEstado(this.data.IdUsuario, this.estado.Estado, fecha)

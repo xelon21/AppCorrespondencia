@@ -128,17 +128,20 @@ export class FiltrofechasComponent implements OnInit {
   correos: Correspondencia[] = [];
   pagina: number = 0;
   
+  /**Se declaran las clases que se utilizaran  */
   constructor(private correoService: CorrespondenciaService) {               
                } 
         
   ngOnInit(): void {
   }
 
+  /**Metodo que permite avanzar en la lista  */
   nextPage() {    
     this.pagina += 8;   
        
   }
 
+  /**Metodo que permite retroceder en la lista */
   prevPage() {
     if ( this.pagina > 0){      
       this.pagina -= 8;
@@ -147,10 +150,11 @@ export class FiltrofechasComponent implements OnInit {
 
     /* Metodo que permite filtrar un rango de fechas */
   async filtraFechas(){
-    // se verifica que los campos no vengan vacios    
+    // se verifica que los campos no vengan vacios y que no sean nulos    
     if(this.range.controls['start'].valid && this.range.controls['end'].valid &&
         this.range.value.start != null && this.range.value.end != null) {
 
+          /**Se Extraen los datos de los campos y se almacenan en 2 variables para poder trabajarlos */
           this.hayError = true;
           this.inicial = this.range.value.start._i;
           this.final = this.range.value.end._i; 
@@ -159,10 +163,13 @@ export class FiltrofechasComponent implements OnInit {
           let fechaInicio: string = this.inicial.year + '-' + (this.inicial.month + 1 ).toString() + '-' + this.inicial.date;
           let fechaFinal: string = this.final.year + '-' + (this.final.month + 1 ).toString() + '-' + this.final.date;
    
+          /**Una vez trabajados los datos, se envian por parametros al filtro de fecha para poder mostrar las correspondencias
+           * Segun el rango de fechas ingresado
+           */
           await this.correoService.filtroFechas( fechaInicio, fechaFinal )
             .subscribe( datos => {              
               this.correos = datos;   
-              console.log(datos)           
+              //console.log(datos)           
             })
         }   
   }

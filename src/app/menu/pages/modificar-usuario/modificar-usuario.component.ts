@@ -63,7 +63,7 @@ import { ModificarEstadoComponent } from '../modificar-estado/modificar-estado.c
 })
 export class ModificarUsuarioComponent implements OnInit {
 
-
+/**Se Declaran las variables a utilizar  */
   roles!: Roles[];
   rolUsuario!: string;
   respuesta!: boolean;
@@ -84,11 +84,14 @@ export class ModificarUsuarioComponent implements OnInit {
     DesactivacionUsuario: '',
     Estado: false
   }
+
+  /**Se declaran las clases a utilizar */
   constructor( private loginService: SesionesService,
                private activatedRouter: ActivatedRoute,
                private router: Router,
                public dialog: MatDialog) { }
 
+  /**Se inicializan los metodos al cargar la pagina */
   ngOnInit(): void {
   
     this.activatedRouter.params
@@ -133,11 +136,15 @@ export class ModificarUsuarioComponent implements OnInit {
 /** Metodo que Permite modificar a usuario por su id */
 async modificar() {   
 
+  /**El siguiente metodo Permite Modificar a un usuario por su ID, Para ello, se extraen los datos 
+   * Del formulario
+   */
   const { IdRol, IdUsuario, NombreUsuario, CorreoUsuario } = this.modUsuario
     try {      
+      /**Una vez obtenido los datos, se envian por parametros al metodo modificarPorIdUsuario para su modificacion */ 
       await this.loginService.modificarPorIdUsuario(IdRol, NombreUsuario, CorreoUsuario, IdUsuario)
           .subscribe( datos => {
-            console.log(datos)
+            //console.log(datos)
             this.usuarioMod = datos                                 
                   Swal.fire({
                     title: 'Estas seguro de guardar los datos?',                  

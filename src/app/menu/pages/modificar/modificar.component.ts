@@ -45,11 +45,13 @@ export class ModificarComponent implements OnInit {
   tipoEnvio: TipoEnvio[] = [];
   estado: boolean = false; 
 
+  /**Se declaran las clases a utilizar */
   constructor( private correoService: CorrespondenciaService,
                private activatedRouter: ActivatedRoute,
                private router: Router,
                private loginService: SesionesService ) { }
 
+  /**Se incializan los metodos al cargar la pagina  */
   ngOnInit(): void {    
 
     // Se trae el correlativo de una correspondencia seleccionada, y mediante el mismo
@@ -70,14 +72,14 @@ export class ModificarComponent implements OnInit {
 
   /** metodo que permite modifiar una correspondencia mediante correlativo */
   async modificar( ){
-
     
     /** Se corrobora el estado de la correspondencia  */
     if(!this.estadoCorrespondencia(this.correos.EstadoCorreo)){
       /** Si el checkBox del estado esta activado, Se anula la correspondencia y hace la modificacion */
       const { IdTipoEnvio, Destinatario, Referencia, EstadoCorreo, Correlativo } = this.correos
-
       
+      /**Si el checkbox del estado del correo esta marcado y el correo es 'GRABADO', Se cambiara el estado a 'ANULADO'
+       */
       if(this.estado){ 
         await this.correoService.buscaCorrelativo(this.correos.Correlativo)
         .subscribe( result => {             
@@ -104,7 +106,7 @@ export class ModificarComponent implements OnInit {
             });  
             
           }else{  
-            /** Si el checkBox del estado no esta seleccionado, Modifica la correspondencia  */        
+            /** Si el checkBox del estado no esta seleccionado, Se modificara la correspondencia sin alterar su estado */        
             await this.correoService.buscaCorrelativo(this.correos.Correlativo)
             .subscribe( result => {    
               if(this.loginService.respuestaLogin.IdUsuario === result.IdUsuario){

@@ -104,14 +104,16 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
 
 export class MostrarComponent implements OnInit, OnDestroy {
 
+  /**Se declaran las varibales a utilizar */
   correos: Correspondencia[] = [];
   suscription!: Subscription;
   pagina: number = 0;
 
-  
+  /**Se declaran las clases a utilizar */
   constructor( private correosService: CorrespondenciaService, 
                private router: Router) { }
 
+  /** Se inicializan Los Metodos al cargar la pagina */
   ngOnInit(): void {
 
     // Se trae todas las correspondencias
@@ -130,10 +132,12 @@ export class MostrarComponent implements OnInit, OnDestroy {
           })
   }
 
+  /**Metodo que permite mostrat la siguiente lista con datos */
   nextPage() {    
     this.pagina += 10;    
   }
 
+  /**Metodo que permite mostrar la lista anterior con datos */
   prevPage() {
     if ( this.pagina > 0){
       this.pagina -= 10;

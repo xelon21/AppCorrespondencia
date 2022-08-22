@@ -71,31 +71,37 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
 })
 export class FiltroNombreComponent implements OnInit {
 
+  /**Declaraciuon de variables a utilizar  */
   correos: Correspondencia[] = [];  
   filtro: string = '';
   hayError: boolean = false;  
   pagina: number = 0;
   search: string = '';
 
+  /**Declaracion de clases a utilizar  */
   constructor( private correosService: CorrespondenciaService,
                private dialog: MatDialog) { 
     
   }
 
+  /**Inicializacion de metodos al cargar la pagina */
   ngOnInit(): void {     
     this.traeCorrespondencia();
   } 
 
+  /**Metodo que permite mostrar la siguiente lista con datos */
   nextPage() {
     this.pagina += 10;
   }
 
+   /**Metodo que permite mostrar la lista anterior con datos */
   prevPage() {
     if ( this.pagina > 0){
       this.pagina -= 10;
     }
   }
 
+  /**Metodo que permite filtrar mediante un pipe por el nombre de usuario */
   onSearchNombreUsuario( search: string) {
     this.pagina = 0;
     this.search = search;

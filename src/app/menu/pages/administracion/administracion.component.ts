@@ -214,6 +214,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 })
 export class AdministracionComponent implements OnInit {
 
+  //Declaracion de variables a utlizar
   usuarioActivo!: string; 
   usuarioNoActivo!: string;
   pagina: number = 0;
@@ -246,14 +247,14 @@ export class AdministracionComponent implements OnInit {
     Estado: [ 0 ],
   })
 
+  //Declaracion de Clases a utilizar
   constructor(private fb: UntypedFormBuilder,
               private loginService: SesionesService,
               private ngbCalendar: NgbCalendar,
               private dateAdapter: NgbDateAdapter<string>) { }
 
-  ngOnInit(): void {
-
-      
+  //Inicializacion y llenado de campos con los datos de la api
+  ngOnInit(): void {      
     /**Metodo que trae los roles  */
     this.loginService.traeRoles()
         .subscribe( datos => { this.roles = datos })
@@ -279,16 +280,19 @@ export class AdministracionComponent implements OnInit {
     this.suscription.unsubscribe();
   }
 
+  /** Metodo que permite al usuario mediante un pipe, el poder avanzar en la lista */
   nextPage() {
     this.pagina += 5;
   }
 
+ /** Metodo que permite al usuario mediante un pipe, el poder retroceder en la lista */
   prevPage() {
     if ( this.pagina > 0){
       this.pagina -= 5;
     }
   }
 
+  /**Metodo que permite al usuario el poder buscar mediante un pipe, a un usuario por su nombre */
   onSearchNombreUsuario( search: string) {
     this.pagina = 0;
     this.search = search;
@@ -307,11 +311,11 @@ export class AdministracionComponent implements OnInit {
     ActivacionUsuario: new UntypedFormControl()    
   });
   
+  /**Metodo que carga la lista cuando el usuario avanza o retrocede en la lista */
   cargarLista() {
     this.hayError = false;
     this.suscription = this.loginService.obtenerUsuarios()  
-    .subscribe( datos => {
-     
+    .subscribe( datos => {     
       this.users = datos
     }) 
   }
@@ -407,8 +411,7 @@ export class AdministracionComponent implements OnInit {
 }
 
 
-
-/** CODIGO QUE NO SE OCUPA PERO PODRIA OCUPARSE */
+//#region CODIGO QUE NO SE OCUPA PERO PODRIA OCUPARSE */
 /** datos necesarios para poder mostrar la informacion en la tabla del html
  * 
  */
@@ -484,4 +487,4 @@ export class AdministracionComponent implements OnInit {
             //     return '2023-01-01';
             //   } 
             // }
-            
+//#endregion

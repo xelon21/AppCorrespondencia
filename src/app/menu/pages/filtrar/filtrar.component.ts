@@ -69,40 +69,46 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
   `]
 })
 export class FiltrarComponent implements OnInit {
-
+  /**Se declaran las varibles a utilizar */
   correos: Correspondencia[] = [];  
   filtro: string = '';
   hayError: boolean = false;  
   pagina: number = 0;
   search: string = '';
 
+  /**Se declaran las clases a utilizar  */
   constructor( private correosService: CorrespondenciaService,
    ) { 
     
   }
 
+  /**Se inician los metodos */
   ngOnInit(): void {     
     this.traeCorrespondencia();
   }  
 
   /** Metodo que trae todas las correspondencias */
-  async traeCorrespondencia(){
-    
+  async traeCorrespondencia(){    
     await this.correosService.getCorrespondencia()
       .subscribe( correos =>{
         this.correos = correos     
       });  
   }
+
+  /**Metodo que permite mostrar la siguiente lista con datos */
   nextPage() {
     this.pagina += 10;
   }
 
+  /**Metodo que permite mostrar la lista anterior con datos */
   prevPage() {
     if ( this.pagina > 0){
       this.pagina -= 10;
     }
   }
 
+  /** Metodo que permite filtrar mediante un pipe por nombre de documento
+  */
   onSearchNombreUsuario( search: string) {
     this.pagina = 0;
     this.search = search;
