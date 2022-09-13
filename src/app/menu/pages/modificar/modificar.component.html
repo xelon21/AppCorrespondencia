@@ -28,8 +28,8 @@
                             <mat-form-field class="ancho2">
                                 <mat-label>Tipo de Envio</mat-label>
                                 <mat-select type="number" required [(ngModel)]="correos.IdTipoEnvio">
-                                    <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.IdTipoEnvio">
-                                    {{ tipo.TipoEnvio }}                            
+                                    <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.idTipoEnvio">
+                                    {{ tipo.nombreEnvio }}                            
                                     </mat-option>
                                 </mat-select>
                                 </mat-form-field>

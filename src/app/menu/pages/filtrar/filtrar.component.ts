@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Correspondencia } from '../../interface/correspondencia.interface';
+import { Correspondencia, CorrespondenciaSqlServer } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 
 @Component({
@@ -70,7 +70,7 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
 })
 export class FiltrarComponent implements OnInit {
   /**Se declaran las varibles a utilizar */
-  correos: Correspondencia[] = [];  
+  correos: CorrespondenciaSqlServer[] = [];  
   filtro: string = '';
   hayError: boolean = false;  
   pagina: number = 0;

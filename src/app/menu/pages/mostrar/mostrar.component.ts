@@ -1,8 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Correspondencia } from '../../interface/correspondencia.interface';
+import { of, Subscription } from 'rxjs';
+import { Correspondencia, CorrespondenciaSqlServer, TipoEnvioSqlServer, TipoDocumentoSqlServer } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
+import { UsuariosSqlServer } from '../../../login/interface/login.interface';
+import { catchError, map } from 'rxjs/operators';
 
 
 @Component({
@@ -105,9 +107,13 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
 export class MostrarComponent implements OnInit, OnDestroy {
 
   /**Se declaran las varibales a utilizar */
-  correos: Correspondencia[] = [];
+  correos: CorrespondenciaSqlServer[] = [];
   suscription!: Subscription;
   pagina: number = 0;
+  usuario: UsuariosSqlServer[] = [];
+  tipoEnvio: TipoEnvioSqlServer[] = [];
+  tipoDocumento: TipoDocumentoSqlServer[] = [];
+
 
   /**Se declaran las clases a utilizar */
   constructor( private correosService: CorrespondenciaService, 
@@ -118,20 +124,30 @@ export class MostrarComponent implements OnInit, OnDestroy {
 
     // Se trae todas las correspondencias
     this.correosService.getCorrespondencia()
-      .subscribe( correos =>{
+      .subscribe( correos =>{ 
+        console.table(correos)     
         this.correos = correos        
-      }); 
+      });
+  
+      // .subscribe( correos =>{
+      //   console.log(correos)
+      //   console.table(correos)        
+      //   this.correos = correos        
+      // });
     
     this.suscription = this.correosService.refrescar
       .subscribe( () => {
         this.correosService.getCorrespondencia()
             .subscribe( correos =>{
-              this.correos = correos        
-              // console.log(this.correos)
+              this.correos = correos
+                      
+              console.log(this.correos)                            
             });
           })
+    
   }
 
+  
   /**Metodo que permite mostrat la siguiente lista con datos */
   nextPage() {    
     this.pagina += 10;    
@@ -154,7 +170,7 @@ export class MostrarComponent implements OnInit, OnDestroy {
   /** Metodo que envia el correlativo de la correspondencia seleccionada 
    * al formulario para poder modificar dicha correspondencia
    */
-  modificar(correlativo: string){
+  modificar(correlativo: string){   
     this.router.navigate(['/correspondencia/modificar', correlativo]);   
   }
 }

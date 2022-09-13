@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Correspondencia } from '../interface/correspondencia.interface';
+import { Correspondencia, CorrespondenciaSqlServer } from '../interface/correspondencia.interface';
 
 
 @Pipe({
@@ -7,7 +7,7 @@ import { Correspondencia } from '../interface/correspondencia.interface';
 })
 export class PaginacionPipe implements PipeTransform {
 
-    transform( lista: Correspondencia[], page: number = 0): any[] {     
+    transform( lista: CorrespondenciaSqlServer[], page: number = 0): any[] {     
      
       return lista.slice( page, page + 10 );
      

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Correspondencia, TipoDocumento, TipoEnvio } from '../../interface/correspondencia.interface';
+import { Correspondencia, TipoDocumento, TipoEnvio, TipoEnvioSqlServer, TipoDocumentoSqlServer, UsuariosSqlServer, CorrespondenciaSqlServer } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 import { SesionesService } from '../../../login/services/sesiones.service';
-import { Usuario } from 'src/app/login/interface/login.interface';
 import { map } from 'rxjs/operators';
+
 
 
 @Component({
@@ -38,21 +38,21 @@ export class AgregarComponent implements OnInit  {
 
   
   // Se declaran los arreglos
-  tipoEnvio: TipoEnvio[] = [];
-  tipoDocumento: TipoDocumento[] = [];
-  correos: Correspondencia[] = [];
+  tipoEnvio: TipoEnvioSqlServer[] = [];
+  tipoDocumento: TipoDocumentoSqlServer[] = []; 
+  correos: CorrespondenciaSqlServer[] = [];
 
 
   estadoCampos = false;
   estadoDestinatario = false;
   estadoReferencia = false;
-
+  correlativo = '';
 
   // se establece el formulario
   miFormulario: UntypedFormGroup = this.fb.group({
-    IdTIpoDocumento: [0, [Validators.required, Validators.min(1)]],  
+    IdTipoDocumento: [0, [Validators.required, Validators.min(1)]],  
     IdTipoEnvio: [0, [Validators.required, Validators.min(1)]],   
-    IdUsuario: this.loginService.respuestaLogin.IdUsuario,
+    IdUsuario: this.loginService.user?.id,
     Destinatario: ['', [Validators.required, Validators.minLength(6)]],
     Referencia: ['', [Validators.required, Validators.minLength(6)]],
   }) 
@@ -76,33 +76,34 @@ export class AgregarComponent implements OnInit  {
        .subscribe( tipo => this.tipoEnvio = tipo );
       
     this.correosService.getTipoDocumento()
-       .subscribe( tipo => this.tipoDocumento = tipo );  
+       .subscribe( tipo => {
+        console.table(tipo)
+        this.tipoDocumento = tipo 
+      });  
   }
 
   /* Metodo que permite ingresar una correspondencia */
   async ingresar() {    
-    try {
+    try {     
       //Se extraen los datos del formulario
-      const { IdTIpoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia } = this.miFormulario.value
-      
+      const { IdTipoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia } = this.miFormulario.value
+      console.log(IdTipoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia )
       //Se corrobora el formulario sea valido
       if(!this.estadoCampos){        
         /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
          * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
-        await this.correosService.ingresaCorrespondencia( IdTIpoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia )
+        await this.correosService.ingresaCorrespondencia( IdTipoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia )
         .subscribe( resp => { 
-          console.log(resp)       
           Swal.fire({
           position: 'top-end',
           icon: 'success',
           title: `Correspondencia Guardada Con Exito \n
-                  El correlativo es: ${resp.Correlativo}`, 
+                  El correlativo es: alguno${this.correlativo}`, 
           showConfirmButton: true 
           })
           //se redirecciona a la pagina que muestra correspondencia 
-          this.router.navigate(['/correspondencia/mostrar'])
-                
-        }); 
+          this.router.navigate(['/correspondencia/mostrar'])           
+        });
           }else {
             console.log('entreo en el else ')
           Swal.fire({
@@ -110,7 +111,7 @@ export class AgregarComponent implements OnInit  {
               title: 'Error',
               text: 'Los campos no pueden estar vacios',         
          })
-      }
+          }  
     } catch (error) {
       console.log('entro en el catch')
       console.log(error)

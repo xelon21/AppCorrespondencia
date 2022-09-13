@@ -16,23 +16,25 @@ export class ValidaAdminGuard implements CanActivate, CanLoad {
 
   }
   canActivate(): Observable<boolean> | boolean {  
-    return this.usuarioService.validaAdmin()
-            .pipe( 
-              tap( valid => {
-                if(!valid) {
-                  this.router.navigateByUrl('/correspondencia/administrador')
-                }             
-              })
-            );
+    return false;
+    // return this.usuarioService.validaAdmin()
+    //         .pipe( 
+    //           tap( valid => {
+    //             if(!valid) {
+    //               this.router.navigateByUrl('/correspondencia/administrador')
+    //             }             
+    //           })
+    //         );
   }
   canLoad(): Observable<boolean> | boolean {  
-    return this.usuarioService.validaAdmin()
-              .pipe( 
-                tap( valid => {
-                  if(!valid) {
-                    this.router.navigateByUrl('/correspondencia/administrador')
-                  }                  
-                })
-              );
+    return false;
+    // return this.usuarioService.validaAdmin()
+    //           .pipe( 
+    //             tap( valid => {
+    //               if(!valid) {
+    //                 this.router.navigateByUrl('/correspondencia/administrador')
+    //               }                  
+    //             })
+    //           );
   }
 }

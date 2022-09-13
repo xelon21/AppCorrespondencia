@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Correspondencia, CorrespondenciaModificar, TipoDocumento, TipoEnvio, CorrespondenciaB, AgregarCorrespondencia } from '../interface/correspondencia.interface';
+import { Correspondencia, CorrespondenciaModificar, TipoDocumento, TipoEnvio, CorrespondenciaB, AgregarCorrespondencia, CorrespondenciaSqlServer, TipoEnvioSqlServer, TipoDocumentoSqlServer } from '../interface/correspondencia.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,51 +23,54 @@ export class CorrespondenciaService {
   }
 
   /* Metodo que trae todas las correspondencias*/
-  getCorrespondencia(): Observable<Correspondencia[]> {
-    return this.http.get<Correspondencia[]>(`${this.baseUrl}/mostrar`)
+  getCorrespondencia(): Observable<CorrespondenciaSqlServer[]> {
+    return this.http.get<CorrespondenciaSqlServer[]>(`${this.baseUrl}/correspondencia`)
   }
  
   /** Metodo que trae los tipos de envio */
-  getTipoEnvio(): Observable<TipoEnvio[]> {
-    return this.http.get<TipoEnvio[]>(`${this.baseUrl}/mostrar/tipoenvio`)
+  getTipoEnvio(): Observable<TipoEnvioSqlServer[]> {
+    return this.http.get<TipoEnvioSqlServer[]>(`${this.baseUrl}/tipoEnvio`)
   }
 
   /** Metodo que trae los tipos de documentos */
-  getTipoDocumento(): Observable<TipoDocumento[]> {
-     return this.http.get<TipoDocumento[]>(`${this.baseUrl}/mostrar/tipodocumento`)
+  getTipoDocumento(): Observable<TipoDocumentoSqlServer[]> {
+     return this.http.get<TipoDocumentoSqlServer[]>(`${this.baseUrl}/tipoDocumento`)
    }
 
    /** Metodo que ingresa una correspondencia  */
-  ingresaCorrespondencia( IdTIpoDocumento: number, IdTipoEnvio: number, IdUsuario: number, Destinatario: string, Referencia: string ): Observable<AgregarCorrespondencia>{
+  ingresaCorrespondencia( IdTipoDocumento: number, IdTipoEnvio: number, IdUsuario: number, Destinatario: string, Referencia: string ): Observable<AgregarCorrespondencia>{
 
-     const url = `${this.baseUrl}/ingresar`;
-    const body = { IdTIpoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia }; 
+     const url = `${this.baseUrl}/correspondencia/agregar`;
+    const body = { IdTipoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia }; 
+    console.log("llega antes del post")
     return this.http.post<AgregarCorrespondencia>(url , body )
           .pipe(
             tap(resp => {
-              // console.log(resp)
+              console.log(resp)
               this.refresh.next()
             })           
           )
   }
 
   /** Metodo que permite modificar una correspondencia por el correlativo */
-  modificarPorCorrelativo(IdTipoEnvio: number, Destinatario: string, Referencia: string, EstadoCorreo: string, Correlativo: string ): Observable<CorrespondenciaModificar> {
+  modificarPorCorrelativo(IdTipoEnvio: number, Destinatario: string, Referencia: string, EstadoCorreo: string, correlativo2: string ): Observable<CorrespondenciaModificar> {
     
-    const url = `${this.baseUrl}/modificar/${ Correlativo }`;
-    let Correlativo2 = Correlativo;
-    const body = { IdTipoEnvio, Destinatario, Referencia, EstadoCorreo, Correlativo2 }   
+    const url = `${this.baseUrl}/correspondencia/modificar`; //?Correlativo=${ correlativo2 }
+    let Correlativo = correlativo2;
+    const body = { IdTipoEnvio, Destinatario, Referencia, EstadoCorreo, Correlativo }   
+    console.log("antes de hascer put",body)
     return this.http.put<CorrespondenciaModificar>(url, body)
           .pipe(
-            tap( resp => {             
+            tap( resp => {         
+              console.log(resp)    
               this.refresh.next()
             })
           );  
   }
   
   /** metodo que trae una correspondencia por el correlativo */
-  buscaCorrelativo(filtro: string ): Observable<CorrespondenciaB> {
-    return this.http.get<CorrespondenciaB>(`${this.baseUrl}/filtro/${ filtro }`);
+  buscaCorrelativo(filtro: string ): Observable<CorrespondenciaSqlServer> {
+    return this.http.get<CorrespondenciaSqlServer>(`${this.baseUrl}/correspondencia/filtroCorrelativo?Correlativo=${ filtro }`);
 
   }
 
@@ -78,8 +81,8 @@ export class CorrespondenciaService {
   }
 
   /** Metodo que permite Filtar las correspondencias por un rango de fechas */
-  filtroFechas(inicio: string, final: string): Observable<Correspondencia[]>{
-    return this.http.get<Correspondencia[]>(`${this.baseUrl}/filtrar/${ inicio }/${ final }`);
+  filtroFechas(inicio: string, final: string): Observable<CorrespondenciaSqlServer[]>{
+    return this.http.get<CorrespondenciaSqlServer[]>(`${this.baseUrl}/correspondencia/filtroFechas?inicio=${ inicio }&fin=${ final }`);
   }
 
 }

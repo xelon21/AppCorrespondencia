@@ -30,6 +30,10 @@ export class inicioComponent implements OnInit {
   get respuestaLogin() {  
     return  this.usuarioService.respuestaLogin;
   }
+  get login2() {  
+    return  this.usuarioService.user;
+  }
+
   /**Se declaran variables */
   esAdmin: boolean = false;
   roles: Roles[] = []
@@ -46,7 +50,7 @@ export class inicioComponent implements OnInit {
 
     
     /** Se verifica si el usuario es administrador */   
-    if(this.usuarioService.respuestaLogin.IdRol === 1 ){
+    if(this.usuarioService.user?.idRol === 1 ){
       this.esAdmin = true;
     }   
   }

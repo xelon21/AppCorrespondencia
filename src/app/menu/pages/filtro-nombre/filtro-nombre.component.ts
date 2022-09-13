@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Correspondencia } from '../../interface/correspondencia.interface';
+import { Correspondencia, CorrespondenciaSqlServer } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 
 
@@ -72,7 +72,7 @@ import { CorrespondenciaService } from '../../services/correspondencia.service';
 export class FiltroNombreComponent implements OnInit {
 
   /**Declaraciuon de variables a utilizar  */
-  correos: Correspondencia[] = [];  
+  correos: CorrespondenciaSqlServer[] = [];  
   filtro: string = '';
   hayError: boolean = false;  
   pagina: number = 0;

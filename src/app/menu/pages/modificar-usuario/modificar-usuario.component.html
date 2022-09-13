@@ -37,8 +37,8 @@
                               <mat-label>Rol del usuario</mat-label>
                               <mat-select [(ngModel)]="modUsuario.IdRol"
                                           type="number">
-                                  <mat-option *ngFor="let rol of roles" [value]="rol.IdRol">
-                                  {{ rol.Rol}}                            
+                                  <mat-option *ngFor="let rol of roles" [value]="rol.idRol">
+                                  {{ rol.nombreRol}}                            
                                   </mat-option>
                               </mat-select>
                               </mat-form-field>    

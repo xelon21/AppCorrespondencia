@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SesionesService } from '../../../login/services/sesiones.service';
-import { Roles, Usuario } from '../../../login/interface/login.interface';
+import { Roles, Usuario, UsuariosSqlServer, IDRolNavigation } from '../../../login/interface/login.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import Swal from 'sweetalert2';
 
@@ -229,10 +229,10 @@ export class AdministracionComponent implements OnInit {
 
   userActivo!: string;
   userNoActivo!: string;
-  usuario: Usuario[] = [];
+  usuario: UsuariosSqlServer[] = [];
   estadoCorreo!: boolean;
-  roles: Roles[] = [];
-  users: Usuario[] = [];
+  roles: IDRolNavigation[] = [];
+  users: UsuariosSqlServer[] = [];
   hayError: boolean = false;
   filtroNombre: string = '';
   suscription!: Subscription;

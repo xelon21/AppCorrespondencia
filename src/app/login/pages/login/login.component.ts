@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 import { LoginUsuario, LoginResponse } from '../../interface/login.interface';
 import { SesionesService } from '../../services/sesiones.service';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
@@ -79,8 +79,8 @@ export class LoginComponent implements OnInit {
                    *  se autentica primero.
                    */
             this.loginService.loginUsuario(email, password)
-                .subscribe( resp => {                       
-                  if(resp) {                    
+                .subscribe( resp => {                           
+                  if(resp) {                              
                     Swal.fire({
                       position: 'top-end',
                       icon: 'success',

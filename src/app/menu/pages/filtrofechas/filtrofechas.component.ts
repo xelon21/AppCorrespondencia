@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { Correspondencia, FormatoFecha } from '../../interface/correspondencia.interface';
+import { Correspondencia, CorrespondenciaSqlServer, FormatoFecha } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 
 @Component({
@@ -125,7 +125,7 @@ export class FiltrofechasComponent implements OnInit {
   });
 
   hayError: boolean = false;
-  correos: Correspondencia[] = [];
+  correos: CorrespondenciaSqlServer[] = [];
   pagina: number = 0;
   
   /**Se declaran las clases que se utilizaran  */
@@ -169,7 +169,7 @@ export class FiltrofechasComponent implements OnInit {
           await this.correoService.filtroFechas( fechaInicio, fechaFinal )
             .subscribe( datos => {              
               this.correos = datos;   
-              //console.log(datos)           
+              console.log(datos)           
             })
         }   
   }

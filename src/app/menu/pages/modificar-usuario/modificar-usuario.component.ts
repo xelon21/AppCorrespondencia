@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { Roles, UsuarioModificar, ModUsuario } from '../../../login/interface/login.interface';
+import { Roles, UsuarioModificar, ModUsuario, IDRolNavigation } from '../../../login/interface/login.interface';
 import { SesionesService } from '../../../login/services/sesiones.service';
 import { CambioPasswordComponent } from '../cambio-password/cambio-password.component';
 import { ModificarEstadoComponent } from '../modificar-estado/modificar-estado.component';
@@ -64,7 +64,7 @@ import { ModificarEstadoComponent } from '../modificar-estado/modificar-estado.c
 export class ModificarUsuarioComponent implements OnInit {
 
 /**Se Declaran las variables a utilizar  */
-  roles!: Roles[];
+  roles!: IDRolNavigation[];
   rolUsuario!: string;
   respuesta!: boolean;
   modUsuario: ModUsuario ={

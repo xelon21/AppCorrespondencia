@@ -35,10 +35,10 @@
                             <mat-grid-tile [colspan]="1" [rowspan]="1">
                                 <mat-form-field class="ancho">
                                     <mat-label>Tipo de Documento</mat-label>
-                                    <mat-select formControlName="IdTIpoDocumento"
+                                    <mat-select formControlName="IdTipoDocumento"
                                                 type="number">
-                                        <mat-option *ngFor="let tipo of tipoDocumento" [value]="tipo.IdTIpoDocumento">
-                                        {{ tipo.NombreDocumento }}                            
+                                        <mat-option *ngFor="let tipo of tipoDocumento" [value]="tipo.idTipoDocumento">
+                                        {{ tipo.nombreDocumento }}                            
                                         </mat-option>
                                     </mat-select>
                                     </mat-form-field>    
@@ -59,8 +59,8 @@
                                     <mat-label>Tipo de Envio</mat-label>
                                     <mat-select formControlName="IdTipoEnvio"
                                                 type="number">
-                                        <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.IdTipoEnvio">
-                                        {{ tipo.TipoEnvio }}                            
+                                        <mat-option *ngFor="let tipo of tipoEnvio" [value]="tipo.idTipoEnvio">
+                                        {{ tipo.nombreEnvio }}                            
                                         </mat-option>
                                     </mat-select>
                                     </mat-form-field>

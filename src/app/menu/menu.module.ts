@@ -23,6 +23,7 @@ import { FiltrofechasComponent } from './pages/filtrofechas/filtrofechas.compone
 import { PaginacionPipe } from './pipe/paginacion.pipe';
 import { FiltroFechaPipe } from './pipe/filtroFecha.pipe';
 import { FechaPipe } from './pipe/fecha.pipe';
+import { ObjToArrayPipe } from './pipe/objToArray.pipe';
 
 
 
@@ -47,7 +48,8 @@ import { FechaPipe } from './pipe/fecha.pipe';
     FiltrofechasComponent,
     PaginacionPipe,
     FiltroFechaPipe,
-    FechaPipe
+    FechaPipe,
+    ObjToArrayPipe
             
   ],
   imports: [

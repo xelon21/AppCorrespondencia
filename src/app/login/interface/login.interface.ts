@@ -1,12 +1,37 @@
 
+export interface UsuariosSqlServer {
+    idUsuario:            number;
+    idRol:                number;
+    correoUsuario:        string;
+    password:             string;
+    nombreUsuario:        string;
+    estado:               number;
+    activacionUsuario:    null;
+    desactivacionUsuario: null;
+    idRolNavigation:      IDRolNavigation;
+}
 
+export interface IDRolNavigation {
+    idRol:       number;
+    nombreRol:   string;
+    descripcion: string;
+}
 
 export interface LoginUsuario {
     Email: string;
     Password: string;
 }
 
+export interface Login2{
+    correoUsuario : string;
+    id: number;
+    idRol: number;
+    token: string;
+}
+
 export interface LoginResponse {
+    correoUsuario: string;
+    token: string;
     IdUsuario: number;
     NombreUsuario: string;
     IdRol:         number;

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion, ModUsuario } from '../interface/login.interface';
+import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion, ModUsuario, Login2, UsuariosSqlServer, IDRolNavigation } from '../interface/login.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +17,18 @@ export class SesionesService {
   }
 
   private baseUrl: string = environment.baseUrl;
-  private _usuario!: Usuario;
+  private _usuario!: UsuariosSqlServer;
   private refresh = new Subject<void>();
   private _respuestaLogin!: LoginResponse;
   public _idu!: number; 
+  private _user!: Login2 | undefined;
 
   get usuario() {
     return { ...this._usuario };
+  }
+
+  get user(){
+    return { ...this._user } 
   }
 
   get respuestaLogin() {
@@ -39,11 +44,11 @@ export class SesionesService {
   }
 
   /** Metodo que permite obtener todos los usuarios de la base de datos. */
-  obtenerUsuarios(): Observable<Usuario[]> {
+  obtenerUsuarios(): Observable<UsuariosSqlServer[]> {
     
     const url = `${this.baseUrl}/login/traeUsuarios`
 
-    return this.http.get<Usuario[]>( url );
+    return this.http.get<UsuariosSqlServer[]>( url );
           
     
   }
@@ -88,18 +93,17 @@ export class SesionesService {
   /** Metodo que permite que un usuario pueda ingresar a la aplicacion */
 loginUsuario(email: string, password: string) {
 
-    const url = `${this.baseUrl}/login`;
+    const url = `${this.baseUrl}/login/autenticate`;
     const body = { email, password, };
 
-    return this.http.post<LoginResponse>(url , body )
+    return this.http.post<Login2>(url , body )
         .pipe(
             tap( resp => {   
               console.log(resp)                                         
-            if( resp.Estado ) {
-              localStorage.setItem('ApiKey', resp.ApiKey!)                         
-              this._respuestaLogin = resp   
-              this._idu = this._respuestaLogin.IdUsuario;       
-            }
+            if( resp ) {         
+              localStorage.setItem('ApiKey', resp.token!)   
+              this._user = resp;          
+            }           
           } ),
             map( resp => {                                          
               return resp;
@@ -109,71 +113,73 @@ loginUsuario(email: string, password: string) {
   }
 
   /**Metodo que permite validar el token del usuario que se inicia sesion */
-validaApiKey(): Observable<boolean> {
+// validaApiKey(): Observable<boolean> {
 
-    const url = `${this.baseUrl}/login/validaKey`;
-    const headers = new HttpHeaders()
-      .set('x-api-key', localStorage.getItem('ApiKey') || '')
+//     const url = `${this.baseUrl}/login/validaKey`;
+//     const headers = new HttpHeaders()
+//       .set('x-api-key', localStorage.getItem('ApiKey') || '')
   
-    return this.http.get<LoginResponse>( url, { headers } )
-      .pipe(
-        map( resp => {          
-          localStorage.setItem('ApiKey', resp.ApiKey!)         
-              this._respuestaLogin = {            
-                IdUsuario: resp.IdUsuario,
-                IdRol: resp.IdRol,
-                NombreUsuario: resp.NombreUsuario!,        
-                Estado: resp.Estado!,                 
-                ApiKey: resp.ApiKey!,
-                EstadoMsg: resp.EstadoMsg!
-              }                  
-          return resp.EstadoMsg;
-        }),
-        catchError( err => of(false))
-      );
-  }
+//     return this.http.get<LoginResponse>( url, { headers } )
+//       .pipe(
+//         map( resp => {          
+//           localStorage.setItem('ApiKey', resp.ApiKey!)         
+//               this._respuestaLogin = {  
+//                 correoUsuario: resp.correoUsuario!,          
+//                 IdUsuario: resp.IdUsuario,
+//                 IdRol: resp.IdRol,
+//                 NombreUsuario: resp.NombreUsuario!,        
+//                 Estado: resp.Estado!,                 
+//                 ApiKey: resp.ApiKey!,
+//                 EstadoMsg: resp.EstadoMsg!
+//               }                  
+//           return resp.EstadoMsg;
+//         }),
+//         catchError( err => of(false))
+//       );
+//   }
  
   /** Metodo que permite traer los roles de los usuarios  */
-  traeRoles(): Observable<Roles[]> {
+  traeRoles(): Observable<IDRolNavigation[]> {
 
     const url = `${this.baseUrl}/login/traeRoles`
 
-    return this.http.get<Roles[]>( url )
+    return this.http.get<IDRolNavigation[]>( url )
   }
 
   /** Metodo que permite la validacion de si un usuario es administrador o no */
-  validaAdmin() {
+  // validaAdmin() {
 
-    const url = `${this.baseUrl}/login/validaAdmin`;
-    const headers = new HttpHeaders()
-      .set('x-api-key', localStorage.getItem('ApiKey') || '')
+  //   const url = `${this.baseUrl}/login/validaAdmin`;
+  //   const headers = new HttpHeaders()
+  //     .set('x-api-key', localStorage.getItem('ApiKey') || '')
 
-    return this.http.get<LoginResponse>( url, { headers } )
-      .pipe(
-        map( resp => { 
-          if(resp.IdRol === 1) {
-            localStorage.setItem('ApiKey', resp.ApiKey!)            
-                this._respuestaLogin = {                 
-                  IdUsuario: resp.IdUsuario,
-                  IdRol: resp.IdRol!,
-                  NombreUsuario: resp.NombreUsuario!,              
-                  Estado: resp.Estado!,                      
-                  ApiKey: resp.ApiKey!,
-                  EstadoMsg: resp.EstadoMsg!
-                }                         
-            return resp.EstadoMsg;
-          } else {
-            return false;
-          }
-        }),
-        catchError( err => of(false))
-      );
+  //   return this.http.get<LoginResponse>( url, { headers } )
+  //     .pipe(
+  //       map( resp => { 
+  //         if(resp.IdRol === 1) {
+  //           localStorage.setItem('ApiKey', resp.ApiKey!)            
+  //               this._respuestaLogin = { 
+  //                 correoUsuario: resp.correoUsuario!,                          
+  //                 IdUsuario: resp.IdUsuario,
+  //                 IdRol: resp.IdRol!,
+  //                 NombreUsuario: resp.NombreUsuario!,              
+  //                 Estado: resp.Estado!,                      
+  //                 ApiKey: resp.ApiKey!,
+  //                 EstadoMsg: resp.EstadoMsg!
+  //               }                         
+  //           return resp.EstadoMsg;
+  //         } else {
+  //           return false;
+  //         }
+  //       }),
+  //       catchError( err => of(false))
+  //     );
   
-  }
+  // }
 
   //** Metodo que permite buscar usuarios Por el nombre de usuario  */
-  buscaUsuario(filtro: string ): Observable<Usuario[]> {
-  return this.http.get<Usuario[]>(`${this.baseUrl}/login/filtraUsuario/${ filtro }`);  
+  buscaUsuario(filtro: string ): Observable<UsuariosSqlServer[]> {
+  return this.http.get<UsuariosSqlServer[]>(`${this.baseUrl}/login/filtraUsuario/${ filtro }`);  
   }
 
   /** Metodo que permite filtrar a un usuario mediante su Correlativo */

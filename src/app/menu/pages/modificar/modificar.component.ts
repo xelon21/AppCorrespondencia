@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CorrespondenciaModificar, TipoEnvio } from '../../interface/correspondencia.interface';
+import { CorrespondenciaModificar, TipoEnvio, TipoEnvioSqlServer, CorrespondenciaSqlServer } from '../../interface/correspondencia.interface';
 import { CorrespondenciaService } from '../../services/correspondencia.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -29,8 +29,14 @@ import { SesionesService } from '../../../login/services/sesiones.service';
 })
 export class ModificarComponent implements OnInit {
 
+  get login2() {  
+    return  this.loginService.user;
+  }
+
   // Se establecen los campos a modificar vacios para luego rellenarlos con los datos traidos mediante
   // los parametros
+  correosql!: CorrespondenciaSqlServer;
+
   correos: CorrespondenciaModificar = {
     IdTipoEnvio: 0,
     IdUsuario: 0,
@@ -42,7 +48,7 @@ export class ModificarComponent implements OnInit {
   us: string = '';
   
   correlativo: string = '';
-  tipoEnvio: TipoEnvio[] = [];
+  tipoEnvio: TipoEnvioSqlServer[] = [];
   estado: boolean = false; 
 
   /**Se declaran las clases a utilizar */
@@ -60,14 +66,23 @@ export class ModificarComponent implements OnInit {
        .pipe(
          switchMap( ({ correlativo }) => this.correoService.buscaCorrelativo(correlativo) )
        )
-       .subscribe( correo => {                  
-        this.correos = correo 
-        // console.log(this.correos)        
+       .subscribe( correo => {
+        this.correosql = correo       
+         console.log(this.correosql)        
+         this.correos = {
+          IdTipoEnvio: this.correosql.idTipoEnvio,
+          IdUsuario: this.correosql.idUsuario,
+          EstadoCorreo: this.correosql.estadoCorreo,
+          Destinatario: this.correosql.destinatario,
+          Referencia: this.correosql.referencia,
+          Correlativo : this.correosql.correlativo
+        }
        })
        this.correoService.getTipoEnvio() 
        .subscribe( tipo => this.tipoEnvio = tipo );
 
-       console.log(this.loginService.respuestaLogin.NombreUsuario)
+
+      console.log(this.correos)
   }
 
   /** metodo que permite modifiar una correspondencia mediante correlativo */
@@ -76,15 +91,16 @@ export class ModificarComponent implements OnInit {
     /** Se corrobora el estado de la correspondencia  */
     if(!this.estadoCorrespondencia(this.correos.EstadoCorreo)){
       /** Si el checkBox del estado esta activado, Se anula la correspondencia y hace la modificacion */
-      const { IdTipoEnvio, Destinatario, Referencia, EstadoCorreo, Correlativo } = this.correos
+      const { IdTipoEnvio, IdUsuario, Destinatario, Referencia, EstadoCorreo, Correlativo } = this.correos
       
       /**Si el checkbox del estado del correo esta marcado y el correo es 'GRABADO', Se cambiara el estado a 'ANULADO'
        */
       if(this.estado){ 
         await this.correoService.buscaCorrelativo(this.correos.Correlativo)
         .subscribe( result => {             
-              if(this.loginService.respuestaLogin.IdUsuario === result.IdUsuario){                        
-                this.correoService.modificarPorCorrelativo( IdTipoEnvio, Destinatario, Referencia, 'ANULADO', Correlativo )
+              if(this.loginService.user.id === result.idUsuario){   
+                let Correlativo2 = this.correos.Correlativo;         
+                this.correoService.modificarPorCorrelativo( IdTipoEnvio, Destinatario, Referencia, 'ANULADO', Correlativo2 )
                 .subscribe( correo => this.correos = correo)                                
                 Swal.fire({
                   position: 'top-end',
@@ -109,8 +125,9 @@ export class ModificarComponent implements OnInit {
             /** Si el checkBox del estado no esta seleccionado, Se modificara la correspondencia sin alterar su estado */        
             await this.correoService.buscaCorrelativo(this.correos.Correlativo)
             .subscribe( result => {    
-              if(this.loginService.respuestaLogin.IdUsuario === result.IdUsuario){
-                this.correoService.modificarPorCorrelativo( IdTipoEnvio, Destinatario, Referencia, EstadoCorreo, Correlativo)
+              if(this.loginService.user.id === result.idUsuario){
+                let Correlativo2 = this.correos.Correlativo;         
+                this.correoService.modificarPorCorrelativo( IdTipoEnvio, Destinatario, Referencia, EstadoCorreo, Correlativo2)
                 .subscribe( correo =>{ 
                   console.log(correo)
                   this.correos = correo

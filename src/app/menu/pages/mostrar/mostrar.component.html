@@ -49,21 +49,21 @@
                         </thead>                     
                           <tbody *ngFor="let correo of correos | paginar:pagina ">                         
                             <tr id="miTablaPersonalizada2">
-                                <td> {{ correo.NombreUsuario }} </td>
-                                <td> {{ correo.TipoEnvio }} </td>
-                                <td> {{ correo.NombreDocumento }} </td>
-                                <td> {{ correo.Destinatario }} </td>
-                                <td> {{ correo.Referencia }} </td>
-                                <td> {{ correo.Correlativo }} </td>
-                                <td> {{ correo.Fecha | fecha }} </td>
-                                <td> {{ correo.EstadoCorreo }} </td>
+                                <td> {{ correo.usuarios.nombreUsuario }} </td>
+                                <td> {{ correo.tipoEnvio.nombreEnvio }} </td>
+                                <td> {{ correo.tipoDocumento.nombreDocumento }} </td>
+                                <td> {{ correo.destinatario }} </td>
+                                <td> {{ correo.referencia }} </td>
+                                <td> {{ correo.correlativo }} </td>
+                                <td> {{ correo.fecha | fecha }} </td>
+                                <td> {{ correo.estadoCorreo }} </td>
                                 <td> <a class="pointer" style="margin-left: 30%;  color: #e15639" matTooltip="Editar correspondencia"
-                                [routerLink]="['/correspondencia/modificar/', correo.Correlativo]">           
-                                <mat-icon>edit</mat-icon>
-                            </a></td> 
-                            </tr>
-                          </tbody>                        
-                      </table>
+                                  [routerLink]="['/correspondencia/modificar/', correo.correlativo]">           
+                                  <mat-icon>edit</mat-icon>
+                                </a></td> 
+                              </tr>
+                            </tbody>                        
+                          </table>      
         </div>
       </div>
     </div>
