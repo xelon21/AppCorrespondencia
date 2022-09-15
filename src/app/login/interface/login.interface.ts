@@ -17,6 +17,13 @@ export interface IDRolNavigation {
     descripcion: string;
 }
 
+export interface Roles {
+    idRol:       number;
+    nombre:      string;
+    descripcion: string;
+}
+
+
 export interface LoginUsuario {
     Email: string;
     Password: string;
@@ -40,9 +47,18 @@ export interface LoginResponse {
     EstadoMsg:     boolean;
 }
 
+export interface RegistrarUsuario {    
+    IdRol: number;
+    CorreoUsuario: string;
+    Nombre: string;
+    Password: string; 
+    Estado: boolean;
+    ActivacionUsuario?: string;    
+}
+
 // export interface LoginResponse {
-//     EstadoMsg: boolean;
-//     Msg: string;    
+    //     EstadoMsg: boolean;
+    //     Msg: string;    
 //     IdUsuario?: number;
 //     IdRol: number;    
 //     NombreUsuario: string;
@@ -90,16 +106,6 @@ export interface Usuario {
     ApiKey: string;
 }
 
-export interface RegistrarUsuario {    
-    IdRol: number;
-    CorreoUsuario: string;
-    Password: string; 
-    NombreUsuario: string;
-    Estado: boolean;
-    ActivacionUsuario?: string;
-    DesactivacionUsuario?: string;
-    EstadoMsg: boolean;
-}
 
 export interface Roles {
     IdRol: number;
@@ -108,14 +114,14 @@ export interface Roles {
 }
 
 export interface UsuarioModificar {
-    IdUsuario: number;
-    IdRol: number;
-    CorreoUsuario: string;
-    Password?: string;
-    Password2?: string;
-    NombreUsuario: string;
-    DesactivacionUsuario?: string; 
-    Estado?: boolean;     
+    idUsuario: number;
+    idRol: number;
+    correoUsuario: string;
+    password?: string;
+    password2?: string;
+    nombreUsuario: string;
+    desactivacionUsuario?: string; 
+    estado?: boolean;     
 }
 
 export interface ModificarActivacion {
@@ -125,14 +131,14 @@ export interface ModificarActivacion {
 }
 
 export interface ModificarPassword {
-    IdUsuario: number;
-    Password: string; 
-    Password2: string;
+    idUsuario: number;
+    password: string; 
+    password2: string;
 }
 
 export interface ModUsuario {
-    IdRol: number;
-    CorreoUsuario: string;
-    NombreUsuario: string;
-    IdUsuario: number;
+    idRol: number;
+    correoUsuario: string;
+    nombreUsuario: string;
+    idUsuario: number;
 }

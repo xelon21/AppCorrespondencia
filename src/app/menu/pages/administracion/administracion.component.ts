@@ -3,11 +3,12 @@ import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } 
 import { SesionesService } from '../../../login/services/sesiones.service';
 import { Roles, Usuario, UsuariosSqlServer, IDRolNavigation } from '../../../login/interface/login.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import Swal from 'sweetalert2';
+
 
 import { NgbCalendar, NgbDate, NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FormatoFecha } from '../../interface/correspondencia.interface';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 
 
@@ -231,7 +232,7 @@ export class AdministracionComponent implements OnInit {
   userNoActivo!: string;
   usuario: UsuariosSqlServer[] = [];
   estadoCorreo!: boolean;
-  roles: IDRolNavigation[] = [];
+  roles: Roles[] = [];
   users: UsuariosSqlServer[] = [];
   hayError: boolean = false;
   filtroNombre: string = '';
@@ -342,14 +343,16 @@ export class AdministracionComponent implements OnInit {
           
           /** En el caso de que la fecha seleccionada de activacion sea igual a la de ahora, el usuario
            *  quedara ingresado como ACTIVO.
-           */
+           */  
+                
           if(ActivacionUsuario === fechaActual){
             let activo = 1;
             /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
              * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
-            this.loginService.registrarUsuario( IdRol, Email, Password, NombreUsuario, activo, ActivacionUsuario )
+            this.loginService.registroUsuario( IdRol, Email, Password, NombreUsuario, activo, ActivacionUsuario )
             .subscribe( resp => {  
-              if(resp){
+              console.log(resp)
+          
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
@@ -357,20 +360,20 @@ export class AdministracionComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 }) 
-              }else {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Error',
-                  text: 'El usuario ya existe',                
-                })
-              }
+            
+                // Swal.fire({
+                //   icon: 'error',
+                //   title: 'Error',
+                //   text: 'El usuario ya existe',                
+                // })
+              
             })
           }else {
             /** Caso contrario enb el que la fecha no es igual a la fecha del dia de hoy,
              * El usuario ingresado quedara INACTIVO hasta el dia de la fecha seleccionada
              * en el formulario de ingreso
              */
-            this.loginService.registrarUsuario( IdRol, Email, Password, NombreUsuario, Estado, ActivacionUsuario )
+            this.loginService.registroUsuario( IdRol, Email, Password, NombreUsuario, Estado, ActivacionUsuario )
             .subscribe( resp => {             
               if(resp){
                 Swal.fire({

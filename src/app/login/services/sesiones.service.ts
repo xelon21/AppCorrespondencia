@@ -46,7 +46,7 @@ export class SesionesService {
   /** Metodo que permite obtener todos los usuarios de la base de datos. */
   obtenerUsuarios(): Observable<UsuariosSqlServer[]> {
     
-    const url = `${this.baseUrl}/login/traeUsuarios`
+    const url = `${this.baseUrl}/usuarios`
 
     return this.http.get<UsuariosSqlServer[]>( url );
           
@@ -55,22 +55,30 @@ export class SesionesService {
 
 
   /** Metodo que permite Registrar a un usuario  */
-  registrarUsuario(IdRol: number, Email: string, 
-    Password: string, NombreUsuario: string , Estado: number, ActivacionUsuario: string ){
+  registroUsuario(IdRol: number, CorreoUsuario: string, 
+    Password: string, Nombre: string , Estado: number, ActivacionUsuario: string ) : Observable<RegistrarUsuario>{
 
-      const url = `${this.baseUrl}/login/register`;
-      const body = { IdRol, Email, Password, NombreUsuario , Estado, ActivacionUsuario };
-  
+      // const url = `${this.baseUrl}/usuarios/registrar`;
+      const url = `https://localhost:7196/api/usuarios/registrar`;
+      const body = { IdRol, CorreoUsuario, Password, Nombre , Estado, ActivacionUsuario };
+      console.log(body);
         return this.http.post<RegistrarUsuario>(url , body )
         .pipe(
-            map( resp => {
-             return resp.EstadoMsg;
-          } ),     
-          tap(() => {            
-            this.refresh.next();
-          }),       
-            catchError( err => of(false) ) 
-    );
+          tap(resp => {
+            console.log(resp)
+            this.refresh.next()
+          })           
+        );
+    //     .pipe(
+    //         map( resp => {
+    //           console.log(resp)
+    //          return true;
+    //       } ),     
+    //       tap(() => {            
+    //         this.refresh.next();
+    //       }),       
+    //         catchError( err => of(false) ) 
+    // );
   }
 
   /**Metodo que permite eliminar el token y desconectar al usuario */
@@ -139,11 +147,11 @@ loginUsuario(email: string, password: string) {
 //   }
  
   /** Metodo que permite traer los roles de los usuarios  */
-  traeRoles(): Observable<IDRolNavigation[]> {
+  traeRoles(): Observable<Roles[]> {
 
-    const url = `${this.baseUrl}/login/traeRoles`
+    const url = `${this.baseUrl}/roles`
 
-    return this.http.get<IDRolNavigation[]>( url )
+    return this.http.get<Roles[]>( url )
   }
 
   /** Metodo que permite la validacion de si un usuario es administrador o no */
@@ -179,7 +187,7 @@ loginUsuario(email: string, password: string) {
 
   //** Metodo que permite buscar usuarios Por el nombre de usuario  */
   buscaUsuario(filtro: string ): Observable<UsuariosSqlServer[]> {
-  return this.http.get<UsuariosSqlServer[]>(`${this.baseUrl}/login/filtraUsuario/${ filtro }`);  
+  return this.http.get<UsuariosSqlServer[]>(`${this.baseUrl}/usuarios/${ filtro }`);  
   }
 
   /** Metodo que permite filtrar a un usuario mediante su Correlativo */
@@ -189,15 +197,14 @@ loginUsuario(email: string, password: string) {
   // }
   filtrarIdUsuario(IdUsuario: number) : Observable<ModUsuario>{
 
-    const url = `${this.baseUrl}/login/filtrarUsuariosModificar/${ IdUsuario}`;
+    const url = `${this.baseUrl}/usuarios/${ IdUsuario}`;
     return this.http.get<ModUsuario>(url);
 
   }
 /** Metodo que permite modificar al usuario mediante su id. */
   modificarPorIdUsuario(IdRol: number, NombreUsuario: string, CorreoUsuario: string, IdUsuario: number ): Observable<UsuarioModificar> {
-    const url = `${this.baseUrl}/login/modificar/${ IdUsuario }`;
-    let IUsuario = IdUsuario
-    const body = { IdRol, NombreUsuario, CorreoUsuario, IdUsuario, IUsuario}; 
+    const url = `${this.baseUrl}/usuarios/modificar`;
+    const body = { IdRol, NombreUsuario, CorreoUsuario, IdUsuario}; 
     return this.http.put<UsuarioModificar>(url, body);   
 
   }
@@ -223,9 +230,9 @@ loginUsuario(email: string, password: string) {
   /** Metodo que permite modificar el estado de un usuario ya sea inmediatamente o en una fecha especifica
  * [Cabe recalcar que es soplo una opcion dentro de la ventana de administracion]
  */
-  modificarEstado(IdUsuario: number, Estado: boolean, DesactivacionUsuario: string | null) {
+   modificarEstado(IdUsuario: number, Estado: boolean, DesactivacionUsuario: string) {
 
-    const url = `${this.baseUrl}/login/modificarEstado/${ IdUsuario }`;
+    const url = `${this.baseUrl}/usuarios/modificarEstado?id=${IdUsuario}`;
     const body = { Estado, DesactivacionUsuario };
 
     console.log(body, url)
@@ -233,6 +240,7 @@ loginUsuario(email: string, password: string) {
         return this.http.put<ModificarActivacion>(url, body)
           .pipe(
             map( resp => {
+              console.log("respuesta servicio: " , resp)
               return resp;
             }
           ),

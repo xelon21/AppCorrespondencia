@@ -44,19 +44,19 @@ export class CambioPasswordComponent implements OnInit {
   
   /**Se declaran las variales a utilizar  */
   mod: ModificarPassword = {
-    IdUsuario: 0,
-    Password: '',
-    Password2: ''
+    idUsuario: 0,
+    password: '',
+    password2: ''
   }
   usuario: UsuarioModificar = {
-    IdUsuario: 0,
-    IdRol: 0,
-    CorreoUsuario: '',
-    Password: '',
-    Password2: '',   
-    NombreUsuario: '',
-    DesactivacionUsuario: '',
-    Estado: false
+    idUsuario: 0,
+    idRol: 0,
+    correoUsuario: '',
+    password: '',
+    password2: '',   
+    nombreUsuario: '',
+    desactivacionUsuario: '',
+    estado: false
   }
 
   /**Se declaran las clases a utilizar  */
@@ -77,7 +77,7 @@ export class CambioPasswordComponent implements OnInit {
   modificarPassword() {
     try {
       //Se Corrobora que las contraseñas no vengan vacias.
-      if( !this.mod.Password || !this.mod.Password2){
+      if( !this.mod.password || !this.mod.password2){
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -85,7 +85,7 @@ export class CambioPasswordComponent implements OnInit {
         })
       }else{
         /**Se Verifica que las contraseñas sean Iguales*/
-        if( this.mod.Password != this.mod.Password2 ){
+        if( this.mod.password != this.mod.password2 ){
           Swal.fire({
             icon: 'error',
             title: 'Error',
@@ -93,7 +93,7 @@ export class CambioPasswordComponent implements OnInit {
           })
         }else {               
          /**¨Si se valida que las contraseñas son iguales y no se encuentran vacias, Entonces se genera el cambio de la contraseña */
-          this.loginService.modificarPassword(this.mod.Password, this.mod.Password2, this.data.IdUsuario )
+          this.loginService.modificarPassword(this.mod.password, this.mod.password2, this.data.idUsuario )
               .subscribe( resp => {               
                 if(resp){                  
                   Swal.fire({

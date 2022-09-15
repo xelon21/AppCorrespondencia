@@ -76,8 +76,7 @@ export class AgregarComponent implements OnInit  {
        .subscribe( tipo => this.tipoEnvio = tipo );
       
     this.correosService.getTipoDocumento()
-       .subscribe( tipo => {
-        console.table(tipo)
+       .subscribe( tipo => {        
         this.tipoDocumento = tipo 
       });  
   }
@@ -86,8 +85,7 @@ export class AgregarComponent implements OnInit  {
   async ingresar() {    
     try {     
       //Se extraen los datos del formulario
-      const { IdTipoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia } = this.miFormulario.value
-      console.log(IdTipoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia )
+      const { IdTipoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia } = this.miFormulario.value     
       //Se corrobora el formulario sea valido
       if(!this.estadoCampos){        
         /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.

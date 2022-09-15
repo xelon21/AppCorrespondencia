@@ -53,6 +53,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ModificarEstadoComponent implements OnInit {
 
   fecha1!: FormatoFecha;
+  id!: number;
 
   estado: ModificarActivacion = {
     IdUsuario: 0,
@@ -61,14 +62,14 @@ export class ModificarEstadoComponent implements OnInit {
   }
 
   usuario: UsuarioModificar = {
-    IdUsuario: 0,
-    IdRol: 0,
-    CorreoUsuario: '',
-    Password: '',
-    Password2: '',   
-    NombreUsuario: '',
-    DesactivacionUsuario: '',
-    Estado: false
+    idUsuario: 0,
+    idRol: 0,
+    correoUsuario: '',
+    password: '',
+    password2: '',   
+    nombreUsuario: '',
+    desactivacionUsuario: '',
+    estado: false
   }
 
   fecha = new UntypedFormGroup({
@@ -80,6 +81,7 @@ export class ModificarEstadoComponent implements OnInit {
                @Inject(MAT_DIALOG_DATA) public data: UsuarioModificar) { }
 
   ngOnInit(): void {
+    this.id = this.data.idUsuario;
   }
 
 
@@ -98,8 +100,8 @@ export class ModificarEstadoComponent implements OnInit {
       this.estado.Estado = true;
       this.fecha1 = this.fecha.controls['desactivacionUsuario'].value._i
       let fechaFinal: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;
-      console.log(this.data.IdUsuario, this.estado.Estado, fechaFinal)
-      this.loginService.modificarEstado(this.data.IdUsuario, this.estado.Estado, fechaFinal)
+      console.log(this.data.idUsuario, this.estado.Estado, fechaFinal)
+      this.loginService.modificarEstado(this.data.idUsuario, this.estado.Estado, fechaFinal)
           .subscribe(resp => {
             if(resp){
               Swal.fire({
@@ -123,10 +125,14 @@ export class ModificarEstadoComponent implements OnInit {
         /**Si el checkBox del estado del usuario esta marcado, entonces se Desactivara al usuario, quedando
        * Registro de la fecha actual al momento de la desactivacion.
        */
-        let fecha = null;
-        console.log(this.data.IdUsuario, this.estado.Estado, fecha)
-        this.loginService.modificarEstado(this.data.IdUsuario, this.estado.Estado, fecha)
+         let diaActual = new Date().getDate().toString()
+         let mesActual = new Date().getMonth()
+         let anioActual = new Date().getFullYear().toString()          
+         let fechaActual =+ anioActual + '-' + +(mesActual + 1).toString() + '-' + diaActual; 
+        console.log(this.id, this.data.idUsuario, this.estado.Estado, fechaActual)
+        this.loginService.modificarEstado(this.data.idUsuario, this.estado.Estado, fechaActual)
               .subscribe( resp => {
+                console.log(resp)
                 if(resp){
                   Swal.fire({
                     position: 'top-end',

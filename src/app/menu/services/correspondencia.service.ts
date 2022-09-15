@@ -41,8 +41,7 @@ export class CorrespondenciaService {
   ingresaCorrespondencia( IdTipoDocumento: number, IdTipoEnvio: number, IdUsuario: number, Destinatario: string, Referencia: string ): Observable<AgregarCorrespondencia>{
 
      const url = `${this.baseUrl}/correspondencia/agregar`;
-    const body = { IdTipoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia }; 
-    console.log("llega antes del post")
+    const body = { IdTipoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia };
     return this.http.post<AgregarCorrespondencia>(url , body )
           .pipe(
             tap(resp => {

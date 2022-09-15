@@ -64,25 +64,26 @@ import { ModificarEstadoComponent } from '../modificar-estado/modificar-estado.c
 export class ModificarUsuarioComponent implements OnInit {
 
 /**Se Declaran las variables a utilizar  */
-  roles!: IDRolNavigation[];
+  roles!: Roles[];
   rolUsuario!: string;
   respuesta!: boolean;
+
   modUsuario: ModUsuario ={
-    IdUsuario: 0,
-    IdRol: 0,
-    CorreoUsuario: '',
-    NombreUsuario: '',
+    idUsuario: 0,
+    idRol: 0,
+    correoUsuario: '',
+    nombreUsuario: '',
   }
 
   usuarioMod: UsuarioModificar = {
-    IdUsuario: 0,
-    IdRol: 0,
-    CorreoUsuario: '',
-    Password: '',
-    Password2: '',   
-    NombreUsuario: '',
-    DesactivacionUsuario: '',
-    Estado: false
+    idUsuario: 0,
+    idRol: 0,
+    correoUsuario: '',
+    password: '',
+    password2: '',   
+    nombreUsuario: '',
+    desactivacionUsuario: '',
+    estado: false
   }
 
   /**Se declaran las clases a utilizar */
@@ -98,9 +99,11 @@ export class ModificarUsuarioComponent implements OnInit {
        .pipe(
          switchMap( ({ idUsuario }) => this.loginService.filtrarIdUsuario(idUsuario))
        )
-       .subscribe( usuario => {
-        this.modUsuario = usuario
-        this.usuarioMod = this.modUsuario;
+       .subscribe( usuario => {     
+        console.log(usuario)   
+        this.modUsuario = usuario  
+       
+        //&this.usuarioMod = this.modUsuario;       
     })
        this.loginService.traeRoles()
        .subscribe( datos => {
@@ -112,7 +115,7 @@ export class ModificarUsuarioComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(CambioPasswordComponent, {
       data: {
-        IdUsuario: this.usuarioMod.IdUsuario
+        idUsuario: this.modUsuario.idUsuario
       }
     });
 
@@ -124,7 +127,7 @@ export class ModificarUsuarioComponent implements OnInit {
   openDialog2() {
     const dialogRef = this.dialog.open(ModificarEstadoComponent, {
       data: {
-        IdUsuario: this.usuarioMod.IdUsuario
+        idUsuario: this.modUsuario.idUsuario
       }
     });
 
@@ -139,13 +142,13 @@ async modificar() {
   /**El siguiente metodo Permite Modificar a un usuario por su ID, Para ello, se extraen los datos 
    * Del formulario
    */
-  const { IdRol, IdUsuario, NombreUsuario, CorreoUsuario } = this.modUsuario
+  const { idRol, idUsuario, nombreUsuario, correoUsuario } = this.modUsuario
     try {      
+      console.log(idRol, idUsuario, nombreUsuario, correoUsuario)
       /**Una vez obtenido los datos, se envian por parametros al metodo modificarPorIdUsuario para su modificacion */ 
-      await this.loginService.modificarPorIdUsuario(IdRol, NombreUsuario, CorreoUsuario, IdUsuario)
+      await this.loginService.modificarPorIdUsuario(idRol, nombreUsuario, correoUsuario, idUsuario)
           .subscribe( datos => {
-            //console.log(datos)
-            this.usuarioMod = datos                                 
+            //console.log(datos)                               
                   Swal.fire({
                     title: 'Estas seguro de guardar los datos?',                  
                     showDenyButton: true,
@@ -154,11 +157,11 @@ async modificar() {
                     denyButtonText: `No Guardar`,
                   }).then((result) => {                   
                     if (result.isConfirmed) {
-                      if(this.usuarioMod.IdRol === 2){
-                        this.rolUsuario = 'Usuario';
-                      }else {
-                        this.rolUsuario = 'Administrador'
-                      }                      
+                      // if(this.modUsuario.idRol === 2){
+                      //   this.rolUsuario = 'Usuario';
+                      // }else {
+                      //   this.rolUsuario = 'Administrador'
+                      // }                   
                       Swal.fire(` Los  datos han sido almacenados                        
                       `)                       
                       this.router.navigate(['/correspondencia/administrador'])             

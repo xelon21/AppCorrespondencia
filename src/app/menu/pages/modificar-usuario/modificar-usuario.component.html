@@ -27,7 +27,7 @@
                                      type="text"  
                                      class="form-control"                                       
                                      autocomplete="off"
-                                     [(ngModel)]="modUsuario.CorreoUsuario"
+                                     [(ngModel)]="modUsuario.correoUsuario"
                                      placeholder="Email">
                             </mat-form-field>
                           </div> 
@@ -35,10 +35,10 @@
                           <div class="col-md-10">
                             <mat-form-field>
                               <mat-label>Rol del usuario</mat-label>
-                              <mat-select [(ngModel)]="modUsuario.IdRol"
+                              <mat-select [(ngModel)]="modUsuario.idRol"
                                           type="number">
                                   <mat-option *ngFor="let rol of roles" [value]="rol.idRol">
-                                  {{ rol.nombreRol}}                            
+                                  {{ rol.nombre }}                            
                                   </mat-option>
                               </mat-select>
                               </mat-form-field>    
@@ -55,7 +55,7 @@
                                    type="text" 
                                    class="form-control"                                    
                                    autocomplete="off"
-                                   [(ngModel)]="modUsuario.NombreUsuario"                               
+                                   [(ngModel)]="modUsuario.nombreUsuario"                               
                                    placeholder="Nombre de usuario">
                           </mat-form-field>                          
                         </div>

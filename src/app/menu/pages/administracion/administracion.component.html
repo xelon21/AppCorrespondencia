@@ -72,7 +72,7 @@
                             <mat-select formControlName="IdRol"
                                         type="number">
                                 <mat-option *ngFor="let rol of roles" [value]="rol.idRol">
-                                {{ rol.nombreRol}                            
+                                {{ rol.nombre }}                            
                                 </mat-option>
                             </mat-select>
                             </mat-form-field>                           
@@ -152,15 +152,15 @@
             </thead>
             <tbody *ngFor="let usuario of users | search:pagina:search">
               <tr id="miTablaPersonalizada2">
-                <td class="centrarTexto"> {{ usuario.IdUsuario }} </td>
-                <td> {{ usuario.NombreUsuario }} </td>
-                <td> {{ usuario.Rol }} </td>
-                <td> {{ usuario.CorreoUsuario }} </td>
-                <td class="centrarTexto"> {{ usuario.Estado! | estado }} </td>
-                <td class="centrarTexto"> {{ usuario.ActivacionUsuario | fecha }} </td>
-                <td class="centrarTexto"> {{ usuario.DesactivacionUsuario | fecha}} </td>
+                <td class="centrarTexto"> {{ usuario.idUsuario }} </td>
+                <td> {{ usuario.nombreUsuario }} </td>
+                <td> {{ usuario.roles.nombreRol }} </td>
+                <td> {{ usuario.correoUsuario }} </td>
+                <td class="centrarTexto"> {{ usuario.estado! | estado }} </td>
+                <td class="centrarTexto"> {{ usuario.activacionUsuario | fecha }} </td>
+                <td class="centrarTexto"> {{ usuario.desactivacionUsuario | fecha}} </td>
                 <td class="centrarTexto"> <a class="pointer" style="color: #e15639" matTooltip="Editar Usuario"
-                  [routerLink]="['/correspondencia/modificarUsuario/', usuario.IdUsuario]">           
+                  [routerLink]="['/correspondencia/modificarUsuario/', usuario.idUsuario]">           
                   <mat-icon>edit</mat-icon>
               </a></td>               
               </tr>
