@@ -99,8 +99,7 @@ export class ModificarUsuarioComponent implements OnInit {
        .pipe(
          switchMap( ({ idUsuario }) => this.loginService.filtrarIdUsuario(idUsuario))
        )
-       .subscribe( usuario => {     
-        console.log(usuario)   
+       .subscribe( usuario => {           
         this.modUsuario = usuario  
        
         //&this.usuarioMod = this.modUsuario;       
@@ -120,7 +119,7 @@ export class ModificarUsuarioComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      //console.log(`Dialog result: ${result}`);
     });
   }
 /**Metodo que permite abrir el dialogo de modificar el estado del usuario */
@@ -132,13 +131,12 @@ export class ModificarUsuarioComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+     // console.log(`Dialog result: ${result}`);
     });
   }
 
 /** Metodo que Permite modificar a usuario por su id */
-async modificar() {   
-
+async modificar() {  
   /**El siguiente metodo Permite Modificar a un usuario por su ID, Para ello, se extraen los datos 
    * Del formulario
    */
@@ -170,17 +168,14 @@ async modificar() {
                       this.router.navigate(['/correspondencia/administrador'])
                     }                  
                   })
-              })    
-      
+              })          
     } catch (error) {
       console.log(error)
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Error al ingresar los datos',
-       
+        text: 'Error al ingresar los datos',       
       })
     }
-
  }
 }

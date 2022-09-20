@@ -326,6 +326,7 @@ export class AdministracionComponent implements OnInit {
     // Se extraen los datos del formulario
     const { IdRol, Email, Password, NombreUsuario , Estado, Password2 } = this.registroUsuario.value;
     try { 
+      let existe = false;
    
       /** Se corrobora que las 2 contraseñas sean identicas */
          if( Password === Password2){           
@@ -344,46 +345,29 @@ export class AdministracionComponent implements OnInit {
           /** En el caso de que la fecha seleccionada de activacion sea igual a la de ahora, el usuario
            *  quedara ingresado como ACTIVO.
            */  
-                
-          if(ActivacionUsuario === fechaActual){
+          this.users.forEach(element => {
+            if(element.nombreUsuario === NombreUsuario){
+              existe = true;
+            }else if(element.correoUsuario === Email){
+              existe = true;
+            }else{
+              existe = false;
+            }});      
+          if(ActivacionUsuario === fechaActual && !existe){
             let activo = 1;
             /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
-             * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
+             * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/         
             this.loginService.registroUsuario( IdRol, Email, Password, NombreUsuario, activo, ActivacionUsuario )
-            .subscribe( resp => {  
-              console.log(resp)
-          
-                Swal.fire({
-                  position: 'top-end',
-                  icon: 'success',
-                  title: 'Usuario Guardado Con Exito',
-                  showConfirmButton: false,
-                  timer: 1500
-                }) 
-            
-                // Swal.fire({
-                //   icon: 'error',
-                //   title: 'Error',
-                //   text: 'El usuario ya existe',                
-                // })
-              
-            })
-          }else {
-            /** Caso contrario enb el que la fecha no es igual a la fecha del dia de hoy,
-             * El usuario ingresado quedara INACTIVO hasta el dia de la fecha seleccionada
-             * en el formulario de ingreso
-             */
-            this.loginService.registroUsuario( IdRol, Email, Password, NombreUsuario, Estado, ActivacionUsuario )
-            .subscribe( resp => {             
-              if(resp){
-                Swal.fire({
-                  position: 'top-end',
-                  icon: 'success',
-                  title: 'Usuario Guardado Con Exito',
-                  showConfirmButton: false,
-                  timer: 1500
-                }) 
-              }else {
+            .subscribe( resp => {
+             if(resp){
+               Swal.fire({
+                 position: 'top-end',
+                 icon: 'success',
+                 title: 'Usuario Guardado Con Exito',
+                 showConfirmButton: false,
+                 timer: 1500
+               })
+              }else{
                 Swal.fire({
                   icon: 'error',
                   title: 'Error',
@@ -391,15 +375,39 @@ export class AdministracionComponent implements OnInit {
                 })
               }
             })
-          }  
-        }else {
+          }else {
+            /** Caso contrario enb el que la fecha no es igual a la fecha del dia de hoy,
+             * El usuario ingresado quedara INACTIVO hasta el dia de la fecha seleccionada
+             * en el formulario de ingreso
+             */
+            if(!existe){
+              this.loginService.registroUsuario( IdRol, Email, Password, NombreUsuario, Estado, ActivacionUsuario )
+              .subscribe( resp => {             
+                if(resp){
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Usuario Guardado Con Exito',
+                    showConfirmButton: false,
+                    timer: 1500
+                  }) 
+                }})
+              }else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'El usuario ya existe',                
+                })
+              }
+              }
+            } 
+          else {
           Swal.fire({
             icon: 'error',
             title: 'Error',
             text: 'Las contraseñas no coinciden',                
           })
-        }
-        
+        }        
       } catch (error) {
         console.log(error)
         Swal.fire({

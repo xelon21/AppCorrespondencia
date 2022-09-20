@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
-import { LoginUsuario, LoginResponse } from '../../interface/login.interface';
+import { LoginUsuario } from '../../interface/login.interface';
 import { SesionesService } from '../../services/sesiones.service';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 

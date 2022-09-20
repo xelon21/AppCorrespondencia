@@ -26,10 +26,7 @@ import { Usuario } from '../../login/interface/login.interface';
 })
 export class inicioComponent implements OnInit {
 
-  /**Este get trae la informacion del usuario almacenada en el servicio SessionesServices. */
-  get respuestaLogin() {  
-    return  this.usuarioService.respuestaLogin;
-  }
+  /**Este get trae la informacion del usuario almacenada en el servicio SessionesServices. */  
   get login2() {  
     return  this.usuarioService.user;
   }
@@ -41,20 +38,17 @@ export class inicioComponent implements OnInit {
   numeroRol: number = 0;  
   email: string ='';
 
-
   constructor(private router: Router,
               private usuarioService: SesionesService) { }
 
 
   ngOnInit(): void {
-
-    console.log("rol",this.usuarioService.user.idRol)
+    
     /** Se verifica si el usuario es administrador */   
     if(this.usuarioService.user.idRol === 1 ){
       this.esAdmin = true;
     }   
-  }
- 
+  } 
 
   /** Metodo que permite al usuario 
    * salir de la sesion en la que se encuentra*/
@@ -65,7 +59,7 @@ export class inicioComponent implements OnInit {
 
 }
 
-
+//#region Emergencia? xD algun codigo q deseche y que podria funcionar
 /** Historial de codigo en caso de emergencias c: */
 // this.usuarioService.desconeccionUsuario(this.usuarioLogin[0].correoUsuario)
     //         .subscribe(resp => {
@@ -80,3 +74,4 @@ export class inicioComponent implements OnInit {
     //           this.email = this.usuarioLogin[0].correoUsuario;
              
     //         })  
+//#endregion

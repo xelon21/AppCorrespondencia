@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LoginResponse, Roles, Usuario, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion, ModUsuario, Login2, UsuariosSqlServer, IDRolNavigation } from '../interface/login.interface';
+import { Roles, RegistrarUsuario, UsuarioModificar, ModificarPassword, ModificarActivacion, ModUsuario, Login2, UsuariosSqlServer } from '../interface/login.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,6 @@ export class SesionesService {
   private baseUrl: string = environment.baseUrl;
   private _usuario!: UsuariosSqlServer;
   private refresh = new Subject<void>();
-  private _respuestaLogin!: LoginResponse;
   public _idu!: number; 
   private _user!: Login2 | undefined;
 
@@ -29,10 +28,6 @@ export class SesionesService {
 
   get user(){
     return { ...this._user } 
-  }
-
-  get respuestaLogin() {
-    return { ...this._respuestaLogin }
   }
 
   get idu() {
@@ -60,13 +55,16 @@ export class SesionesService {
 
       // const url = `${this.baseUrl}/usuarios/registrar`;
       const url = `https://localhost:7196/api/usuarios/registrar`;
-      const body = { IdRol, CorreoUsuario, Password, Nombre , Estado, ActivacionUsuario };
-      console.log(body);
+      const body = { IdRol, CorreoUsuario, Password, Nombre , Estado, ActivacionUsuario };    
         return this.http.post<RegistrarUsuario>(url , body )
         .pipe(
           tap(resp => {
-            console.log(resp)
+            if(!resp){
+              return false
+            }            
             this.refresh.next()
+            return true
+            
           })           
         );
     //     .pipe(
@@ -106,8 +104,7 @@ loginUsuario(email: string, password: string) {
 
     return this.http.post<Login2>(url , body )
         .pipe(
-            tap( resp => {   
-              console.log(resp)                                         
+            tap( resp => {                                     
             if( resp ) {         
               localStorage.setItem('ApiKey', resp.token!)   
               this._user = resp;          
@@ -121,30 +118,32 @@ loginUsuario(email: string, password: string) {
   }
 
   /**Metodo que permite validar el token del usuario que se inicia sesion */
-// validaApiKey(): Observable<boolean> {
+validaApiKey(): Observable<boolean> {
 
-//     const url = `${this.baseUrl}/login/validaKey`;
-//     const headers = new HttpHeaders()
-//       .set('x-api-key', localStorage.getItem('ApiKey') || '')
-  
-//     return this.http.get<LoginResponse>( url, { headers } )
-//       .pipe(
-//         map( resp => {          
-//           localStorage.setItem('ApiKey', resp.ApiKey!)         
-//               this._respuestaLogin = {  
-//                 correoUsuario: resp.correoUsuario!,          
-//                 IdUsuario: resp.IdUsuario,
-//                 IdRol: resp.IdRol,
-//                 NombreUsuario: resp.NombreUsuario!,        
-//                 Estado: resp.Estado!,                 
-//                 ApiKey: resp.ApiKey!,
-//                 EstadoMsg: resp.EstadoMsg!
-//               }                  
-//           return resp.EstadoMsg;
-//         }),
-//         catchError( err => of(false))
-//       );
-//   }
+  const headers = new HttpHeaders()
+    .set('x-api-key', localStorage.getItem('ApiKey') || '')
+  const hed = localStorage.getItem('ApiKey');
+  if(hed === null){
+    return of(false);
+  }else{
+    const url = `${this.baseUrl}/login/validar?token=${hed}`;
+    return this.http.post<Login2>( url, {headers} )
+      .pipe(
+        map( resp => {          
+          localStorage.setItem('ApiKey', resp.token!)         
+              this._user = {  
+                correoUsuario: resp.correoUsuario!,          
+                id: resp.id,
+                idRol: resp.idRol,
+                token: resp.token,
+                estado: resp.estado             
+              }               
+          return true;
+        }),
+        catchError( err => of(false))
+      );
+  }
+  }
  
   /** Metodo que permite traer los roles de los usuarios  */
   traeRoles(): Observable<Roles[]> {
@@ -155,45 +154,44 @@ loginUsuario(email: string, password: string) {
   }
 
   /** Metodo que permite la validacion de si un usuario es administrador o no */
-  // validaAdmin() {
-
-  //   const url = `${this.baseUrl}/login/validaAdmin`;
-  //   const headers = new HttpHeaders()
-  //     .set('x-api-key', localStorage.getItem('ApiKey') || '')
-
-  //   return this.http.get<LoginResponse>( url, { headers } )
-  //     .pipe(
-  //       map( resp => { 
-  //         if(resp.IdRol === 1) {
-  //           localStorage.setItem('ApiKey', resp.ApiKey!)            
-  //               this._respuestaLogin = { 
-  //                 correoUsuario: resp.correoUsuario!,                          
-  //                 IdUsuario: resp.IdUsuario,
-  //                 IdRol: resp.IdRol!,
-  //                 NombreUsuario: resp.NombreUsuario!,              
-  //                 Estado: resp.Estado!,                      
-  //                 ApiKey: resp.ApiKey!,
-  //                 EstadoMsg: resp.EstadoMsg!
-  //               }                         
-  //           return resp.EstadoMsg;
-  //         } else {
-  //           return false;
-  //         }
-  //       }),
-  //       catchError( err => of(false))
-  //     );
-  
-  // }
+  validaAdmin() {
+    const headers = new HttpHeaders()
+    .set('x-api-key', localStorage.getItem('ApiKey') || '')
+  const hed = localStorage.getItem('ApiKey');
+  if(hed === null){
+    return of(false);
+  }else{
+    const url = `${this.baseUrl}/login/validar?token=${hed}`;
+    return this.http.post<Login2>( url, { headers } )
+      .pipe(
+        map( resp => { 
+          if(resp.idRol === 1) {
+            localStorage.setItem('ApiKey', resp.token!)            
+                this._user = { 
+                  correoUsuario: resp.correoUsuario!,                          
+                  id: resp.id,
+                  token: resp.token,
+                  idRol: resp.idRol,
+                  estado: resp.estado  
+                }                         
+            return true;
+          } else {
+            return false;
+          }
+        }),
+        catchError( err => of(false))
+      );
+    }
+  }
 
   //** Metodo que permite buscar usuarios Por el nombre de usuario  */
-  buscaUsuario(filtro: string ): Observable<UsuariosSqlServer[]> {
-  return this.http.get<UsuariosSqlServer[]>(`${this.baseUrl}/usuarios/${ filtro }`);  
-  }
+  // buscaUsuario(filtro: string ): Observable<UsuariosSqlServer[]> {
+  // return this.http.get<UsuariosSqlServer[]>(`${this.baseUrl}/usuarios/${ filtro }`);  
+  // }
 
   /** Metodo que permite filtrar a un usuario mediante su Correlativo */
   // buscarPorIdUsuario(IdUsuario: number) : Observable<UsuarioModificar>{
   //   return this.http.get<UsuarioModificar>(`${this.baseUrl}/login/filtrarUsuariosModificar/${ IdUsuario}`);
-
   // }
   filtrarIdUsuario(IdUsuario: number) : Observable<ModUsuario>{
 
@@ -213,7 +211,7 @@ loginUsuario(email: string, password: string) {
  */
   modificarPassword( Password: string, Password2: string, idUsuario: number) {
     
-    const url = `${this.baseUrl}/login/modificarPassword/${ idUsuario }`;
+    const url = `${this.baseUrl}/usuarios/modificarPassword?id=${ idUsuario }`;
     let IUsuario = idUsuario
     const body = {  Password, Password2, IUsuario };
   
@@ -230,17 +228,16 @@ loginUsuario(email: string, password: string) {
   /** Metodo que permite modificar el estado de un usuario ya sea inmediatamente o en una fecha especifica
  * [Cabe recalcar que es soplo una opcion dentro de la ventana de administracion]
  */
-   modificarEstado(IdUsuario: number, Estado: boolean, DesactivacionUsuario: string) {
+   modificarEstado(id: number, estado: number, desactivacionUsuario: string) {
 
-    const url = `${this.baseUrl}/usuarios/modificarEstado?id=${IdUsuario}`;
-    const body = { Estado, DesactivacionUsuario };
-
-    console.log(body, url)
+    const url = `${this.baseUrl}/usuarios/modificarEstado?id=${id}`;
+    const body = { estado, desactivacionUsuario };
 
         return this.http.put<ModificarActivacion>(url, body)
           .pipe(
-            map( resp => {
-              console.log("respuesta servicio: " , resp)
+            tap( data => {            
+            }),
+            map( resp => {           
               return resp;
             }
           ),

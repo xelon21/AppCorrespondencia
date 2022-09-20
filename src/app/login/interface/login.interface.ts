@@ -34,17 +34,7 @@ export interface Login2{
     id: number;
     idRol: number;
     token: string;
-}
-
-export interface LoginResponse {
-    correoUsuario: string;
-    token: string;
-    IdUsuario: number;
-    NombreUsuario: string;
-    IdRol:         number;
-    Estado:        boolean;
-    ApiKey:        string;
-    EstadoMsg:     boolean;
+    estado: boolean;
 }
 
 export interface RegistrarUsuario {    
@@ -125,9 +115,9 @@ export interface UsuarioModificar {
 }
 
 export interface ModificarActivacion {
-    IdUsuario: number;
-    DesactivacionUsuario: string; 
-    Estado: boolean;   
+    idUsuario: number;
+    desactivacionUsuario: string; 
+    estado: boolean;   
 }
 
 export interface ModificarPassword {

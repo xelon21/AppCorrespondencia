@@ -24,12 +24,12 @@ const routes: Routes = [
       { path: 'filtroNombre', component: FiltroNombreComponent },
       { path: 'filtroFechas', component: FiltrofechasComponent },     
       { path: 'administrador', component: AdministracionComponent, 
-        // canActivate: [ ValidaAdminGuard ],
-        // canLoad: [ ValidaAdminGuard ] 
+        canActivate: [ ValidaAdminGuard ],
+        canLoad: [ ValidaAdminGuard ] 
       },  
       { path: 'modificarUsuario/:idUsuario', component: ModificarUsuarioComponent, 
-        // canActivate: [ ValidaAdminGuard ],
-        // canLoad: [ ValidaAdminGuard ] 
+        canActivate: [ ValidaAdminGuard ],
+        canLoad: [ ValidaAdminGuard ] 
       }, 
       { path: '**', redirectTo: 'agregar'}
     ]

@@ -6,6 +6,8 @@ import { FormatoFecha } from '../../interface/correspondencia.interface';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ThisReceiver } from '@angular/compiler';
+import { catchError, map, of, pipe, tap } from 'rxjs';
 
 @Component({
   selector: 'app-modificar-estado',
@@ -56,9 +58,9 @@ export class ModificarEstadoComponent implements OnInit {
   id!: number;
 
   estado: ModificarActivacion = {
-    IdUsuario: 0,
-    Estado: false,
-    DesactivacionUsuario: ''    
+    idUsuario: 0,
+    estado: false,
+    desactivacionUsuario: ''    
   }
 
   usuario: UsuarioModificar = {
@@ -97,11 +99,11 @@ export class ModificarEstadoComponent implements OnInit {
        * [TENER EN CUENTA QUE SI EL USUARIO ESTABA DESACTIVADO, ESTE SE VOLVERA A ACTIVAR Y UNA VEZ LLEGADA
        * LA FECHA, ESTE SE DESACTIVARA.]
        */
-      this.estado.Estado = true;
+      this.estado.estado = true;
+      let state = 1;
       this.fecha1 = this.fecha.controls['desactivacionUsuario'].value._i
-      let fechaFinal: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;
-      console.log(this.data.idUsuario, this.estado.Estado, fechaFinal)
-      this.loginService.modificarEstado(this.data.idUsuario, this.estado.Estado, fechaFinal)
+      let fechaFinal: string = this.fecha1.year + '-' + (this.fecha1.month + 1 ).toString() + '-' + this.fecha1.date;     
+      this.loginService.modificarEstado(this.data.idUsuario, state, fechaFinal)    
           .subscribe(resp => {
             if(resp){
               Swal.fire({
@@ -121,18 +123,17 @@ export class ModificarEstadoComponent implements OnInit {
             }
           })
     }else {
-      if(this.estado.Estado){
+      if(this.estado.estado){
         /**Si el checkBox del estado del usuario esta marcado, entonces se Desactivara al usuario, quedando
        * Registro de la fecha actual al momento de la desactivacion.
        */
+        let state = 0;
          let diaActual = new Date().getDate().toString()
          let mesActual = new Date().getMonth()
          let anioActual = new Date().getFullYear().toString()          
          let fechaActual =+ anioActual + '-' + +(mesActual + 1).toString() + '-' + diaActual; 
-        console.log(this.id, this.data.idUsuario, this.estado.Estado, fechaActual)
-        this.loginService.modificarEstado(this.data.idUsuario, this.estado.Estado, fechaActual)
-              .subscribe( resp => {
-                console.log(resp)
+        this.loginService.modificarEstado(this.id, state, fechaActual)
+              .subscribe( resp => {                
                 if(resp){
                   Swal.fire({
                     position: 'top-end',
@@ -149,8 +150,7 @@ export class ModificarEstadoComponent implements OnInit {
                     text: 'Error al ingreso de los datos',                
                   })
                 }
-              })
-        
+              })        
       }
     }
 

@@ -124,29 +124,18 @@ export class MostrarComponent implements OnInit, OnDestroy {
 
     // Se trae todas las correspondencias
     this.correosService.getCorrespondencia()
-      .subscribe( correos =>{ 
-        console.table(correos)     
+      .subscribe( correos =>{
         this.correos = correos        
       });
-  
-      // .subscribe( correos =>{
-      //   console.log(correos)
-      //   console.table(correos)        
-      //   this.correos = correos        
-      // });
-    
+
     this.suscription = this.correosService.refrescar
       .subscribe( () => {
         this.correosService.getCorrespondencia()
             .subscribe( correos =>{
               this.correos = correos
-                      
-              console.log(this.correos)                            
             });
-          })
-    
+          })    
   }
-
   
   /**Metodo que permite mostrat la siguiente lista con datos */
   nextPage() {    

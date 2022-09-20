@@ -67,8 +67,7 @@ export class ModificarComponent implements OnInit {
          switchMap( ({ correlativo }) => this.correoService.buscaCorrelativo(correlativo) )
        )
        .subscribe( correo => {
-        this.correosql = correo       
-         console.log(this.correosql)        
+        this.correosql = correo 
          this.correos = {
           IdTipoEnvio: this.correosql.idTipoEnvio,
           IdUsuario: this.correosql.idUsuario,
@@ -80,9 +79,6 @@ export class ModificarComponent implements OnInit {
        })
        this.correoService.getTipoEnvio() 
        .subscribe( tipo => this.tipoEnvio = tipo );
-
-
-      console.log(this.correos)
   }
 
   /** metodo que permite modifiar una correspondencia mediante correlativo */
@@ -128,8 +124,7 @@ export class ModificarComponent implements OnInit {
               if(this.loginService.user.id === result.idUsuario){
                 let Correlativo2 = this.correos.Correlativo;         
                 this.correoService.modificarPorCorrelativo( IdTipoEnvio, Destinatario, Referencia, EstadoCorreo, Correlativo2)
-                .subscribe( correo =>{ 
-                  console.log(correo)
+                .subscribe( correo =>{                 
                   this.correos = correo
                 })                 
                 Swal.fire({

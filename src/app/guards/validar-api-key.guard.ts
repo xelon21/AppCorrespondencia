@@ -17,52 +17,23 @@ export class ValidarApiKeyGuard implements CanActivate, CanLoad {
                private router: Router) {}
 
   canActivate(): Observable<boolean> | boolean { 
-
-    // var dato = this.usuarioService.user!.correoUsuario
-    // if(!dato  || dato  == "no"){
-    //   this.router.navigateByUrl('/login')
-    //   return false;
-    // }
-    return true;
-    
-    // var hed = new HttpHeaders()
-    // .set('x-api-key', localStorage.getItem('ApiKey') || '')
-    // if(!hed){
-    //   this.router.navigateByUrl('/login') 
-    //   return false;     
-    // }
-    // return true;
-    // return this.usuarioService.validaApiKey()
-    //         .pipe( 
-    //           tap( valid => {
-    //             if(!valid) {
-    //               this.router.navigateByUrl('/login')
-    //             } 
-    //           })
-    //         );
+    return this.usuarioService.validaApiKey()
+            .pipe( 
+              tap( valid => {
+                if(!valid) {                  
+                  this.router.navigateByUrl('/login')
+                } 
+              })
+            );
   }
-  canLoad(): Observable<boolean> | boolean { 
-    // console.log(this.usuarioService.user!.correoUsuario)
-    // var dato = this.usuarioService.user!.correoUsuario || 1
-    // if(!dato  || dato  == "no"){      
-    //   this.router.navigateByUrl('/login')
-    //   return false;
-    // }   
-    return true;
-    // var headers = new HttpHeaders()
-    // .set('x-api-key', localStorage.getItem('ApiKey') || '')
-    // if(!headers){
-    //   this.router.navigateByUrl('/login')
-    //   return false;      
-    // }
-    // return true;
-    // return this.usuarioService.validaApiKey()
-    //           .pipe( 
-    //             tap( valid => {
-    //               if(!valid) {
-    //                 this.router.navigateByUrl('/login')
-    //               }
-    //             })
-    //           );
+  canLoad(): Observable<boolean> | boolean {
+    return this.usuarioService.validaApiKey()
+              .pipe( 
+                tap( valid => {
+                  if(!valid) {                   
+                    this.router.navigateByUrl('/login')
+                  }
+                })
+              );
   }
 }
