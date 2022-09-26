@@ -90,17 +90,35 @@ export class AgregarComponent implements OnInit  {
       if(!this.estadoCampos){        
         /** Se extrae el nombre de usuario del servicio login para poder ingresarlo a la correspondencia.
          * Se debe tener en cuenta que toma el usuario que se encuentre logeado en el momento*/
+        var cont = 0;
+        
         await this.correosService.ingresaCorrespondencia( IdTipoDocumento, IdTipoEnvio, IdUsuario, Destinatario, Referencia )
         .subscribe( resp => { 
-          Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: `Correspondencia Guardada Con Exito \n
-                  El correlativo es: alguno${this.correlativo}`, 
-          showConfirmButton: true 
-          })
-          //se redirecciona a la pagina que muestra correspondencia 
-          this.router.navigate(['/correspondencia/mostrar'])           
+          if(resp){
+            this.correosService.getCorrespondencia().subscribe( datos => {
+              datos.forEach(element => {             
+                if(datos.length -1 === cont ){
+                  Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: `Correspondencia Guardada Con Exito \n
+                          El correlativo es: ${element.correlativo}`, 
+                  showConfirmButton: true 
+                  })
+                  //se redirecciona a la pagina que muestra correspondencia 
+                  this.router.navigate(['/correspondencia/mostrar'])                      
+                }else{
+                  cont ++;
+                }
+              });            
+            })           
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error al ingresar los campos',     
+            })
+          }         
         });
           }else {
             console.log('entreo en el else ')

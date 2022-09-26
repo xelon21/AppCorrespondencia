@@ -54,7 +54,7 @@ export class SesionesService {
     Password: string, Nombre: string , Estado: number, ActivacionUsuario: string ) : Observable<RegistrarUsuario>{
 
       // const url = `${this.baseUrl}/usuarios/registrar`;
-      const url = `https://localhost:7196/api/usuarios/registrar`;
+      const url = `${this.baseUrl}/usuarios/registrar`;
       const body = { IdRol, CorreoUsuario, Password, Nombre , Estado, ActivacionUsuario };    
         return this.http.post<RegistrarUsuario>(url , body )
         .pipe(
