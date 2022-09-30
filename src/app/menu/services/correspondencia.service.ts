@@ -63,7 +63,7 @@ export class CorrespondenciaService {
               console.log(resp)    
               this.refresh.next()
             })
-          );  
+          );   
   }
   
   /** metodo que trae una correspondencia por el correlativo */
