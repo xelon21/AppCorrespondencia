@@ -1,6 +1,6 @@
 {
     "/api/*":{
-        "target": "http://10.0.0.206:4100",
+        "target": "http://demoapi/api",
         "secure": false,
         "logLevel": "debug"
     }

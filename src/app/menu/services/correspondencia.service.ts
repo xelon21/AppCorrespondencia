@@ -25,6 +25,7 @@ export class CorrespondenciaService {
   /* Metodo que trae todas las correspondencias*/
   getCorrespondencia(): Observable<CorrespondenciaSqlServer[]> {
     return this.http.get<CorrespondenciaSqlServer[]>(`${this.baseUrl}/correspondencia`)
+    
   }
  
   /** Metodo que trae los tipos de envio */
