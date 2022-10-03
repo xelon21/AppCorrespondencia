@@ -59,8 +59,7 @@ export class CorrespondenciaService {
     const body = { IdTipoEnvio, Destinatario, Referencia, EstadoCorreo, Correlativo }
     return this.http.put<CorrespondenciaModificar>(url, body)
           .pipe(
-            tap( resp => {         
-              console.log(resp)    
+            tap( resp => {           
               this.refresh.next()
             })
           );   

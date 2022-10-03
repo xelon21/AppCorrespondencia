@@ -297,8 +297,7 @@ export class AdministracionComponent implements OnInit {
   onSearchNombreUsuario( search: string) {
     this.pagina = 0;
     this.search = search;
-  }
- 
+  } 
   
   /** Este get trae la fecha actual para poder ingresarla
    * al registrar un usuario.

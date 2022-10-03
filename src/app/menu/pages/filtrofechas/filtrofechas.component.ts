@@ -168,8 +168,7 @@ export class FiltrofechasComponent implements OnInit {
            */
           await this.correoService.filtroFechas( fechaInicio, fechaFinal )
             .subscribe( datos => {              
-              this.correos = datos;   
-              console.log(datos)           
+              this.correos = datos;            
             })
         }   
   }

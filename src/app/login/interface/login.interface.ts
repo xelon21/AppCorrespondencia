@@ -23,7 +23,6 @@ export interface Roles {
     descripcion: string;
 }
 
-
 export interface LoginUsuario {
     Email: string;
     Password: string;
@@ -46,20 +45,6 @@ export interface RegistrarUsuario {
     ActivacionUsuario?: string;    
 }
 
-// export interface LoginResponse {
-    //     EstadoMsg: boolean;
-    //     Msg: string;    
-//     IdUsuario?: number;
-//     IdRol: number;    
-//     NombreUsuario: string;
-//     Email?: string;
-//     Password?: string;
-//     UsuarioActivo?: string;
-//     UsuarioNoActivo?: string;    
-//     ApiKey: string;
-//     Estado?: boolean;    
-// }
-
 export interface Usuario2 {
     IdUsuario: number;
     IdRol: number;
@@ -71,17 +56,6 @@ export interface Usuario2 {
     Estado?: boolean;
     ApiKey: string;
 }
-
-// export interface Usuario {
-//     IdUsuario:            number;
-//     NombreUsuario:        string;
-//     Rol:                  string;
-//     CorreoUsuario:        string;
-//     Estado:               number;
-//     ActivacionUsuario:    Date;
-//     DesactivacionUsuario: Date;
-// }
-
 
 export interface Usuario {
     IdUsuario: number;
@@ -95,7 +69,6 @@ export interface Usuario {
     Estado?: boolean;
     ApiKey: string;
 }
-
 
 export interface Roles {
     IdRol: number;
@@ -132,3 +105,32 @@ export interface ModUsuario {
     nombreUsuario: string;
     idUsuario: number;
 }
+
+//#region codigo desecho
+
+// export interface LoginResponse {
+    //     EstadoMsg: boolean;
+    //     Msg: string;    
+    //     IdUsuario?: number;
+    //     IdRol: number;    
+    //     NombreUsuario: string;
+    //     Email?: string;
+    //     Password?: string;
+    //     UsuarioActivo?: string;
+    //     UsuarioNoActivo?: string;    
+    //     ApiKey: string;
+    //     Estado?: boolean;    
+    // }
+    
+    // export interface Usuario {
+    //     IdUsuario:            number;
+    //     NombreUsuario:        string;
+    //     Rol:                  string;
+    //     CorreoUsuario:        string;
+    //     Estado:               number;
+    //     ActivacionUsuario:    Date;
+    //     DesactivacionUsuario: Date;
+    // }
+
+
+//#endregion

@@ -141,8 +141,7 @@ async modificar() {
    * Del formulario
    */
   const { idRol, idUsuario, nombreUsuario, correoUsuario } = this.modUsuario
-    try {      
-      console.log(idRol, idUsuario, nombreUsuario, correoUsuario)
+    try {           
       /**Una vez obtenido los datos, se envian por parametros al metodo modificarPorIdUsuario para su modificacion */ 
       await this.loginService.modificarPorIdUsuario(idRol, nombreUsuario, correoUsuario, idUsuario)
           .subscribe( datos => {
